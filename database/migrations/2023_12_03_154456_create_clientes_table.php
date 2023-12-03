@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('nascimento')->nullable();
             $table->string('telefone')->nullable();
             $table->string('endereco')->nullable();
-            $table->string('numero')->nullable();
+            $table->string('bairro')->nullable();
+            $table->string('estado')->nullable();
             $table->string('cidade')->nullable();
+            $table->string('cep')->nullable();
             $table->timestamps();
         });
     }

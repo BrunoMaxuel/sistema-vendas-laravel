@@ -12,16 +12,17 @@ class ClientesController extends Controller
         return view('cliente/index',['clientes'=>$cliente]);
     }
     public function editarView(Request $request){
-        // if($request->id != null){
-            // $cliente = Clientes::where('id', $request->id)->first();
-            return view('cliente/edit');
-        // }
-        // else{
-        //     return response()->json([
-        //         'success' => 'false',
-        //         'message' => 'sem indice na busca!'
-        //     ]);
-        // }
+        dd("Entrou");
+        if($request->id != null){
+            $cliente = Clientes::where('id', $request->id)->first();
+            return $cliente;
+        }
+        else{
+            return response()->json([
+                'success' => 'false',
+                'message' => 'sem indice na busca!'
+            ]);
+        }
     }
     public function editarSave(Request $request){
         

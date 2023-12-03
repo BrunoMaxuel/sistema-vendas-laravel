@@ -21,8 +21,10 @@ class ClientesFactory extends Factory
             'nascimento' => $this->faker->date(),
             'telefone' => $this->faker->phoneNumber,
             'endereco' => $this->faker->streetAddress,
-            'numero' => $this->faker->buildingNumber,
+            'bairro' => $this->faker->secondaryAddress,
+            'estado' => $this->faker->stateAbbr,
             'cidade' => $this->faker->city,
+            'cep' => $this->faker->postcode,
         ];
     }
 }

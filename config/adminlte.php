@@ -290,7 +290,6 @@ return [
     */
 
     'menu' => [
-        'menu',
         [
             'text'        => 'Dashboard',
             'url'         => '/',

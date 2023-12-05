@@ -338,8 +338,20 @@ return [
         ],
         [
             'text'        => 'Área de Clientes',
-            'url'         => '/clientes',
+            'url'         => '#',
             'icon'        => 'fas fa-fw fa-users',
+            'submenu'=> [
+                [
+                    'text' => 'Lista de Clientes',
+                    'url'  => '/clientes',
+                    'icon' => 'fas fa-fw fa-user',
+                ],
+                [
+                    'text'    => 'Adicionar Cliente',
+                    'url'     => '/#',
+                    'icon'    => 'fas fa-fw fa-download'
+                ],
+            ]
         ],
         'configurações',
         [

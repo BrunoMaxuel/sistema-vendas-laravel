@@ -21,7 +21,10 @@ Route::get('/vender', [VenderController::class, 'index'])->name('vender.index');
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.view');
 Route::post('/clientes/editar', [ClientesController::class, 'editarView'])->name('clientes.editar');
-Route::post('/clientes/saveeditar', [ClientesController::class, 'editarSave'])->name('clientes.saveEdit');
+Route::post('/clientes/saveeditar', [ClientesController::class, 'saveEditar'])->name('clientes.saveEdit');
 Route::get('/clientes/cadastrar',[ClientesController::class, 'cadastrarCliente'])->name('clientes.cadastrar');
+Route::post('/clientes/excluir',[ClientesController::class, 'excluirCliente'])->name('clientes.excluir');
+Route::post('/clientes/excluirAction',[ClientesController::class, 'excluirClienteAction'])->name('clientes.excluirAction');
+
 
 

@@ -13,8 +13,8 @@
             <div class="icon">
                 <i class="ion ion-person-stalker"></i>
             </div>
-            <a href="" class="small-box-footer">Clientes <i class="fa fa-arrow-circle-right"></i></a>
-            {{-- {{route('clientes.todos')}} --}}
+            <a href="{{route('clientes.view')}}" class="small-box-footer">Clientes <i class="fa fa-arrow-circle-right"></i></a>
+            
         </div>
     </div>
     <div class="col-sm-3">

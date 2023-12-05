@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Clientes;
+use App\Models\Cliente;
 use Exception;
 use Illuminate\Http\Request;
 
 class ClientesController extends Controller
 {
     public function index(){
-        $cliente = Clientes::all();
+        $cliente = Cliente::all();
         return view('cliente/index',['clientes'=>$cliente]);
     }
     public function editarView(Request $request){
         if($request->id != null){
-            $cliente = Clientes::where('id', $request->id)->first();
+            $cliente = Cliente::where('id', $request->id)->first();
             return response()->json($cliente);
         }
         else{
@@ -26,7 +26,7 @@ class ClientesController extends Controller
     }
     public function saveEditar(Request $request){
         try{
-            $cliente = Clientes::find($request->id);
+            $cliente = Cliente::find($request->id);
             $cliente->nome          = $request->nome;
             $cliente->sexo          = $request->sexo;
             $cliente->telefone      = $request->telefone;
@@ -57,7 +57,7 @@ class ClientesController extends Controller
      }
     public function excluirCliente(Request $request){
         if($request->id != null){
-            $cliente = Clientes::where('id', $request->id)->first();
+            $cliente = Cliente::where('id', $request->id)->first();
             return response()->json($cliente);
         }
         else{
@@ -69,7 +69,7 @@ class ClientesController extends Controller
     }
     public function excluirClienteAction(Request $request) {
         if ($request->id) {
-            $cliente = Clientes::find($request->id);
+            $cliente = Cliente::find($request->id);
             
             if ($cliente) {
                 $cliente->delete();
@@ -92,34 +92,24 @@ class ClientesController extends Controller
     }
     
 
-    public function cadastrarCliente(Request $request){
+    public function adicionarCliente(Request $request){
 
-        // $cliente = new Cliente;
-        // $cliente->nome          = $request->nome;
-        // $cliente->CPF           = $request->CPF;
-        // $cliente->sexo          = $request->sexo;
-        // $cliente->nascimento    = $request->nascimento;
-        // $cliente->telefone      = $request->telefone;
-        // $cliente->cep           = $request->cep;
-        // $cliente->endereco      = $request->endereco;
-        // $cliente->bairro        = $request->bairro;
-        // $cliente->cidade        = $request->cidade;
-        // $cliente->estado        = $request->estado;
-        
-        // try{
-        //     $cliente->save();
-        //     return response()->json([
-        //         'success' => "true",               
-        //         'message' => 'Cliente cadastrado com sucesso'
-        //     ]);
-        // }catch (QueryException  $e){
-        //     $error_code = $e->errorInfo[1];
-        //     if($error_code == 1062){
-        //        return response()->json([
-        //             'success' => 'false',
-        //             'message' => 'CPF já cadastrado no sistema!'
-        //         ]);
-        //     }
-        // }
+        $cliente = new Cliente;
+        $cliente->nome          = $request->nome;
+        $cliente->sexo          = $request->sexo;
+        $cliente->telefone      = $request->telefone;
+        $cliente->endereco      = $request->endereco;
+        $cliente->bairro        = $request->bairro;
+        $cliente->cidade        = $request->cidade;
+        $cliente->estado        = $request->estado;
+        if($cliente->save()){
+            return response()->json([
+                'success' => true,               
+                'message' => 'Cliente cadastrado com sucesso'
+            ]);
+        }
+   }
+    public function adicionarClienteView(){
+        return view('cliente.adicionar');
    }
 }

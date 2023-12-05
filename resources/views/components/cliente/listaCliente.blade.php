@@ -1,7 +1,7 @@
 <div>
     <h4>Total de clientes: {{count($clientes)  }} </h4>
 </div>
-<div class="btn btn-success m-1">
+<div id="btnAdd" class="btn btn-success m-1">
     Adicionar Cliente
 </div>
 <div class="table-responsive">
@@ -59,3 +59,14 @@
 {{-- {{$clientes->links()}} --}}
 </div>
 </div>
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('#btnAdd').click(function() {
+                window.location.href = '/clientes/adicionar';
+            });
+        });
+    </script>
+
+
+@stop

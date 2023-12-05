@@ -338,7 +338,7 @@ return [
         ],
         [
             'text'        => 'Área de Clientes',
-            'url'         => '#',
+            'url'         => '/clientes',
             'icon'        => 'fas fa-fw fa-users',
             'submenu'=> [
                 [
@@ -348,8 +348,9 @@ return [
                 ],
                 [
                     'text'    => 'Adicionar Cliente',
-                    'url'     => '/#',
-                    'icon'    => 'fas fa-fw fa-download'
+                    'url'     => '/clientes/adicionar',
+                    'icon'    => 'fas fa-fw fa-plus',
+                    'icon_color' => 'success'
                 ],
             ]
         ],

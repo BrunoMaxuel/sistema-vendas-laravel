@@ -9,9 +9,13 @@ use Illuminate\Http\Request;
 class ClientesController extends Controller
 {
     public function index(){
-        $cliente = Cliente::all();
-        return view('cliente/index',['clientes'=>$cliente]);
+        $quantidade = 10; // Define a quantidade de itens por página
+    
+        $clientes = Cliente::paginate($quantidade);
+        
+        return view('cliente/index', ['clientes' => $clientes]);
     }
+    
     public function editarView(Request $request){
         if($request->id != null){
             $cliente = Cliente::where('id', $request->id)->first();
@@ -26,35 +30,43 @@ class ClientesController extends Controller
     }
     public function saveEditar(Request $request){
         try{
-            $cliente = Cliente::find($request->id);
-            $cliente->nome          = $request->nome;
-            $cliente->sexo          = $request->sexo;
-            $cliente->telefone      = $request->telefone;
-            $cliente->endereco      = $request->endereco;
-            $cliente->bairro        = $request->bairro;
-            $cliente->cidade        = $request->cidade;
-            $cliente->estado        = $request->estado;
+            $cliente = null;
+            if(!blank($request->id)){
+                $cliente = Cliente::find($request->id);
+            }
+    
+            if($cliente == null){
+                $cliente = new Cliente;
+            }
+    
+            $cliente->nome      = $request->nome;
+            $cliente->sexo      = $request->sexo;
+            $cliente->telefone  = $request->telefone;
+            $cliente->endereco  = $request->endereco;
+            $cliente->bairro    = $request->bairro;
+            $cliente->cidade    = $request->cidade;
+    
             if($cliente->save()){
-                return response()->json([
-                'success' => true,
-                    'message' => 'Alterado com sucesso!'
-                ]);
+                if(!blank($request->id)){
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Cliente alterado com sucesso!'
+                    ]);
+                } else {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Cliente adicionado com sucesso!'
+                    ]);
+                }
             }
-            else{
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Algum erro ocorreu no sistema!'
-                ]);
-            }
-        
-        }catch(Exception $e){
+        } catch(Exception $e){
             return response()->json([
-                'success' => 'false',
-                'message' => $e
+                'success' => false,
+                'message' => $e->getMessage()
             ]);
         }
-         
-     }
+    }
+    
     public function excluirCliente(Request $request){
         if($request->id != null){
             $cliente = Cliente::where('id', $request->id)->first();
@@ -90,10 +102,19 @@ class ClientesController extends Controller
             ], 400); // Indica uma requisição inválida (400 Bad Request)
         }
     }
-    
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+
+    $clientes = Cliente::where('nome', 'LIKE', "%$query%")
+                        ->orWhere('endereco', 'LIKE', "%$query%")
+                        ->paginate(10);
+
+    return view('cliente/index', ['clientes' => $clientes]);
+}
+
 
     public function adicionarCliente(Request $request){
-
         $cliente = new Cliente;
         $cliente->nome          = $request->nome;
         $cliente->sexo          = $request->sexo;
@@ -101,11 +122,9 @@ class ClientesController extends Controller
         $cliente->endereco      = $request->endereco;
         $cliente->bairro        = $request->bairro;
         $cliente->cidade        = $request->cidade;
-        $cliente->estado        = $request->estado;
         if($cliente->save()){
             return response()->json([
-                'success' => true,               
-                'message' => 'Cliente cadastrado com sucesso'
+                'success' => true,
             ]);
         }
    }

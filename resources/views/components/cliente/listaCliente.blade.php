@@ -1,9 +1,12 @@
-<div>
-    <h4>Total de clientes: {{count($clientes)  }} </h4>
-</div>
-<div id="btnAdd" class="btn btn-success m-1">
-    Adicionar Cliente
-</div>
+
+<form action="{{ route('clientes.search') }}" method="GET" class="form-inline">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Pesquisar clientes" name="query">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+            </div>
+        </div>
+    </form>
 <div class="table-responsive">
     <table class="table table-striped align-middle">
         <thead>
@@ -14,7 +17,6 @@
             <th scope="col">Telefone</th>
             <th scope="col">Bairro</th>
             <th scope="col">Cidade</th>
-            <th scope="col">Estado</th>
             <th scope="col">Ações</th>
         </tr>
         </thead>
@@ -28,7 +30,6 @@
                     <td>{{$cliente['telefone']}}</td>
                     <td>{{$cliente['bairro']}}</td>
                     <td>{{$cliente['cidade']}}</td>
-                    <td>{{$cliente['estado']}}</td>
                     <td>
                         <div class="btn-group">
                             <div>
@@ -55,18 +56,9 @@
     </table>
 </div>
 </div>
-<div class="d-flex justify-content-end">
-{{-- {{$clientes->links()}} --}}
+<div class="d-flex justify-content-center">
+    {{ $clientes->links('pagination::bootstrap-4') }}
 </div>
-</div>
-@section('js')
-    <script>
-        $(document).ready(function() {
-            $('#btnAdd').click(function() {
-                window.location.href = '/clientes/adicionar';
-            });
-        });
-    </script>
 
 
-@stop
+</div>

@@ -30,6 +30,8 @@ Route::get('/clientes/adicionar',[ClientesController::class, 'adicionarClienteVi
 Route::post('/clientes/adicionar',[ClientesController::class, 'adicionarCliente'])->name('clientes.adicionar.action');
 Route::post('/clientes/excluir',[ClientesController::class, 'excluirCliente'])->name('clientes.excluir');
 Route::post('/clientes/excluirAction',[ClientesController::class, 'excluirClienteAction'])->name('clientes.excluirAction');
+Route::get('/clientes/search', [ClientesController::class, 'search'])->name('clientes.search');
+
 
 
 

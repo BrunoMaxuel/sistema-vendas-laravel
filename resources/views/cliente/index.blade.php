@@ -3,7 +3,12 @@
 @section('title', 'Clientes')
 
 @section('content_header')
-    <h1>Clientes</h1>
+<div>
+    <h3>Total de clientes: {{$clientes->total()  }} </h3>
+</div>
+<div id="btnAdd" class="btn btn-success m-1">
+    Adicionar Cliente
+</div>
 @stop
 
 @section('content')
@@ -24,7 +29,12 @@
 
 @section('js')
   <script type="text/javascript">
-    $(function() {	
+    $(function() {
+        $('#btnAdd').click(function() {
+            $("#formUp")[0].reset();
+            $('#modalAlert').modal('show');
+        });
+
         $('.btnEditar').click(function() {
             $("#formUp")[0].reset();
             editar($(this).attr('id'));
@@ -42,19 +52,23 @@
             }
         );
 
+
         $('#modalAlert').modal('show');
 
         };
+
+
+        
+    
         $('#btnSubmit').click(function() {
             var dados = $("#formUp").serialize();
             $.post("{{route('clientes.saveEdit')}}",dados, function( data )	{
                 $('#modalAlert').modal('hide');
                 if(data.success == true){
-                    $("#background-text").addClass("modal-header alert alert-success");
-                    $("#titulo-msg").html("Cliente alterado com sucesso!");
+                    $("#background-text").addClass("bg-success");
+                    $("#titulo-msg").html(data.message);
                     $('#modal-msg').modal('show');
                     setTimeout(function() {
-                        $('#modal-msg').modal('hide');
                         window.location.reload(); 
                     }, 1100); 
                 }
@@ -81,7 +95,7 @@
             var idExcluir = $('#idExcluir').val();
             $.post("{{route('clientes.excluirAction')}}", { id: idExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function (data){
                 if(data.success === true){
-                    $("#background-text").addClass("modal-header alert alert-success");
+                    $("#background-text").addClass("bg-danger");
                     $("#titulo-msg").html("Cliente excluido com sucesso!");
                     $('#modal-msg').modal('show');
                     setTimeout(function() {

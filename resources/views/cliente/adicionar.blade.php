@@ -15,7 +15,7 @@
 <x-cliente.msgReturn/>
 
     <div class="row ml-2">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <form id="formUp">
                 @csrf
                 <input type="hidden" name="id" id="id">

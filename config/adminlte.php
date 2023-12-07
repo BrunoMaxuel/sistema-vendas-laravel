@@ -339,7 +339,8 @@ return [
                 [
                     'text' => 'Lista de Produtos',
                     'url'  => '/produtos',
-                    'icon' => 'fas fa-fw fa-user',
+                    'icon' => 'fas fa-tag',
+                    'icon_color' => 'warning'
                 ],
                 [
                     'text'    => 'Adicionar Produto',
@@ -358,6 +359,7 @@ return [
                     'text' => 'Lista de Clientes',
                     'url'  => '/clientes',
                     'icon' => 'fas fa-fw fa-user',
+                    'icon_color' => 'warning'
                 ],
                 [
                     'text'    => 'Adicionar Cliente',
@@ -376,11 +378,13 @@ return [
                     'text' => 'Meu Perfil',
                     'url'  => 'admin/settings',
                     'icon' => 'fas fa-fw fa-user',
+                    'icon_color' => 'warning'
                 ],
                 [
                     'text'    => 'Backup do Sistema',
                     'url'     => '#',
-                    'icon'    => 'fas fa-fw fa-download'
+                    'icon'    => 'fas fa-fw fa-download',
+                    'icon_color' => 'success'
                 ],
                 [
                     'text' => 'config3',

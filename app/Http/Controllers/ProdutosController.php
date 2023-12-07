@@ -29,6 +29,10 @@ class ProdutosController extends Controller
         }
     }
 
+    public function produtosViewAdicionar(){
+        return view('produto.adicionar');
+    }
+
     public function saveEditar(Request $request){
         try{
             $validator = Validator::make($request->all(), [

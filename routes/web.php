@@ -34,6 +34,7 @@ Route::get('/clientes/search', [ClientesController::class, 'search'])->name('cli
 
 
 Route::get('/produtos', [ProdutosController::class, 'index'])->name('produtos.view');
+Route::get('/produtos/adicionar', [ProdutosController::class, 'produtosViewAdicionar'])->name('produtos.view.adicinar');
 Route::get('/produtos/search', [ProdutosController::class, 'search'])->name('produtos.search');
 Route::post('/produtos/editar', [ProdutosController::class, 'editarView'])->name('produtos.editar');
 Route::post('/produtos/saveeditar', [ProdutosController::class, 'saveEditar'])->name('produtos.saveEdit');

@@ -3,7 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VenderController;
 use App\Http\Controllers\ClientesController;
-
+use App\Http\Controllers\ProdutosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,5 +33,9 @@ Route::post('/clientes/excluirAction',[ClientesController::class, 'excluirClient
 Route::get('/clientes/search', [ClientesController::class, 'search'])->name('clientes.search');
 
 
+Route::get('/produtos', [ProdutosController::class, 'index'])->name('produtos.view');
+Route::get('/produtos/search', [ProdutosController::class, 'search'])->name('produtos.search');
+Route::post('/produtos/editar', [ProdutosController::class, 'editarView'])->name('produtos.editar');
+Route::post('/produtos/saveeditar', [ProdutosController::class, 'saveEditar'])->name('produtos.saveEdit');
 
 

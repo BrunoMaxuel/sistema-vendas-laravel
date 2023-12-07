@@ -49,7 +49,7 @@
         @endif
         
     </div>
-    @stop
+@stop
 
 @section('adminlte_js')
     @stack('js')

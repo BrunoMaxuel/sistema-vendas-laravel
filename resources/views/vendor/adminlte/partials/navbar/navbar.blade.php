@@ -13,7 +13,6 @@
         {{-- Custom left links --}}
         @yield('content_top_nav_left')
     </ul>
-
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
         {{-- Custom right links --}}
@@ -30,7 +29,6 @@
                 @include('adminlte::partials.navbar.menu-item-logout-link')
             @endif
         @endif
-
         {{-- Right sidebar toggler link --}}
         @if(config('adminlte.right_sidebar'))
             @include('adminlte::partials.navbar.menu-item-right-sidebar-toggler')

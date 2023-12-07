@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Clientes;
+use App\Models\Cliente;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ClientesFactory extends Factory
+class ClienteFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,15 +16,10 @@ class ClientesFactory extends Factory
     {
         return [
             'nome' => $this->faker->name,
-            'CPF' => $this->faker->unique()->numerify('###########'),
-            'sexo' => $this->faker->randomElement(['M', 'F', 'I']),
-            'nascimento' => $this->faker->date(),
-            'telefone' => $this->faker->phoneNumber,
             'endereco' => $this->faker->streetAddress,
+            'telefone' => $this->faker->phoneNumber,
             'bairro' => $this->faker->secondaryAddress,
-            'estado' => $this->faker->stateAbbr,
             'cidade' => $this->faker->city,
-            'cep' => $this->faker->postcode,
         ];
     }
 }

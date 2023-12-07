@@ -103,15 +103,15 @@ class ClientesController extends Controller
         }
     }
     public function search(Request $request)
-{
-    $query = $request->input('query');
+    {
+        $query = $request->input('query');
 
-    $clientes = Cliente::where('nome', 'LIKE', "%$query%")
-                        ->orWhere('endereco', 'LIKE', "%$query%")
-                        ->paginate(10);
+        $clientes = Cliente::where('nome', 'LIKE', "%$query%")
+                            ->orWhere('endereco', 'LIKE', "%$query%")
+                            ->paginate(10);
 
-    return view('cliente/index', ['clientes' => $clientes]);
-}
+        return view('cliente/index', ['clientes' => $clientes]);
+    }
 
 
     public function adicionarCliente(Request $request){

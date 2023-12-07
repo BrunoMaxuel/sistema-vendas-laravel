@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Clientes')
+@section('title', 'Clientes Cadastrados')
 
 @section('content_header')
 <div>
@@ -43,12 +43,10 @@
             $.post("{{route('clientes.editar')}}", { id: index, _token: $('meta[name="csrf-token"]').attr('content')}, function( data )	{
               $("#id").val(data.id);
               $("#nome").val(data.nome);
-              $("#sexo").val(data.sexo);
               $("#tel1").val(data.telefone);
               $("#endereco").val(data.endereco);
               $("#bairro").val(data.bairro);
               $("#cidade").val(data.cidade);
-              $("#uf").val(data.estado);
             }
         );
 

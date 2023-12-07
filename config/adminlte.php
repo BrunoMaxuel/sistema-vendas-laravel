@@ -335,6 +335,19 @@ return [
             'text'        => 'Área de Produtos ',
             'url'         => '/produtos',
             'icon'        => 'fas fa-fw fa-box',
+            'submenu'=> [
+                [
+                    'text' => 'Lista de Produtos',
+                    'url'  => '/produtos',
+                    'icon' => 'fas fa-fw fa-user',
+                ],
+                [
+                    'text'    => 'Adicionar Produto',
+                    'url'     => '/produtos/adicionar',
+                    'icon'    => 'fas fa-fw fa-plus',
+                    'icon_color' => 'success'
+                ],
+            ]
         ],
         [
             'text'        => 'Área de Clientes',

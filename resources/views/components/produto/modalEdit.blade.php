@@ -13,23 +13,23 @@
             <input type="hidden" name="id" id="id">
             <div class="form-group">
               <label for="nome">Nome do produto <span class="text-danger">*</span></label>
-              <input type="text" id="nome" maxlength="100" required="required" name="nome" class="form-control" placeholder="Nome do produto">
+              <input type="text" id="nome" maxlength="50" required="required" name="nome" class="form-control" placeholder="Nome do produto">
               <span id="error-nome" class="text-danger"></span>
             </div>
             <div class="form-group">
               <label for="endereco">Código de barras</label>
-              <input type="text" id="codigo_barras" name="codigo_barras" class="form-control" placeholder="Insira um codigo de barras">
+              <input type="text" id="codigo_barras" maxlength="13" name="codigo_barras" class="form-control" placeholder="Insira um codigo de barras">
             </div>
             <div class="row">
-              <div class="form-group col-md-6">
-                <label for="preco">Preço de venda<span class="text-danger">*</span></label>
-                <input type="text" id="preco" name="preco" class="form-control" placeholder="Preço de vender o produto...">
-                <span id="error-preco" class="text-danger"></span>
-              </div>
               <div class="form-group col-md-6">
                 <label for="bairro">Preço de custo<span class="text-danger">*</span></label>
                 <input type="text" id="preco_custo" name="preco_custo" class="form-control" placeholder="Qual o produto lhe custou...">
                 <span id="error-preco-custo" class="text-danger"></span>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="preco">Preço de venda<span class="text-danger">*</span></label>
+                <input type="text" id="preco" name="preco" class="form-control" placeholder="Preço de vender o produto...">
+                <span id="error-preco" class="text-danger"></span>
               </div>
             </div>
             <div class="form-row">
@@ -45,7 +45,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="fornecedor">Fornecedor</label>
-                <input type="text" id="fornecedor" name="fornecedor" class="form-control" >
+                <input type="text" id="fornecedor" maxlength="30" name="fornecedor" class="form-control" >
               </div>
                 <div class="form-group col-md-6">
                   <label for="categoria">Categoria</label>

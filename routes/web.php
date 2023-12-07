@@ -38,5 +38,8 @@ Route::get('/produtos/adicionar', [ProdutosController::class, 'produtosViewAdici
 Route::get('/produtos/search', [ProdutosController::class, 'search'])->name('produtos.search');
 Route::post('/produtos/editar', [ProdutosController::class, 'editarView'])->name('produtos.editar');
 Route::post('/produtos/saveeditar', [ProdutosController::class, 'saveEditar'])->name('produtos.saveEdit');
+Route::post('/produtos/excluir', [ProdutosController::class, 'excluirProduto'])->name('produtos.excluir');
+Route::post('/produtos/excluiraction', [ProdutosController::class, 'excluirProdutoAction'])->name('produtos.excluir.action');
+
 
 

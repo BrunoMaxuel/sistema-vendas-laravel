@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Produtos Cadastrados')
+@section('title', 'Produtos Adicionados')
 @section('css')
 @section('content_header')
 <div>
@@ -30,18 +30,44 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- Modal -->
-
+<x-produto.modalExcluir/>
 <x-produto.modalEdit/>
 <x-produto.msgReturn/>
 
 <x-produto.listProduto :produtos="$produtos"/>
 @stop
 @section('js')
+<script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
   <script type="text/javascript">
     $(function() {
         $('#btnAdd').click(function() {
             $("#formUp")[0].reset();
             $('#modalAlert').modal('show');
+        });
+
+        $('#preco').mask('000.000,00', {reverse: true});
+        $('#preco_custo').mask('000.000,00', {reverse: true});
+        $('#lucro').mask('000%', {reverse: true});
+
+        var preco = $('#preco');
+    	var lucro = $('#lucro');
+    	var custo = $('#preco_custo');
+    	
+    	$('#preco, #preco_custo').on('keyup', function() {
+            var mCusto = parseFloat(custo.val().replace(".", "").replace(",", ".")) || 0;
+            var mPreco = parseFloat(preco.val().replace(".", "").replace(",", ".")) || 0;
+            var diff = mPreco - mCusto;
+            lucro.val(lucro.masked(((diff / mCusto) * 100).toFixed(0)));
+        });
+
+        $('#lucro').on('keyup', function() {
+            var mCusto = parseFloat(custo.val().replace(".", "").replace(",", ".")) || 0;
+            var mLucro = parseFloat(lucro.cleanVal()) || 0;
+            console.log($('#lucro').val(), $('#preco').val(),  $('#preco_custo').val());
+
+            var newPreco = mCusto + (mCusto * (mLucro / 100));
+            preco.val(preco.masked(newPreco.toFixed(2)));
+           
         });
 
         $('.btnEditar').click(function() {
@@ -56,21 +82,15 @@
               $("#preco").val(data.preco);
               $("#preco_custo").val(data.preco_custo);
               $("#lucro").val(data.lucro);
+              $("#categoria").val(data.categoria);
               $("#fornecedor").val(data.fornecedor);
               $("#estoque").val(data.estoque);
             }
         );
-
-
         $('#modalAlert').modal('show');
 
         };
-
-
-        
-    
         $('#btnSubmit').click(function() {
-
             var dados = $("#formUp").serialize();
             $.post("{{route('produtos.saveEdit')}}",dados, function( data )	{
                 
@@ -127,7 +147,7 @@
               excluir($(this).attr('id'));
         });
         function excluir(idExcluir) {
-            $.post("{{route('clientes.excluir')}}", { id: idExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function (data) {
+            $.post("{{route('produtos.excluir')}}", { id: idExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function (data) {
                 $("#idExcluir").val(data.id); 
             });
             $('#modalExcluir').modal('show');
@@ -135,13 +155,13 @@
 
         $('#btnModalExcluir').click(function () {
             var idExcluir = $('#idExcluir').val();
-            $.post("{{route('clientes.excluirAction')}}", { id: idExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function (data){
+            $.post("{{route('produtos.excluir.action')}}", { id: idExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function (data){
                 if(data.success === true){
-                    $("#background-text").addClass("bg-danger");
+                    $('#modalExcluir').modal('hide');
+                    $("#background-text").addClass("bg-success");
                     $("#titulo-msg").html("Cliente excluido com sucesso!");
                     $('#modal-msg').modal('show');
                     setTimeout(function() {
-                            $('#modal-msg').modal('hide');
                             window.location.reload(); 
                     }, 1100); 
                 }
@@ -149,7 +169,6 @@
                     $("#background-text").addClass("modal-header alert alert-danger");
                     $("#titulo-msg").html("Erro ao excluir cliente!");
                 }
-                $('#modalExcluir').modal('hide');
           });
       });
   });

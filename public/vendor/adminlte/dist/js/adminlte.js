@@ -1274,7 +1274,7 @@
       var navId = "tab-" + uniqueName;
 
       if (this._config.allowDuplicates) {
-        tabId += "-" + Math.floor(Math.random() * 1000);
+        tabId += "-" + Math.floor(Math.random() * 1000); 
         navId += "-" + Math.floor(Math.random() * 1000);
       }
 

@@ -21,15 +21,19 @@
 {{-- Modal excluir --}}
 <x-cliente.modalExcluir/>
 
+
 {{-- Exibição de mensagem apos excluir ou alterar --}}
 <x-cliente.msgReturn/>
 {{-- Tabela de clientes --}}
 <x-cliente.listaCliente :clientes="$clientes"/>
+
 @stop
 
 @section('js')
+<script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
   <script type="text/javascript">
     $(function() {
+        $('#tel').mask('(00) 00000-0000');
         $('#btnAdd').click(function() {
             $("#formUp")[0].reset();
             $('#modalAlert').modal('show');
@@ -43,7 +47,7 @@
             $.post("{{route('clientes.editar')}}", { id: index, _token: $('meta[name="csrf-token"]').attr('content')}, function( data )	{
               $("#id").val(data.id);
               $("#nome").val(data.nome);
-              $("#tel1").val(data.telefone);
+              $("#tel").val(data.telefone);
               $("#endereco").val(data.endereco);
               $("#bairro").val(data.bairro);
               $("#cidade").val(data.cidade);
@@ -61,8 +65,8 @@
         $('#btnSubmit').click(function() {
             var dados = $("#formUp").serialize();
             $.post("{{route('clientes.saveEdit')}}",dados, function( data )	{
-                $('#modalAlert').modal('hide');
                 if(data.success == true){
+                    $('#modalAlert').modal('hide');
                     $("#background-text").addClass("bg-success");
                     $("#titulo-msg").html(data.message);
                     $('#modal-msg').modal('show');
@@ -71,13 +75,15 @@
                     }, 1100); 
                 }
                 else{
-                    $("#background-text").addClass("modal-header alert alert-danger");
-                    $("#titulo-msg").html("Erro ao alterar cliente!");
+                    if(data.errors.hasOwnProperty('nome')) {
+                    // Exibe a mensagem de erro ao lado do campo 'nome'
+                    var errorMessage = data.errors.nome[0];
+                    $('#error-nome').text(errorMessage);
                 }
               }
+            }
             );
         });
-
         $('.btnExcluir').click(function () {
               $("#formUpExcluir")[0].reset();
               excluir($(this).attr('id'));
@@ -93,11 +99,11 @@
             var idExcluir = $('#idExcluir').val();
             $.post("{{route('clientes.excluirAction')}}", { id: idExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function (data){
                 if(data.success === true){
-                    $("#background-text").addClass("bg-danger");
+                    $("#background-text").addClass("bg-success");
                     $("#titulo-msg").html("Cliente excluido com sucesso!");
                     $('#modal-msg').modal('show');
+                    $('#modalExcluir').modal('hide');
                     setTimeout(function() {
-                            $('#modal-msg').modal('hide');
                             window.location.reload(); 
                     }, 1100); 
                 }
@@ -105,7 +111,6 @@
                     $("#background-text").addClass("modal-header alert alert-danger");
                     $("#titulo-msg").html("Erro ao excluir cliente!");
                 }
-                $('#modalExcluir').modal('hide');
           });
       });
   });

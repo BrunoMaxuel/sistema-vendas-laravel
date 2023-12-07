@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClientesController extends Controller
 {
     public function index(){
         $quantidade = 10; // Define a quantidade de itens por página
     
-        $clientes = Cliente::paginate($quantidade);
+        $clientes = Cliente::orderBy('id', 'desc')->paginate($quantidade);
         
         return view('cliente/index', ['clientes' => $clientes]);
     }
     
     public function editarView(Request $request){
+        
+
+
         if($request->id != null){
             $cliente = Cliente::where('id', $request->id)->first();
             return response()->json($cliente);
@@ -29,6 +33,21 @@ class ClientesController extends Controller
         }
     }
     public function saveEditar(Request $request){
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required',
+        ], [
+            'nome.required' => 'Por favor, preencha o campo nome.',
+            // Adicione mensagens para os demais campos
+        ]);
+        
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro na validação',
+                'errors' => $validator->errors()
+            ]);// Código de status HTTP para erros de validação 
+        }
         try{
             $cliente = null;
             if(!blank($request->id)){
@@ -40,7 +59,6 @@ class ClientesController extends Controller
             }
     
             $cliente->nome      = $request->nome;
-            $cliente->sexo      = $request->sexo;
             $cliente->telefone  = $request->telefone;
             $cliente->endereco  = $request->endereco;
             $cliente->bairro    = $request->bairro;
@@ -115,9 +133,23 @@ class ClientesController extends Controller
 
 
     public function adicionarCliente(Request $request){
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required',
+        ], [
+            'nome.required' => 'Por favor, preencha o campo nome.',
+            // Adicione mensagens para os demais campos
+        ]);
+        
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro na validação',
+                'errors' => $validator->errors()
+            ]);// Código de status HTTP para erros de validação 
+        }
         $cliente = new Cliente;
         $cliente->nome          = $request->nome;
-        $cliente->sexo          = $request->sexo;
         $cliente->telefone      = $request->telefone;
         $cliente->endereco      = $request->endereco;
         $cliente->bairro        = $request->bairro;

@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@section('title', 'Adicionar Produto')
 @section('content')
 <x-produto.msgReturn/>
 <div class="row ml-2">
@@ -14,18 +15,18 @@
             </div>
             <div class="form-group">
                 <label for="codigo_barras">Código de barras</label>
-                <input type="text" id="codigo_barras" name="codigo_barras" class="form-control" placeholder="Insira um código de barras">
+                <input type="text" id="codigo_barras" maxlength="13" name="codigo_barras" class="form-control" placeholder="Insira um código de barras">
             </div>
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="preco">Preço de venda<span class="text-danger">*</span></label>
-                    <input type="text" id="preco" name="preco" class="form-control" placeholder="Preço de venda do produto...">
-                    <span id="error-preco" class="text-danger"></span>
-                </div>
                 <div class="form-group col-md-6">
                     <label for="preco_custo">Preço de custo<span class="text-danger">*</span></label>
                     <input type="text" id="preco_custo" name="preco_custo" class="form-control" placeholder="Qual o custo do produto...">
                     <span id="error-preco-custo" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="preco">Preço de venda<span class="text-danger">*</span></label>
+                    <input type="text" id="preco" name="preco" class="form-control" placeholder="Preço de venda do produto...">
+                    <span id="error-preco" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-row">
@@ -59,8 +60,35 @@
 </div>
 @stop
 @section('js')
+<script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
   <script type="text/javascript">
     $(function() {   
+        $('#preco').mask('000.000,00', {reverse: true});
+        $('#preco_custo').mask('000.000,00', {reverse: true});
+        $('#lucro').mask('000%', {reverse: true});
+
+        var preco = $('#preco');
+    	var lucro = $('#lucro');
+    	var custo = $('#preco_custo');
+    	
+    	$('#preco, #preco_custo').on('keyup', function() {
+            var mCusto = parseFloat(custo.val().replace(".", "").replace(",", ".")) || 0;
+            var mPreco = parseFloat(preco.val().replace(".", "").replace(",", ".")) || 0;
+            var diff = mPreco - mCusto;
+            lucro.val(lucro.masked(((diff / mCusto) * 100).toFixed(0)));
+        });
+
+        $('#lucro').on('keyup', function() {
+            var mCusto = parseFloat(custo.val().replace(".", "").replace(",", ".")) || 0;
+            var mLucro = parseFloat(lucro.cleanVal()) || 0;
+            console.log($('#lucro').val(), $('#preco').val(),  $('#preco_custo').val());
+            
+            
+            var newPreco = mCusto + (mCusto * (mLucro / 100));
+            preco.val(preco.masked(newPreco.toFixed(2)));
+           
+        });
+
         $('#btnSubmit').click(function() {
             var dados = $("#formUp").serialize();
             $.post("{{route('produtos.saveEdit')}}",dados, function( data )	{

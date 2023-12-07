@@ -14,9 +14,7 @@ return [
     |
     */
 
-    'title' => 'YOURTUBE',
-    'title_prefix' => '',
-    'title_postfix' => '',
+    'title' => 'Invoke Vendas',
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +62,7 @@ return [
     */
 
     'logo' => 'Invoke Vendas',
-    'logo_img' => 'vendor/adminlte/dist/img/yourtube_m.png',
+    'logo_img' => 'vendor/adminlte/dist/img/invokevendas_m.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -109,11 +107,11 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/yourtube_m.png',
+            'path' => 'vendor/adminlte/dist/img/invokevendas_m.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 100,
-            'height' => 100,
+            'width' => 300,
+            'height' => 300,
         ],
     ],
 

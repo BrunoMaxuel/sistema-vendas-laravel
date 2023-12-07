@@ -12,8 +12,9 @@
             @csrf
             <input type="hidden" name="id" id="id">
             <div class="form-group">
-              <label for="nome">Nome do cliente</label>
-              <input type="text" id="nome" maxlength="100" required="required" name="nome" class="form-control" placeholder="Nome">
+              <label for="nome">Nome do cliente<span class="text-danger">*</label>
+              <input type="text" id="nome" maxlength="100"  name="nome" class="form-control" placeholder="Nome">
+              <span id="error-nome" class="text-danger"></span>
             </div>
             <div class="form-group">
               <label for="endereco">Endereço</label>
@@ -22,7 +23,7 @@
             <div class="row">
               <div class="form-group col-md-6">
                 <label for="telefone">Telefone</label>
-                <input type="tel" id="tel1" name="telefone" class="form-control" placeholder="Telefone">
+                <input type="tel" id="tel" name="telefone" class="form-control" placeholder="Telefone">
               </div>
               <div class="form-group col-md-6">
                 <label for="bairro">Bairro</label>
@@ -34,14 +35,7 @@
                 <label for="cidade">Cidade</label>
                 <input type="text" id="cidade" name="cidade" class="form-control" placeholder="Cidade">
               </div>
-                <div class="form-group col-md-6">
-                  <label for="sexo">Sexo do cliente</label>
-                  <select id="sexo" name="sexo" class="form-control">
-                    <option value="I">Não especificado</option>
-                    <option value="F">Feminino</option>
-                    <option value="M">Masculino</option>
-                  </select>
-                </div>
+                
               </div>
           </form>
         </div>

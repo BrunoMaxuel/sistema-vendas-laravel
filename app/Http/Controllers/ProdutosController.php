@@ -33,6 +33,42 @@ class ProdutosController extends Controller
         return view('produto.adicionar');
     }
 
+    public function excluirProduto(Request $request){
+        if($request->id != null){
+            $produto = Produto::where('id', $request->id)->first();
+            return response()->json($produto);
+        }
+        else{
+            return response()->json([
+                'success' => false,
+                'message' => 'sem indice na busca!'
+            ]);
+        }
+    }
+    public function excluirProdutoAction(Request $request) {
+        if ($request->id) {
+            $produto = Produto::find($request->id);
+            
+            if ($produto) {
+                $produto->delete();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Cliente excluído com sucesso!'
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Cliente não encontrado!'
+                ], 404); 
+            }
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nenhum ID fornecido para exclusão!'
+            ], 400); // Indica uma requisição inválida (400 Bad Request)
+        }
+    }
+
     public function saveEditar(Request $request){
         try{
             $validator = Validator::make($request->all(), [
@@ -57,9 +93,9 @@ class ProdutosController extends Controller
                     'success' => false,
                     'message' => 'Erro na validação',
                     'errors' => $validator->errors()
-                ]);// Código de status HTTP para erros de validação 
+                ]);
             }
-        
+            
             $produto = null;
             if(!blank($request->id)){
                 $produto = Produto::find($request->id);
@@ -68,6 +104,7 @@ class ProdutosController extends Controller
             if($produto == null){
                 $produto = new Produto();
             }
+            
     
             $produto->nome      = $request->nome;
             $produto->codigo_barras      = $request->codigo_barras;

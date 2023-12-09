@@ -23,7 +23,7 @@
 
 
 {{-- Exibição de mensagem apos excluir ou alterar --}}
-<x-cliente.msgReturn/>
+<x-modalMsg.modalMsg/>
 {{-- Tabela de clientes --}}
 <x-cliente.listaCliente :clientes="$clientes"/>
 

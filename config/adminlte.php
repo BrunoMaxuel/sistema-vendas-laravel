@@ -302,32 +302,32 @@ return [
             'text'       => 'Gerenciar Caixa',
             'url'        => 'caixa',
             'icon'       => 'fas fa-fw fa-money-bill',    
-            'submenu' => [
-                [
-                    'text' => 'Abrir Caixa',
-                    'url'  => 'caixa/abrir',
-                    'icon' => 'fas fa-fw fa-unlock',
-                    'icon_color' => 'success'
-                ],
-                [
-                    'text' => 'Fechar Caixa',
-                    'url'  => 'caixa/fechar',
-                    'icon' => 'fas fa-fw fa-lock',
-                    'icon_color' => 'red'
-                ],
-                [
-                    'text' => 'Adicionar Dinheiro',
-                    'url'  => 'caixa/adicionar',
-                    'icon' => 'fas fa-fw fa-coins',
-                    'icon_color' => 'green'
-                ],
-                [
-                    'text' => 'Sangria',
-                    'url'  => 'caixa/sangria',
-                    'icon' => 'fas fa-fw fa-coins',
-                    'icon_color' => 'red'
-                ],
-            ]
+            // 'submenu' => [
+            //     [
+            //         'text' => 'Abrir Caixa',
+            //         'url'  => 'caixa/abrir',
+            //         'icon' => 'fas fa-fw fa-unlock',
+            //         'icon_color' => 'success'
+            //     ],
+            //     [
+            //         'text' => 'Fechar Caixa',
+            //         'url'  => 'caixa/fechar',
+            //         'icon' => 'fas fa-fw fa-lock',
+            //         'icon_color' => 'red'
+            //     ],
+            //     [
+            //         'text' => 'Adicionar Dinheiro',
+            //         'url'  => 'caixa/adicionar',
+            //         'icon' => 'fas fa-fw fa-coins',
+            //         'icon_color' => 'green'
+            //     ],
+            //     [
+            //         'text' => 'Sangria',
+            //         'url'  => 'caixa/sangria',
+            //         'icon' => 'fas fa-fw fa-coins',
+            //         'icon_color' => 'red'
+            //     ],
+            // ]
         ],
         [
             'text'        => 'Área de Produtos ',

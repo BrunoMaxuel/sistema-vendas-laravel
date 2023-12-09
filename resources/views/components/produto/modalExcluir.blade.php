@@ -10,7 +10,7 @@
           </div>
           <div class="modal-body">
             <div style="margin-top: 40px; margin-bottom: 40px ">
-              <h3>Tem certeza que deseja excluir o cliente?</h3>
+              <h3>Tem certeza que deseja excluir o produto selecionado?</h3>
             </div>
           </div>
           <form id="formUpExcluir">

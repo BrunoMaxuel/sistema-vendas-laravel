@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CaixaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VenderController;
 use App\Http\Controllers\ClientesController;
@@ -41,5 +42,20 @@ Route::post('/produtos/saveeditar', [ProdutosController::class, 'saveEditar'])->
 Route::post('/produtos/excluir', [ProdutosController::class, 'excluirProduto'])->name('produtos.excluir');
 Route::post('/produtos/excluiraction', [ProdutosController::class, 'excluirProdutoAction'])->name('produtos.excluir.action');
 
+
+
+
+Route::get('/caixa', [CaixaController::class, 'caixaView'])->name('caixa.abrir.view');
+Route::post('/caixa/abrir', [CaixaController::class, 'caixaAbrir'])->name('caixa.abrir.abrir');
+Route::get('/caixa/fechar', [CaixaController::class, 'fecharCaixaView'])->name('caixa.fechar.view');
+Route::post('/caixa/fechar', [CaixaController::class, 'fecharCaixa'])->name('caixa.fechar');
+
+
+
+
+// Route::get('/caixa/sangria', 'CaixaController@sangriaView')->name('sangria');
+// Route::post('/caixa/sangria', 'CaixaController@sangriaPost')->name('sangria');
+// Route::get('/caixa/adicionar', 'CaixaController@addCaixaView')->name('caixa.add');
+// Route::post('/caixa/adicionar', 'CaixaController@addCaixa')->name('caixa.add');
 
 

@@ -32,7 +32,7 @@
 <!-- Modal -->
 <x-produto.modalExcluir/>
 <x-produto.modalEdit/>
-<x-produto.msgReturn/>
+<x-modalMsg.modalMsg/>
 
 <x-produto.listProduto :produtos="$produtos"/>
 @stop

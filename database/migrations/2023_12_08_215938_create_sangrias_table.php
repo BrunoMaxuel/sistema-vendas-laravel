@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('sangrias', function (Blueprint $table) {
             $table->id();
-
-            $table->string('descricao');
             $table->string('valor');
+            $table->string('descricao')->nullable();
 
             $table->timestamps();
         });

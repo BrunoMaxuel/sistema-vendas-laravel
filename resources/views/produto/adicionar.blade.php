@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'Adicionar Produto')
 @section('content')
-<x-produto.msgReturn/>
+<x-modalMsg.modalMsg/>
 <div class="row ml-2">
     <div class="col-md-7">
         <h5>Alterar Informações do Produto</h5>

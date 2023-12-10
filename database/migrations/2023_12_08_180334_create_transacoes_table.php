@@ -13,20 +13,14 @@ return new class extends Migration
     {
         Schema::create('transacoes', function (Blueprint $table) {
             $table->id();
-            $table->string('cliente');
+            $table->string('cliente')->default('Não identificado');
             $table->integer('desconto');
-            $table->enum('pagamento',['DI','CR','DE']);
             $table->integer('parcelas');
             $table->string('valor_parcelas');
-            $table->string('total');
+            $table->string('venda_item');
+            $table->integer('total');
+            $table->enum('pagamento',['DI','CR','DE']);
             $table->timestamps();
-
-
-            $table->unsignedBigInteger('cliente_foreign');
-            $table->foreign('cliente_foreign')->references('id')->on('clientes')->onUpdate('cascade');
-
-            
-
         });
     }
 

@@ -4,7 +4,7 @@
 
 @section('content')
 	<x-modalMsg.modalMsg/>
-	@if ($aberto == true)
+	@if ($aberto == false)
 		<div class="row p-5 ">
 			<div class="col-md-4">
 				<form id="abrirForm" method="POST">
@@ -18,7 +18,7 @@
 					</div>
 					<div class="form-group">
 						<label for="descricao">Informe uma descrição:</label>
-						<input name="descricao" class="form-control" placeholder="Insira uma descrição (Opcional)" maxlength="30" >
+						<input name="descricao" class="form-control" value="Saldo inicial" placeholder="Insira uma descrição (Opcional)" maxlength="30" >
 					</div>
 					
 					<button type="submit" id="btnSubmit" class="btn btn-success mt-2">
@@ -37,6 +37,7 @@
 		$('#abrirForm').submit(function(){
 			$.post("{{ route('caixa.abrir.abrir') }}",$('#abrirForm').serialize(),function(data){
 				if(data.success == true){
+					$('#modalAlert').modal('hide');
                     $('#modal-msg').modal('show');
                     $("#background-text").addClass("bg-success");
                     $("#titulo-msg").html(data.message);
@@ -53,8 +54,7 @@
                     }, 1100); 
         			
     			}
-    			$('#modalAlert').modal('show');
-			}, "json"
+			}
 		);
 		return false;
 		});

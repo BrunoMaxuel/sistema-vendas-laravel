@@ -14,48 +14,43 @@ class CaixaController extends Controller
 {   
     public function caixaView(){
 
-        $ultimoRegistro = Caixa::latest()->first();
-        if(!isset($ultimoRegistro) || $ultimoRegistro->aberto == false){
-            $aberto = true;
+        $ultimoRegistroCaixa = Caixa::latest()->first();
+        if(!isset($ultimoRegistroCaixa) || $ultimoRegistroCaixa->aberto == false){
+            $aberto = false;
             $caixa = null;
             return view('caixa.caixaAbrir', ['aberto'=>$aberto, 'caixa'=>$caixa]);
         }
         else{ 
-            $transacoes =  Transacao::all();
-            if(!isset($transacoes)){
-                $transacoes = null;
-            }
-            $sangria = Sangria::all(); 
-            $entradas = Suprimento::all();
-            $detalhes = "";
+            $transacoes = Transacao::where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
+            $sangria = Sangria::where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
+            $sangriaTotal = Sangria::where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
+            $suprimentoTotal = Suprimento::where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
             
-            foreach ($transacoes as $objTransaction){
-                $venda = Venda::where('transacao','=', $objTransaction->id)->get();
-                $objTransaction->pagamento = str_replace(['DI','CR','DE'],['Dinheiro','Cartão de Crédito','Débido'],$objTransaction->pagamento);
-                $objTransaction->desconto = $objTransaction->desconto . "%";
+            $suprimento = Suprimento::where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
+            $caixa  = (object) null;       
+            $caixa->total = str_replace(',', '.', str_replace('.', '', $ultimoRegistroCaixa->valor_inicial));
 
-                foreach($venda as $objVenda){
-                    $codigo = $objVenda->codigo_estoque;
-                    $estoque = Produto::where('codigo','=',$codigo)->first();
-                    $detalhes = $estoque->nome. ' | '. $detalhes ;
-                }
-                $objTransaction->detalhes = $detalhes;
-                $detalhes = "";
-            }
-           
-            if(!Caixa::all()){
-                $caixaValor = (object) ['valor' => '0,00','inicial'=>'0,00','totalCredito'=>'0,00','totalDebito'=>'0,00','totalC'=>'0,00'];
-            }else{
-                $caixaValor = new Caixa();
-                $caixaValor->valor = number_format($caixaValor->valor, 2, ',', '.');
-                $caixaValor->inicial = number_format($caixaValor->inicial, 2, ',', '.');
-                $caixaValor->totalCredito = 20.00;
-                $caixaValor->totalDebito = 100.00;
-                $caixaValor->totalC = 200.00;
-            }
-            $ultimoValor = Caixa::latest()->first(); 
+            $caixa->created_at = $ultimoRegistroCaixa->created_at;
+            $caixa->descricao = $ultimoRegistroCaixa->descricao;
+            $caixa->totalCredito = Transacao::where('created_at','>=', $ultimoRegistroCaixa->created_at)
+                ->where('pagamento','=','CR')
+                ->sum('total'); 
+            
+            $caixa->totalDebito = Transacao::where('created_at','>=', $ultimoRegistroCaixa->created_at)
+                ->where('pagamento','=','DE')
+                ->sum('total'); 
+                
+                $caixa->totalCreditoDebito = $caixa->totalCredito + $caixa->totalDebito;
 
-        return view('caixa.caixa',['aberto'=>$ultimoValor,'caixaValor'=>$caixaValor,'transacoes'=>$transacoes,'sangria'=>$sangria,'entrada'=>$entradas]);
+                $caixa->total += $caixa->totalCreditoDebito;
+                $caixa->total -= $sangriaTotal;
+                $caixa->total += $suprimentoTotal;
+
+                
+                
+                $caixa->valor_inicial = $ultimoRegistroCaixa->valor_inicial;      
+            
+            return view('caixa.caixa',['aberto'=>$ultimoRegistroCaixa->aberto,'caixa'=>$caixa,'transacoes'=>$transacoes,'sangria'=>$sangria,'entrada'=>$suprimento]);
             
         }
     }
@@ -79,5 +74,36 @@ class CaixaController extends Controller
             ]);
         }
         
+    }
+    public function fecharCaixa(){
+        $caixa = new Caixa();
+        $caixa->aberto = false;
+        $caixa->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Caixa fechado com sucesso!'
+        ]);
+    }
+    public function addDinheiro(Request $request){
+        $suprimento = new Suprimento();
+        $suprimento->valor = $request->valor;
+        $suprimento->descricao = $request->descricao;
+        $suprimento->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Dinheiro adicionado com sucesso!'
+
+        ]);
+    }
+    public function retirarDinheiro(Request $request){
+        $sangria = new Sangria();
+        $sangria->valor = $request->valor;
+        $sangria->descricao = $request->descricao;
+        $sangria->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Dinheiro removido com sucesso!'
+
+        ]);
     }
 }

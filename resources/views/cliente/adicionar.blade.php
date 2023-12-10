@@ -12,8 +12,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 {{-- Exibição de mensagem apos excluir ou alterar ou adicionar--}}
-<x-cliente.msgReturn/>
-
+<x-modalMsg.modalMsg/>
     <div class="row ml-2">
         <div class="col-md-6">
             <form id="formUp">

@@ -2,23 +2,12 @@
 
 use App\Http\Controllers\CaixaController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\VenderController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ProdutosController;
+use App\Http\Controllers\VendasController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-Route::get('/vender', [VenderController::class, 'index'])->name('vender.index');
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 
@@ -46,16 +35,27 @@ Route::post('/produtos/excluiraction', [ProdutosController::class, 'excluirProdu
 
 
 Route::get('/caixa', [CaixaController::class, 'caixaView'])->name('caixa.abrir.view');
-Route::post('/caixa/abrir', [CaixaController::class, 'caixaAbrir'])->name('caixa.abrir.abrir');
-Route::get('/caixa/fechar', [CaixaController::class, 'fecharCaixaView'])->name('caixa.fechar.view');
 Route::post('/caixa/fechar', [CaixaController::class, 'fecharCaixa'])->name('caixa.fechar');
-
-
+Route::post('/caixa/abrir', [CaixaController::class, 'caixaAbrir'])->name('caixa.abrir.abrir');
+Route::post('/caixa/adicionar', [CaixaController::class, 'addDinheiro'])->name('caixa.add');
+Route::post('/caixa/sangria', [CaixaController::class, 'retirarDinheiro'])->name('caixa.sangria');
 
 
 // Route::get('/caixa/sangria', 'CaixaController@sangriaView')->name('sangria');
 // Route::post('/caixa/sangria', 'CaixaController@sangriaPost')->name('sangria');
 // Route::get('/caixa/adicionar', 'CaixaController@addCaixaView')->name('caixa.add');
 // Route::post('/caixa/adicionar', 'CaixaController@addCaixa')->name('caixa.add');
+
+
+Route::get('/vender', [VendasController::class, 'venderView'])->name('venda.view');
+
+// Route::post('/venda', 'VendasController@Registrar')->name('venda.registrar');
+// Route::get('/venda/cupom/', 'VendasController@GerarCupom')->name('venda.cupom.route');
+Route::get('/venda/cupom/{id}', 'VendasController@GerarCupom')->name('venda.cupom');
+// Route::post('/venda/cancelar/', 'VendasController@CancelarVenda')->name('venda.cancelar');
+
+
+
+
 
 

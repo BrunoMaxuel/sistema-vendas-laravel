@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Abertura de caixa')
+@section('title', 'Gerenciamento de Caixa')
 
 @section('content')
 <div class="modal fade" id="modalAlert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -55,9 +55,9 @@
 			</div>
 		</div>
 	</div>
-	<button class="btn btn-info m-2 p-3" id="close">Fechar o caixa</button>
-	<button class="btn btn-success m-2 p-3" id="btnAdd">Suprimento</button>
-	<button class="btn btn-danger m-2 p-3" id="btnRemove">Sangria de caixa</button>
+	<button class="btn btn-info m-2" id="close">Fechar o caixa</button>
+	<button class="btn btn-success m-2" id="btnAdd">Suprimento</button>
+	<button class="btn btn-danger m-2" id="btnRemove">Sangria de caixa</button>
 </div>
 	
 

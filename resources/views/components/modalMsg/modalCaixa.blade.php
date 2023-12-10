@@ -18,7 +18,7 @@
             </div>
 		</div>
 		<div class="modal-footer">
-		    <button type="button" id="btnAction"class="btn btn-success" >Confirmar</button>
+		    <button type="button" id="btnAction"class="btn btn-success" >Salvar alterações</button>
 		    <button type="button" id="btnModal"class="btn btn-default" data-dismiss="modal">Cancelar</button>
 		</div>
 	  </div>

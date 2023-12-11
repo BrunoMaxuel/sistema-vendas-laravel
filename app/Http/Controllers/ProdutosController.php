@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Produto;
 use Exception;
 use Illuminate\Http\Request;
@@ -135,7 +133,6 @@ class ProdutosController extends Controller
             ]);
         }
     }
-
     public function search(Request $request){
         $query = $request->input('query');
 

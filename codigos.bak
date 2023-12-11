@@ -1,0 +1,211 @@
+for (let i = 0; i < data.length; i++) {
+
+					for (let i = 0; i arrayDeObjetos[i].nome< .length; i++) {
+						data.forEach(function(i) {
+							var newRow = $('<tr>');
+							newRow.append('<td>' + i.id + '</td>');
+							newRow.append('<td>' + i.nome + '</td>');
+							newRow.append('<td>' + i.codigo_barras + '</td>');
+							newRow.append('<td>' + i.preco + '</td>');
+							newRow.append('<td>' + i.preco_custo + '</td>');
+							newRow.append('<td>' + i.lucro + '</td>');
+							newRow.append('<td>' + i.estoque + '</td>');
+							newRow.append('<td>' + i.marca + '</td>');
+							newRow.append('<td>' + i.categoria + '</td>');
+							$('#tableApi tbody').append(newRow);
+						});
+
+					}
+				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+                @extends('adminlte::page')
+@section('title', 'Realizar venda')
+
+@section('css')
+
+<link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables.min.css') }}"/>
+<style>
+	#search{
+		margin-left: 15px;
+		margin-bottom: 15px;
+		width: 350px;
+		height: 40px;
+		font-size: 25px;
+	}
+	#tableApi {
+		display: none;
+	}
+	.custom-dialog {
+		display: none;
+		background-color: #222D32;
+		position: fixed;
+		width: 500px;
+		height: 250px;
+		color: white;
+		top: 50%;
+		left: 50%;
+		text-align: center;
+		transform: translate(-50%, -50%);
+		padding: 30px;
+		z-index: 999;
+	}
+	#confirm-button, #cancel-button{
+		color: #1A2226;
+		background-color: white;
+		padding: 10px;
+		font-size: 20px;
+		border-radius: 5px;
+		margin: 30px;
+	}
+</style>
+@stop
+
+@section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<div class="row">
+	<div class="custom-dialog" id="confirmation-dialog">
+		<div class="conteudo">
+			<h3>Venda em andamento, deseja <strong>Cancelar</strong> a venda?</h3>
+			<button id="confirm-button">Confirmar</button>
+			<button id="cancel-button" autofocus>Cancelar</button>
+		</div>
+	</div>
+</div>
+<div class="row m-2">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 style="margin-left: 15px">Código barras/Nome</h4>
+        </div>
+            <div class="search-input col-md-12">
+                <input type="text" id="search" placeholder="Pesquisar item para venda" oninput="convertToUpper(this)">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table id="tableApi" style="cursor: pointer;"  class="moverProduto table hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
+                <thead class="thead-light">
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome do produto</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Preço Custo</th>
+                    <th scope="col">Estoque</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Categoria</th>
+                    </tr>
+                </thead>
+            </table>
+            <table id="tableVenda" style="cursor: default;"  class="table hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
+                <thead class="thead-light">
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome do produto</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Preço Custo</th>
+                    <th scope="col">Estoque</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Categoria</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>  
+    </div>
+</div>
+
+@stop
+@section('js')
+<script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
+<script type="text/javascript">
+        function convertToUpper(el) {
+            el.value = el.value.toUpperCase();
+        }
+        var inputFocus = document.querySelector('#search');
+        var tableVenda = document.getElementById('tableVenda');
+        var tableApi = document.getElementById('tableApi');
+
+        document.querySelector('#tableApi').addEventListener('click', function () {
+        var selectedRow = tableApi.querySelector('.selected');
+
+        if (selectedRow) {
+            var newRow = tableVenda.insertRow();
+            var rowData = selectedRow.cells;
+            for (var i = 0; i < rowData.length; i++) {
+                var newCell = newRow.insertCell(i);
+                newCell.textContent = rowData[i].textContent;
+            }
+            selectedRow.classList.remove('selected');
+            inputFocus.focus();
+            document.getElementById('search').value = "";
+            $('#tableApi').css('display', 'none');
+            document.getElementById('tableVenda').style.visibility = 'visible';
+        } else {
+            alert('Produto não selecionado');
+        }
+    });
+
+    $(function() {
+        $('#search').on('keyup', function() {
+            var search = $('#search').val();
+            if (search) {
+                $.post("{{route('estoque.api.listar')}}", { search, _token: $('meta[name="csrf-token"]').attr('content') }, function (data){
+                        
+                        $('#tableApi tbody').empty();
+                        console.log(data);
+                        
+                        if (Array.isArray(data) && data.length > 0) {
+                                data.forEach(function(item) {
+                                    var newRow = $('<tr>');
+                                    newRow.append('<td>' + item.id + '</td>');
+                                    newRow.append('<td>' + item.nome + '</td>');
+                                    newRow.append('<td>' + item.codigo_barras + '</td>');
+                                    newRow.append('<td>' + item.preco + '</td>');
+                                    newRow.append('<td>' + item.preco_custo + '</td>');
+                                    newRow.append('<td>' + item.lucro + '</td>');
+                                    newRow.append('<td>' + item.estoque + '</td>');
+                                    newRow.append('<td>' + item.marca + '</td>');
+                                    newRow.append('<td>' + item.categoria + '</td>');
+                                    $('#tableApi tbody').append(newRow);
+                                });
+                            } else {
+                                console.log('Nenhum dado retornado');
+                            }
+                        });
+                $('#tableApi').css('display', 'block');
+                $('#tableVenda').css('visibility', 'hidden');
+            } else {
+                $('#tableApi').css('display', 'none');
+                $('#tableVenda').css('visibility', 'visible');
+            }
+            
+
+        //         $('#tableApi').css('display', 'block');
+        //         $('#tableVenda').css('visibility', 'hidden');;
+          
+        });
+    
+        $('#tableApi tbody').on( 'click', 'tr', function () {
+            
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+            }
+            else {
+                tableApi.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+});
+</script>
+@stop

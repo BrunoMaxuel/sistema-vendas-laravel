@@ -38,67 +38,13 @@ Route::post('/caixa/sangria', [CaixaController::class, 'retirarDinheiro'])->name
 
 
 Route::get('/vender', [VendasController::class, 'venderView'])->name('venda.view');
-Route::post('/vender/estoque', [VendasController::class, 'apiListar'])->name('estoque.api.listar');
+Route::post('/venda/registrar', [VendasController::class, 'registrarVenda'])->name('venda.registrar');
+
 Route::post('api/delete', [VendasController::class, 'apiDelete'])->name('estoque.api.delete');
 Route::post('api/produto/', [VendasController::class, 'apiSave'])->name('estoque.api.save');
+Route::post('/vender/estoque', [VendasController::class, 'apiListar'])->name('estoque.api.listar');
 
 // Route::post('/venda', 'VendasController@Registrar')->name('venda.registrar');
 // Route::get('/venda/cupom/', 'VendasController@GerarCupom')->name('venda.cupom.route');
 Route::get('/venda/cupom/{id}', 'VendasController@GerarCupom')->name('venda.cupom');
 // Route::post('/venda/cancelar/', 'VendasController@CancelarVenda')->name('venda.cancelar');
-
-
-
-
-
-
-
-
-// { "data": "id" },
-// { "data": "nome" },
-// { "data": "codigo_barras" },
-// { "data": "preco" },
-// { "data": "preco_custo" },
-// { "data": "lucro" },
-// { "data": "estoque" },
-// { "data": "fornecedor"},
-// { "data": "categoria" },
-
-
-// window.addEventListener('keydown', function (e) {
-//     var tableVenda = document.querySelector('#tableVenda');
-//     var rowCount = tableVenda.rows.length;
-//     var code = e.key || e.code;
-//     switch (code) {
-//         case 'F1':
-//         case 'F2':
-//         case 'F3':
-//         case 'F4':
-//         case 'F6':
-//         case 'F7':
-//         case 'F8':
-//         case 'F9':
-//         case 'F10':
-//         case 'F11':
-//         case 'F12':
-//             e.preventDefault();
-//             break;
-//         case 'F5':
-//             if (rowCount > 1) {
-//                 e.preventDefault();
-//                 confimDialog.style.display = 'block';
-//                 btnCancel.focus(); 
-//             }
-//     }
-//     });
-
-
-
-
-// Route::get('/relatorio/backup', [RelatorioController::class, 'ImportBackup'])->name('relatorio.backup');
-
-
-
-
-
-

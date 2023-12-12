@@ -130,7 +130,7 @@
 
 @section('js')
 <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
-<script src="{{ asset('vendor/datatable.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables.min.js') }}"></script>
 <script type="text/javascript">
     $(function() {
     	$.ajaxSetup({

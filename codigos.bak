@@ -209,3 +209,43 @@ for (let i = 0; i < data.length; i++) {
 });
 </script>
 @stop
+
+
+
+
+
+
+// $('#search').on('keydown', function(e) {
+//     var keyCode = e.keyCode || e.which;
+
+//     // Se a tecla para cima for pressionada
+//     if (keyCode === 38) {
+//         e.preventDefault(); // Previne o comportamento padrão da tecla
+//         var selected = $('.selected');
+
+//         if (selected.length > 0) {
+//             var prevRow = selected.prev('tr');
+//             if (prevRow.length > 0) {
+//                 selected.removeClass('selected');
+//                 prevRow.addClass('selected');
+//             }
+//         }
+//     }
+
+//     // Se a tecla para baixo for pressionada
+//     if (keyCode === 40) {
+//         e.preventDefault(); // Previne o comportamento padrão da tecla
+//         var selected = $('.selected');
+
+//         if (selected.length > 0) {
+//             var nextRow = selected.next('tr');
+//             if (nextRow.length > 0) {
+//                 selected.removeClass('selected');
+//                 nextRow.addClass('selected');
+//             }
+//         } else {
+//             // Se não houver linha selecionada, seleciona a primeira linha
+//             $('tr:first').addClass('selected');
+//         }
+//     }
+// });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Caixa;
 use App\Models\Produto;
+use App\Models\Venda;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,23 +14,15 @@ class VendasController extends Controller
     public function venderView(){
         $ultimoRegistroCaixa = Caixa::latest()->first();
         if(!isset($ultimoRegistroCaixa) || $ultimoRegistroCaixa->aberto == true){
-            // $produtos = DB::table('produtos')
-            // ->select('id', 'nome', 'codigo_barras', 'preco', 'preco_custo', 'lucro', 'estoque', 'fornecedor', 'categoria')
-            // ->get();
-            // return view('venda.venda', [
-            //     'produtos'=>$produtos
-            // ]);
             return view('venda.venda');
         }else{
             return view('');
         }
     }
     public function apiListar(Request $request){
-        return Produto::where('nome', 'LIKE', "%$request->search%")
-            ->orWhere('codigo_barras', 'LIKE', "%$request->search%")
-            ->get();
+        $letrasAsterisco = $request->search;
+        return Produto::where('nome', 'LIKE', "%$letrasAsterisco%")->get();
     }
-    
     
     public function apiDelete(Request $request){
         try{
@@ -71,5 +64,29 @@ class VendasController extends Controller
                 'message' => 'sem indice na busca!'
             ]);
         };
+    }
+    public function registrarVenda(Request $request){
+        $dadosTabela = $request->input('tableData');
+
+        foreach ($dadosTabela as $dados) {
+            $venda = new Venda(); 
+            $venda->nome_produto = $dados[1]; // Ajuste os índices conforme a estrutura dos dados
+            $venda->codigo_barras = $dados[2];
+            $venda->preco = $dados[3];
+            $venda->preco_custo = $dados[4];
+            $venda->estoque = $dados[5];
+            $venda->save();
+            // $table->string('nome_produto');
+            // $table->string('codigo_barras')->nullable();
+            // $table->integer('quantidade');
+            // $table->string('valor_item');
+            // $table->string('desconto');
+            // $table->string('pagamento');
+            // $table->string('parcelas');
+            // $table->string('valor_parcelas');
+            // $table->string('total_venda');
+        }
+
+        return response()->json(['message' => 'Dados salvos com sucesso']);
     }
 }

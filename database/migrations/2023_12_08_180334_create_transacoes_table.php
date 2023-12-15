@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('cliente')->default('Visitante');
             $table->integer('desconto');
-            $table->integer('parcelas');
-            $table->decimal('valor_parcelas');
+            $table->integer('parcela');
+            $table->decimal('valor_parcela');
             $table->decimal('total');
-            $table->enum('pagamento',['DI','CR','DE']);
+            $table->integer('total_item');
+            $table->enum('pagamento',['Dinheiro','Crédito','Débito']);
             $table->timestamps();
         });
     }

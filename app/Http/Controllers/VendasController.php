@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Caixa;
 use App\Models\Produto;
+use App\Models\Transacao;
 use App\Models\Venda;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class VendasController extends Controller
     public function vendaEmAndamento(){
         $vendas = Venda::where('venda_finalizada', false)->where('item_cancelado', false)->get();
         $vendaRealizada = Venda::latest()->first();
-        if($vendaRealizada->venda_finalizada == false){
+        if(!isset($vendaRealizada) || $vendaRealizada->venda_finalizada == false){
 
             return response()->json($vendas); 
         }
@@ -95,7 +96,18 @@ class VendasController extends Controller
             ]);
         };
     }
-    public function finalizarVenda(){
+    public function finalizarVenda(Request $request){
+        $dados = $request->dados;
+        $transacao = new Transacao();
+        $transacao->total = $dados[0];
+        $transacao->total_item = $dados[1];
+        $transacao->pagamento = $dados[2];
+        $transacao->cliente = $dados[6];
+        $transacao->desconto = $dados[5];
+        $transacao->parcela = $dados[3];
+        $transacao->valor_parcela = $dados[4];
+        $transacao->save();
+
         Venda::whereNotNull('id')->update(['venda_finalizada' => true]);
 
         return response()->json();

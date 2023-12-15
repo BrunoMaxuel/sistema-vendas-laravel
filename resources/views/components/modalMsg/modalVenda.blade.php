@@ -22,24 +22,24 @@
                         <input id="valor_recebido" data-mask="000 000.00" data-mask-reverse="true" name="valor_dinheiro" class="form-control"/>
                     </div>
                     <div class="col-md-4">
-                        <label>Troco:</label>
+                        <label>Troco</label>
                         <input id="troco" data-mask="000 000.00" data-mask-reverse="true" name="troco" value="0.00" class="form-control" readonly/>
                     </div>
                     <div class="col-md-4 col-md-offset-2">
-                        <label>Desconto:</label>
+                        <label>Desconto</label>
                         <input id="desconto" data-mask="000%" value="0%" readonly data-mask-reverse="true" name="desconto" class="form-control"/>
                     </div>
                     <div class="col-md-4 ">
-                        <label>Pagamento:</label>
+                        <label>Pagamento</label>
                         <select id="pagamento" name="pagamento" class="form-control">
-                            <option value="DI">Dinheiro</option>
-                            <option value="CR">Crédito</option>
-                            <option value="DE">Débito</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Crédito">Crédito</option>
+                            <option value="Débito">Débito</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label>Parcelas:</label>
-                        <select id="parcelas" name="parcelas" class="form-control"readonly="readonly">
+                        <label>Parcela </label>
+                        <select id="parcela" name="parcelas" class="form-control"readonly="readonly">
                             <option value="1">1x</option>
                             <option value="2">2x</option>
                             <option value="3">3x</option>
@@ -57,18 +57,18 @@
                     </div>
                     <div class="col-md-4">
                         <label>Valor da parcela:</label>
-                        <input id="valor_parcelas" name="valor_parcelas"  data-mask="000 000.00" data-mask-reverse="true" class="form-control"/>
+                        <input id="valor_parcela" name="valor_parcelas"  data-mask="000 000.00" data-mask-reverse="true" class="form-control"/>
                     </div>
                     <div class="col-md-12">
                         <label for="">Cliente</label>
-                        <input  id="cliente" class="form-control" name="cliente" placeholder="Pesquisar cliente"/>
+                        <input  id="cliente" class="form-control" name="cliente" placeholder="Pesquisar cliente" value="Visitante"/>
                     </div>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
             <button id="finalizarVenda" type="submit" class="btn btn-success">Finalizar venda</button>
-          <button id="btnCancel" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button id="btnCancel" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         </div>
       </div>
     </div>

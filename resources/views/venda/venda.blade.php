@@ -118,7 +118,11 @@
 <script src="{{asset('assets/js/vendas.js')}}"></script>
 <script>
     $('#btnFinalizar').on('click', function () {
-        $('#modalFinalizarVenda').modal('show');
-    })
+    $('#modalFinalizarVenda').modal('show');
+    setTimeout(function() {
+        $('#valor_recebido').focus();
+    }, 500);
+});
+
 </script>
 @stop

@@ -101,7 +101,8 @@
 			  	@endforeach
 			  	@foreach($transacoes as $transations)
 					<tr class="bg-success">
-						<td>{{$transations->id}}</td>
+						{{-- <td>{{$transations->id}}</td> --}}
+						<td> - </td>
 						<td>{{$transations->created_at}}</td>
 						<td>{{$transations->cliente}}</td>
 						{{-- <td><a target="_blank" href="{{route('venda.cupom', ['id'=>$transations->id])}}">{!!nl2br($transations->detalhes)!!}</a></td> --}}
@@ -156,6 +157,8 @@
 		
     	
     	 $('#transations-table').DataTable( {
+			"scrollY": "390px", 
+			"scrollCollapse": true,
     		 "bPaginate": false,
 			 "columnDefs": [
 				{ "orderable": false, "targets": 1 } // O índice da coluna começa de 0

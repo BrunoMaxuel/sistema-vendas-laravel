@@ -56,10 +56,22 @@ $(function() {
     
     
     $('#finalizarVenda').on('click', function() {
-        $.post("/vender/vendaAndamento/finalizar", { _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
+        var dados = [];
+        var totalVenda = $('#total_venda').val();
+        var totalItem = $('#total_item').val();
+        var pagamento = $('#pagamento').val();
+        var parcela = $('#parcela').val();
+        var valorParcela = $('#valor_parcela').val();
+        var desconto = $('#desconto').val();
+        desconto = desconto.replace('%', '');
+        var cliente = $('#cliente').val();
+
+        dados.push(totalVenda, totalItem, pagamento, parcela, valorParcela, desconto, cliente);
+
+        $.post("/vender/vendaAndamento/finalizar", {dados: dados , _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
             location.reload();
         });
-    })
+    });
 
 
     $.post("/vender/vendaAndamento", { _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {

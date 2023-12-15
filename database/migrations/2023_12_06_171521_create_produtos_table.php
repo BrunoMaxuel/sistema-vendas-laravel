@@ -15,8 +15,8 @@ return new class extends Migration
                 $table->id('id');
                 $table->string('nome');
                 $table->string('codigo_barras')->nullable();
-                $table->string('preco');
-                $table->string('preco_custo');
+                $table->decimal('preco');
+                $table->decimal('preco_custo');
                 $table->string('lucro');
                 $table->integer('estoque');
                 $table->string('fornecedor')->nullable();

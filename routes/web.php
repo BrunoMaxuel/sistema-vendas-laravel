@@ -43,8 +43,13 @@ Route::post('/venda/registrar', [VendasController::class, 'registrarVenda'])->na
 Route::post('api/delete', [VendasController::class, 'apiDelete'])->name('estoque.api.delete');
 Route::post('api/produto/', [VendasController::class, 'apiSave'])->name('estoque.api.save');
 Route::post('/vender/estoque', [VendasController::class, 'apiListar'])->name('estoque.api.listar');
+Route::post('/vender/vendaAndamento', [VendasController::class, 'vendaEmAndamento'])->name('venda.andamento');
+Route::post('/vender/vendaAndamento/cancelar', [VendasController::class, 'apiCancelar'])->name('venda.cancelar');
+Route::post('/vender/vendaAndamento/registrar', [VendasController::class, 'vendaEmAndamentoRegistrar'])->name('venda.andamento.registrar');
+Route::post('/vender/vendaAndamento/finalizar', [VendasController::class, 'finalizarVenda'])->name('venda.andamento.finalizar');
+
 
 // Route::post('/venda', 'VendasController@Registrar')->name('venda.registrar');
 // Route::get('/venda/cupom/', 'VendasController@GerarCupom')->name('venda.cupom.route');
-Route::get('/venda/cupom/{id}', 'VendasController@GerarCupom')->name('venda.cupom');
+// Route::get('/venda/cupom/{id}', 'VendasController@GerarCupom')->name('venda.cupom');
 // Route::post('/venda/cancelar/', 'VendasController@CancelarVenda')->name('venda.cancelar');

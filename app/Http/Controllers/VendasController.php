@@ -23,18 +23,48 @@ class VendasController extends Controller
         $letrasAsterisco = $request->search;
         return Produto::where('nome', 'LIKE', "%$letrasAsterisco%")->get();
     }
-    
-    public function apiDelete(Request $request){
-        try{
-            $produto = Produto::where("id",'=',$request->id)->first();
-            $produto->delete();
-            return array("success"=>true);
-        }catch (QueryException $e){
-            return array(
-                "success"=>false, "message"=> $e->getMessage(),"error"=>$e->errorInfo[1]
-            );
+    public function vendaEmAndamentoRegistrar(Request $request){
+
+        $linha = $request->linha;
+        $produtoTotal = $linha[3] * $linha[6];  
+        $venda = new Venda();
+        $venda->nome_produto = $linha[1];
+        $venda->codigo_barras = $linha[2];
+        $venda->quantidade = $linha[6];
+        $venda->valor_item = $linha[3];
+        $venda->total_venda = $produtoTotal;
+        $venda->save();
+        $vendas = Venda::where('venda_finalizada', false)->where('item_cancelado', false)->get();
+        $vendaRealizada = Venda::latest()->first();
+        if($vendaRealizada->venda_finalizada == false){
+
+            return response()->json($vendas);
+        }
+
+    }
+
+    public function vendaEmAndamento(){
+        $vendas = Venda::where('venda_finalizada', false)->where('item_cancelado', false)->get();
+        $vendaRealizada = Venda::latest()->first();
+        if($vendaRealizada->venda_finalizada == false){
+
+            return response()->json($vendas); 
         }
     }
+
+    public function apiCancelar(Request $request) {
+        $venda = Venda::find($request->id);
+    
+        if ($venda) {
+            $venda->item_cancelado = true;
+            $venda->save();
+    
+            return response()->json();
+        } else {
+            return response()->json(['error' => 'Venda não encontrada'], 404);
+        }
+    }
+    
     public function apiSave(Request $request){
         if($request->id != null){
             try{
@@ -65,28 +95,9 @@ class VendasController extends Controller
             ]);
         };
     }
-    public function registrarVenda(Request $request){
-        $dadosTabela = $request->input('tableData');
+    public function finalizarVenda(){
+        Venda::whereNotNull('id')->update(['venda_finalizada' => true]);
 
-        foreach ($dadosTabela as $dados) {
-            $venda = new Venda(); 
-            $venda->nome_produto = $dados[1]; // Ajuste os índices conforme a estrutura dos dados
-            $venda->codigo_barras = $dados[2];
-            $venda->preco = $dados[3];
-            $venda->preco_custo = $dados[4];
-            $venda->estoque = $dados[5];
-            $venda->save();
-            // $table->string('nome_produto');
-            // $table->string('codigo_barras')->nullable();
-            // $table->integer('quantidade');
-            // $table->string('valor_item');
-            // $table->string('desconto');
-            // $table->string('pagamento');
-            // $table->string('parcelas');
-            // $table->string('valor_parcelas');
-            // $table->string('total_venda');
-        }
-
-        return response()->json(['message' => 'Dados salvos com sucesso']);
+        return response()->json();
     }
 }

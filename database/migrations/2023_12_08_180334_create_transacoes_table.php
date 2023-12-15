@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('transacoes', function (Blueprint $table) {
             $table->id();
-            $table->string('cliente')->default('Não identificado');
+            $table->string('cliente')->default('Visitante');
             $table->integer('desconto');
             $table->integer('parcelas');
-            $table->string('valor_parcelas');
-            $table->string('venda_item');
-            $table->integer('total');
+            $table->decimal('valor_parcelas');
+            $table->decimal('total');
             $table->enum('pagamento',['DI','CR','DE']);
             $table->timestamps();
         });

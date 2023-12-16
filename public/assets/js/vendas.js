@@ -100,6 +100,16 @@ $(function() {
             });
             $('#display-tableApi').css('display', 'block');
             $('#display-tableVenda').css('display', 'none');
+        } else if (search.length === 13) {
+            var searcSplit = search.split('*');
+            qtd = searcSplit[0];
+            var searchLetra = searcSplit[1];
+
+            $.post("/vender/estoque", { search: searchLetra, _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
+                updateTable(data);
+            });
+            $('#display-tableApi').css('display', 'block');
+            $('#display-tableVenda').css('display', 'none');
         } else {
             $('#tableApi tbody').empty();
             $('#display-tableApi').css('display', 'none');
@@ -143,16 +153,14 @@ function updateTableVenda(data) {
         newRow.append('<td>' + item.quantidade + '</td>');
         newRow.append('<td>' + item.valor_item + '</td>');
         newRow.append('<td>' + item.total_venda + '</td>');
-
         totalVendas += parseFloat(item.total_venda);
-        
         var actionColumn = $('<td>');
-        var btnExcluir = $('<i>').addClass('fas fa-trash-alt btn bg-danger').attr('id', item.id).css('font-size', '10px');
+        var btnExcluir = $('<i>').addClass('fas fa-trash-alt btn bg-danger').attr('id', item.id_venda).css('font-size', '10px');
         
         btnExcluir.on('click', function() {
             var idParaExcluir = $(this).attr('id');
             
-            $.post("/vender/vendaAndamento/cancelar", {id: idParaExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
+            $.post("/vender/vendaAndamento/cancelar", {id_venda : idParaExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
                 location.reload();
             });
         });

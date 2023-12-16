@@ -35,6 +35,7 @@
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <x-modalMsg.modalVenda/>
+<x-modalMsg.modal/>
 
 <div class="row ">
     <div class="col-md-12 p-2 cor-linha">
@@ -94,18 +95,18 @@
                         <div id="btnFinalizar" class="mt-4 mb-4">
                             <button class="btn btn-light p-3"><strong>Finalizar Venda</strong></button>
                         </div>
-                        <div class="mt-4 mb-4">
+                        <div id="btnCancelar" class="mt-4 mb-4">
                             <button class="btn btn-light p-3"><strong>Cancelar Venda</strong></button>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                         <div class="mt-4 mb-4">
                             <button class="btn btn-light p-3"><strong>Buscar Cliente</strong></button>
                         </div>
                         <div class="mt-4 mb-4">
                             <button class="btn btn-light p-3"><strong>Nova venda</strong></button>
                         </div>
-                    </div>
+                    </div> --}}
                </div>
             </div>
         </div>
@@ -119,10 +120,23 @@
 <script>
     $('#btnFinalizar').on('click', function () {
     $('#modalFinalizarVenda').modal('show');
-    setTimeout(function() {
-        $('#valor_recebido').focus();
-    }, 500);
-});
+        setTimeout(function() {
+            $('#valor_recebido').focus();
+        }, 500);
+    });
+    $('#btnCancelar').on('click', function () {
+        $('#modalAlert').modal('show');
+        $('.modal-title').text('Cancelamento de venda');
+        $('#title-body').text('Deseja cancelar a venda?');
+        $('.btn-cancelar').text('Cancelar venda');
+        $('#btnSubmit').text('Finalizar venda');
+    }); _token: $('meta[name="csrf-token"]').attr('content')
+    $('#btnSubmit').on('click', function () {
+
+        $.post('/vender/vendaAndamento/cancelarVenda',{_token: $('meta[name="csrf-token"]').attr('content')}, function (data) {
+            location.reload();
+        });
+    })
 
 </script>
 @stop

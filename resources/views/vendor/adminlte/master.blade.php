@@ -2,7 +2,7 @@
 <html lang="pt-br">
 
 <head>
-
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon"> 
     {{-- Base Meta Tags --}}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,9 +14,7 @@
 
     {{-- Title --}}
     <title>
-        @yield('title_prefix', config('adminlte.title_prefix', ''))
-        @yield('title', config('adminlte.title', 'YOURTUBE'))
-        @yield('title_postfix', config('adminlte.title_postfix', ''))
+        @yield('title', config('adminlte.title', 'Invoke Vendas'))
     </title>
 
     {{-- Custom stylesheets (pre AdminLTE) --}}

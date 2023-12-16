@@ -34,7 +34,15 @@
 	<div class="col-sm-3">
 		<div class="small-box bg-green">
 			<div class="inner p-3">
-				<h5>Total em crédito <br> 
+				<h5>Total em Dinheiro <br> 
+					<h4>R${{$caixa->dinheiro}}</h4> </h5>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="small-box bg-green">
+			<div class="inner p-3">
+				<h5>Total em Crédito <br> 
 					<h4>R${{$caixa->totalCredito}}</h4></h5>
 			</div>
 		</div>
@@ -42,16 +50,8 @@
 	<div class="col-sm-3">
 		<div class="small-box bg-green">
 			<div class="inner p-3">
-				<h5>Total em débito <br> 
+				<h5>Total em Débito <br> 
 					<h4>R${{$caixa->totalDebito}}</h4></h5>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-3">
-		<div class="small-box bg-green">
-			<div class="inner p-3">
-				<h5>Total em cartões <br> 
-					<h4>R${{$caixa->totalCreditoDebito}}</h4> </h5>
 			</div>
 		</div>
 	</div>
@@ -71,7 +71,7 @@
 				<tr>
 					<th scope="col">#</th>
 					<th scope="col">Data de movimento</th>
-					<th scope="col">Cliente</th>
+					<th scope="col">Cliente ou Ação</th>
 					<th scope="col">Descrição</th>
 					<th scope="col">Desconto</th>
 					<th scope="col">Pagamento</th>
@@ -92,17 +92,17 @@
 					<tr class="bg-success">
 						<td>-</td>
 						<td>{{$entradas->created_at}}</td>
-						<td>-</td>
+						<td> Adição de dinheiro </td>
 						<td>{{$entradas->descricao}}</td>
 						<td>-</td>
 						<td>-</td>
 						<td>+{{$entradas->valor}}</td>
-					</tr>
+					</tr>	
 			  	@endforeach
 			  	@foreach($transacoes as $transations)
 					<tr class="bg-success">
 						{{-- <td>{{$transations->id}}</td> --}}
-						<td> - </td>
+						<td> + </td>
 						<td>{{$transations->created_at}}</td>
 						<td>{{$transations->cliente}}</td>
 						{{-- <td><a target="_blank" href="{{route('venda.cupom', ['id'=>$transations->id])}}">{!!nl2br($transations->detalhes)!!}</a></td> --}}
@@ -116,7 +116,7 @@
 					<tr style="background-color: rgb(250, 100, 100)">
 						<td>-</td>
 						<td>{{$transations->created_at}}</td>
-						<td>-</td>
+						<td> Subtração de Dinheiro </td>
 						<td>{{$transations->descricao}}</td>
 						<td>-</td>
 						<td>-</td>
@@ -146,12 +146,14 @@
 			$('#addOrSangria').val('add');
         	$('#title').html('Adicionar dinheiro do caixa');
 			$('#text-label').html('Insira o valor que deseja adicionar:');
+			$('#descricao').val('Adicionando dinheiro...');
         	$('#modalCaixa').modal('show');
         });
         $('#btnRemove').click(function(){
 			$('#addOrSangria').val('sangria');
 			$('#title').html('Retirar dinheiro do caixa');
 			$('#text-label').html('Insira o valor de retirada:');
+			$('#descricao').val('Retirando dinheiro...');
         	$('#modalCaixa').modal('show');
         });
 		

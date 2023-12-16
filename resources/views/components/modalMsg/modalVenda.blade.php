@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-md-4">
                         <label>Valor da parcela:</label>
-                        <input id="valor_parcela" name="valor_parcelas"  data-mask="000 000.00" data-mask-reverse="true" class="form-control"/>
+                        <input id="valor_parcela" name="valor_parcelas" readonly value="0.00"  data-mask="000 000.00" data-mask-reverse="true" class="form-control"/>
                     </div>
                     <div class="col-md-12">
                         <label for="">Cliente</label>

@@ -33,11 +33,15 @@ class CaixaController extends Controller
             $caixa->created_at = $ultimoRegistroCaixa->created_at;
             $caixa->descricao = $ultimoRegistroCaixa->descricao;
             $caixa->totalCredito = Transacao::where('created_at','>=', $ultimoRegistroCaixa->created_at)
-                ->where('pagamento','=','CR')
+                ->where('pagamento','=','Crédito')
                 ->sum('total'); 
             
             $caixa->totalDebito = Transacao::where('created_at','>=', $ultimoRegistroCaixa->created_at)
-                ->where('pagamento','=','DE')
+                ->where('pagamento','=','Débito')
+                ->sum('total'); 
+                
+            $caixa->dinheiro = Transacao::where('created_at','>=', $ultimoRegistroCaixa->created_at)
+                ->where('pagamento','=','Dinheiro')
                 ->sum('total'); 
                 
                 $caixa->totalCreditoDebito = $caixa->totalCredito + $caixa->totalDebito;
@@ -45,6 +49,7 @@ class CaixaController extends Controller
                 $caixa->total += $caixa->totalCreditoDebito;
                 $caixa->total -= $sangriaTotal;
                 $caixa->total += $suprimentoTotal;
+                $caixa->total += $caixa->dinheiro;
 
                 
                 

@@ -103,12 +103,12 @@ class ProdutosController extends Controller
                 $produto = new Produto();
             }
             
-    
+            
             $produto->nome      = $request->nome;
             $produto->codigo_barras      = $request->codigo_barras;
-            $produto->preco  = $request->preco;
-            $produto->preco_custo  = $request->preco_custo;
-            $produto->lucro    = $request->lucro;
+            $produto->preco  = str_replace(',', '.', $request->preco);
+            $produto->preco_custo  = str_replace(',', '.', $request->preco_custo);
+            $produto->lucro    = str_replace('%', '', $request->lucro);
             $produto->estoque    = $request->estoque;
             $produto->fornecedor    = $request->fornecedor;
             $produto->categoria    = $request->categoria;

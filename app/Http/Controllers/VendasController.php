@@ -22,19 +22,26 @@ class VendasController extends Controller
     }
     public function apiListar(Request $request){
         $letrasAsterisco = $request->search;
-        return Produto::where('nome', 'LIKE', "%$letrasAsterisco%")->get();
+        if(strlen($letrasAsterisco) < 13){
+            return Produto::where('nome', 'LIKE', "%$letrasAsterisco%")->get();
+        }else{
+            return Produto::where('codigo_barras', $letrasAsterisco)->get();
+        }
     }
     public function vendaEmAndamentoRegistrar(Request $request){
 
         $linha = $request->linha;
         $produtoTotal = $linha[3] * $linha[6];  
         $venda = new Venda();
+        $venda->id_venda = $linha[0];
         $venda->nome_produto = $linha[1];
         $venda->codigo_barras = $linha[2];
         $venda->quantidade = $linha[6];
         $venda->valor_item = $linha[3];
         $venda->total_venda = $produtoTotal;
         $venda->save();
+        Produto::where('id', $linha[0])->decrement('estoque', $linha[6]);
+
         $vendas = Venda::where('venda_finalizada', false)->where('item_cancelado', false)->get();
         $vendaRealizada = Venda::latest()->first();
         if($vendaRealizada->venda_finalizada == false){
@@ -54,16 +61,9 @@ class VendasController extends Controller
     }
 
     public function apiCancelar(Request $request) {
-        $venda = Venda::find($request->id);
-    
-        if ($venda) {
-            $venda->item_cancelado = true;
-            $venda->save();
-    
-            return response()->json();
-        } else {
-            return response()->json(['error' => 'Venda não encontrada'], 404);
-        }
+        Venda::where('id_venda', $request->id_venda)
+            ->update(['item_cancelado' => true]);
+        return response()->json();
     }
     
     public function apiSave(Request $request){
@@ -108,8 +108,27 @@ class VendasController extends Controller
         $transacao->valor_parcela = $dados[4];
         $transacao->save();
 
-        Venda::whereNotNull('id')->update(['venda_finalizada' => true]);
+        Venda::whereNotNull('id_venda')->update(['venda_finalizada' => true]);
 
         return response()->json();
+    }
+    public function cancelarVenda(){
+        $vendasNaoFinalizadas = Venda::where('venda_finalizada', false)->where('item_cancelado', false)->get();
+
+        foreach ($vendasNaoFinalizadas as $venda) {
+            $quantidadeVendida = intval($venda->quantidade);
+            $idProduto = intval($venda->id_venda);
+
+            // Encontrar o produto pelo ID
+            $produto = Produto::find($idProduto);
+
+            if ($produto) {
+                $produto->estoque += $quantidadeVendida;
+                $produto->save();
+                
+                $venda->item_cancelado = true;
+                $venda->save();
+            }
+        }
     }
 }

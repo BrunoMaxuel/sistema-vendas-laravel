@@ -82,10 +82,10 @@ return [
     */
 
     'auth_logo' => [
-        'enabled' => false,
+        'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'Auth Logo',
+            'path' => 'vendor/adminlte/dist/img/invokevendas_m.png',
+            'alt' => 'Invoke Vendas',
             'class' => '',
             'width' => 50,
             'height' => 50,
@@ -110,8 +110,8 @@ return [
             'path' => 'vendor/adminlte/dist/img/invokevendas_m.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 300,
-            'height' => 300,
+            'width' => 200,
+            'height' => 200,
         ],
     ],
 
@@ -128,7 +128,7 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
+    'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
     'usermenu_desc' => false,
@@ -252,8 +252,8 @@ return [
 
     'use_route_url' => false,
     'dashboard_url' => '/',
-    'logout_url' => 'logout',
-    'login_url' => 'login',
+    'logout_url' => '/logout',
+    'login_url' => '/login',
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',

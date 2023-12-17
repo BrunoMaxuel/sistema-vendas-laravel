@@ -9,38 +9,39 @@ use App\Models\Suprimento;
 use App\Models\Transacao;
 use App\Models\Venda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CaixaController extends Controller
 {   
     public function caixaView(){
+        $ultimoRegistroCaixa = Caixa::where('user_id', Auth::id())->latest()->first();
 
-        $ultimoRegistroCaixa = Caixa::latest()->first();
         if(!isset($ultimoRegistroCaixa) || $ultimoRegistroCaixa->aberto == false){
             $aberto = false;
             $caixa = null;
             return view('caixa.caixaAbrir', ['aberto'=>$aberto, 'caixa'=>$caixa]);
         }
         else{ 
-            $transacoes = Transacao::where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
-            $sangria = Sangria::where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
-            $sangriaTotal = Sangria::where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
-            $suprimentoTotal = Suprimento::where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
+            $transacoes = Transacao::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
+            $sangria = Sangria::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
+            $sangriaTotal = Sangria::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
+            $suprimentoTotal = Suprimento::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
             
-            $suprimento = Suprimento::where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
+            $suprimento = Suprimento::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
             $caixa  = (object) null;       
             $caixa->total = str_replace(',', '.', str_replace('.', '', $ultimoRegistroCaixa->valor_inicial));
 
             $caixa->created_at = $ultimoRegistroCaixa->created_at;
             $caixa->descricao = $ultimoRegistroCaixa->descricao;
-            $caixa->totalCredito = Transacao::where('created_at','>=', $ultimoRegistroCaixa->created_at)
+            $caixa->totalCredito = Transacao::where('user_id', Auth::id())->where('created_at','>=', $ultimoRegistroCaixa->created_at)
                 ->where('pagamento','=','Crédito')
                 ->sum('total'); 
             
-            $caixa->totalDebito = Transacao::where('created_at','>=', $ultimoRegistroCaixa->created_at)
+            $caixa->totalDebito = Transacao::where('user_id', Auth::id())->where('created_at','>=', $ultimoRegistroCaixa->created_at)
                 ->where('pagamento','=','Débito')
                 ->sum('total'); 
                 
-            $caixa->dinheiro = Transacao::where('created_at','>=', $ultimoRegistroCaixa->created_at)
+            $caixa->dinheiro = Transacao::where('user_id', Auth::id())->where('created_at','>=', $ultimoRegistroCaixa->created_at)
                 ->where('pagamento','=','Dinheiro')
                 ->sum('total'); 
                 
@@ -63,6 +64,7 @@ class CaixaController extends Controller
     public function caixaAbrir(Request $request){
 
         $caixa = new Caixa();
+        $caixa->user_id = Auth::id();
         $caixa->valor_inicial = $request->valor_inicial;
         $caixa->descricao = $request->descricao;
         $caixa->aberto = true;
@@ -81,7 +83,7 @@ class CaixaController extends Controller
         
     }
     public function fecharCaixa(){
-        $caixa = new Caixa();
+        $caixa = Caixa::where('user_id', Auth::id());
         $caixa->aberto = false;
         $caixa->save();
         return response()->json([
@@ -90,7 +92,7 @@ class CaixaController extends Controller
         ]);
     }
     public function addDinheiro(Request $request){
-        $suprimento = new Suprimento();
+        $suprimento = Suprimento::where('user_id', Auth::id());
         $suprimento->valor = $request->valor;
         $suprimento->descricao = $request->descricao;
         $suprimento->save();
@@ -101,7 +103,7 @@ class CaixaController extends Controller
         ]);
     }
     public function retirarDinheiro(Request $request){
-        $sangria = new Sangria();
+        $sangria = Sangria::where('user_id', Auth::id());
         $sangria->valor = $request->valor;
         $sangria->descricao = $request->descricao;
         $sangria->save();

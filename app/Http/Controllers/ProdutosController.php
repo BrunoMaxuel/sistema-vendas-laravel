@@ -3,20 +3,21 @@ namespace App\Http\Controllers;
 use App\Models\Produto;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProdutosController extends Controller
 {
     public function index(){
         $quantidade = 10;
-        $produtos = Produto::orderBy('id', 'desc')->paginate($quantidade);
+        $produtos = Produto::where('user_id', Auth::id())->orderBy('id', 'desc')->paginate($quantidade);
 
         return view('produto/index', ['produtos'=>$produtos]);
     }
 
     public function editarView(Request $request){
         if($request->id != null){
-            $produto = Produto::where('id', $request->id)->first();
+            $produto = Produto::where('user_id', Auth::id())->where('id', $request->id)->first();
             return response()->json($produto);
         }
         else{
@@ -103,7 +104,7 @@ class ProdutosController extends Controller
                 $produto = new Produto();
             }
             
-            
+            $produto->user_id = Auth::id();
             $produto->nome      = $request->nome;
             $produto->codigo_barras      = $request->codigo_barras;
             $produto->preco  = str_replace(',', '.', $request->preco);

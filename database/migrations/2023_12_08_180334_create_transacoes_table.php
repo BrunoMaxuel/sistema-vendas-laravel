@@ -20,6 +20,9 @@ return new class extends Migration
             $table->decimal('total');
             $table->integer('total_item');
             $table->enum('pagamento',['Dinheiro','Crédito','Débito']);
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

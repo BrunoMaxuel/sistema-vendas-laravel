@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('aberto')->default(false);
             $table->string('valor_inicial')->default('0,00');
             $table->string('descricao')->nullable();
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -29,6 +29,27 @@ class LoginController extends Controller
                 ->withErrors(['email' => 'Credenciais inválidas']);
         }
     }
+    public function registrar(){
+        return view('vendor/adminlte/auth/register');
+    }
+
+    public function registrarAction(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|min:3',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
+        // Criação de um novo usuário
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']), 
+        ]);
+        Auth::login($user);
+        return redirect(route('login.view'));
+    }
     public function logout(){
         Auth::logout();
         return redirect(route('login.view'));

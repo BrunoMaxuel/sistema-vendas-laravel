@@ -8,12 +8,13 @@ use App\Models\Transacao;
 use App\Models\Venda;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class VendasController extends Controller
 {
     public function venderView(){
-        $ultimoRegistroCaixa = Caixa::latest()->first();
+        $ultimoRegistroCaixa = Caixa::where('user_id', Auth::id())->latest()->first();
         if(!isset($ultimoRegistroCaixa) || $ultimoRegistroCaixa->aberto == true){
             return view('venda.venda');
         }else{
@@ -23,16 +24,18 @@ class VendasController extends Controller
     public function apiListar(Request $request){
         $letrasAsterisco = $request->search;
         if(strlen($letrasAsterisco) < 13){
-            return Produto::where('nome', 'LIKE', "%$letrasAsterisco%")->get();
+            return Produto::where('user_id', Auth::id())->where('nome', 'LIKE', "%$letrasAsterisco%")->get();
         }else{
-            return Produto::where('codigo_barras', $letrasAsterisco)->get();
+            return Produto::where('user_id', Auth::id())->where('codigo_barras', $letrasAsterisco)->get();
         }
     }
     public function vendaEmAndamentoRegistrar(Request $request){
 
         $linha = $request->linha;
         $produtoTotal = $linha[3] * $linha[6];  
+
         $venda = new Venda();
+        $venda->user_id  = Auth::id();
         $venda->id_venda = $linha[0];
         $venda->nome_produto = $linha[1];
         $venda->codigo_barras = $linha[2];
@@ -40,10 +43,10 @@ class VendasController extends Controller
         $venda->valor_item = $linha[3];
         $venda->total_venda = $produtoTotal;
         $venda->save();
-        Produto::where('id', $linha[0])->decrement('estoque', $linha[6]);
+        Produto::where('user_id', Auth::id())->where('id', $linha[0])->decrement('estoque', $linha[6]);
 
-        $vendas = Venda::where('venda_finalizada', false)->where('item_cancelado', false)->get();
-        $vendaRealizada = Venda::latest()->first();
+        $vendas = Venda::where('user_id', Auth::id())->where('venda_finalizada', false)->where('item_cancelado', false)->get();
+        $vendaRealizada = Venda::where('user_id', Auth::id())->latest()->first();
         if($vendaRealizada->venda_finalizada == false){
 
             return response()->json($vendas);
@@ -52,8 +55,8 @@ class VendasController extends Controller
     }
 
     public function vendaEmAndamento(){
-        $vendas = Venda::where('venda_finalizada', false)->where('item_cancelado', false)->get();
-        $vendaRealizada = Venda::latest()->first();
+        $vendas = Venda::where('user_id', Auth::id())->where('venda_finalizada', false)->where('item_cancelado', false)->get();
+        $vendaRealizada = Venda::where('user_id', Auth::id())->latest()->first();
         if(!isset($vendaRealizada) || $vendaRealizada->venda_finalizada == false){
 
             return response()->json($vendas); 
@@ -61,7 +64,7 @@ class VendasController extends Controller
     }
 
     public function apiCancelar(Request $request) {
-        Venda::where('id_venda', $request->id_venda)
+        Venda::where('user_id', Auth::id())->where('id_venda', $request->id_venda)
             ->update(['item_cancelado' => true]);
         return response()->json();
     }
@@ -99,6 +102,7 @@ class VendasController extends Controller
     public function finalizarVenda(Request $request){
         $dados = $request->dados;
         $transacao = new Transacao();
+        $transacao->user_id = Auth::id(); 
         $transacao->total = $dados[0];
         $transacao->total_item = $dados[1];
         $transacao->pagamento = $dados[2];
@@ -108,7 +112,7 @@ class VendasController extends Controller
         $transacao->valor_parcela = $dados[4];
         $transacao->save();
 
-        Venda::whereNotNull('id_venda')->update(['venda_finalizada' => true]);
+        Venda::where('user_id', Auth::id())->whereNotNull('id_venda')->update(['venda_finalizada' => true]);
 
         return response()->json();
     }

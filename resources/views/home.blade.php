@@ -7,8 +7,8 @@
         <div class="col-sm-4">
             <div class="small-box bg-green">
                 <div class="inner">
-                    {{-- <h3>{{$transacoes}}</h3> --}}
-                    <h3>200</h3>
+                    
+                    <h3>{{ count($transacoes )}}</h3>
                     <h5>Vendas desse mês</h5>
                 </div>
                 <div class="icon">

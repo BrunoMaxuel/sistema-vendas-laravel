@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ClientesController extends Controller
 {
     public function index(){
-        $quantidade = 10; // Define a quantidade de itens por página
-    
-        $clientes = Cliente::orderBy('id', 'desc')->paginate($quantidade);
+        $quantidade = 10; 
+        $clientes = Cliente::where('user_id', Auth::id())->orderBy('id', 'desc')->paginate($quantidade);
         
         return view('cliente/index', ['clientes' => $clientes]);
     }
@@ -22,7 +22,7 @@ class ClientesController extends Controller
 
 
         if($request->id != null){
-            $cliente = Cliente::where('id', $request->id)->first();
+            $cliente = Cliente::where('user_id', Auth::id())->where('id', $request->id)->first();
             return response()->json($cliente);
         }
         else{
@@ -51,13 +51,13 @@ class ClientesController extends Controller
         try{
             $cliente = null;
             if(!blank($request->id)){
-                $cliente = Cliente::find($request->id);
+                $cliente = Cliente::where('user_id', Auth::id())->find($request->id);
             }
     
             if($cliente == null){
-                $cliente = new Cliente;
+                $cliente = new Cliente();
             }
-    
+            $cliente->user_id   = Auth::id(); 
             $cliente->nome      = $request->nome;
             $cliente->telefone  = $request->telefone;
             $cliente->endereco  = $request->endereco;
@@ -87,7 +87,7 @@ class ClientesController extends Controller
     
     public function excluirCliente(Request $request){
         if($request->id != null){
-            $cliente = Cliente::where('id', $request->id)->first();
+            $cliente = Cliente::where('user_id', Auth::id())->where('id', $request->id)->first();
             return response()->json($cliente);
         }
         else{
@@ -99,7 +99,7 @@ class ClientesController extends Controller
     }
     public function excluirClienteAction(Request $request) {
         if ($request->id) {
-            $cliente = Cliente::find($request->id);
+            $cliente = Cliente::where('user_id', Auth::id())->find($request->id);
             
             if ($cliente) {
                 $cliente->delete();
@@ -124,7 +124,7 @@ class ClientesController extends Controller
     {
         $query = $request->input('query');
 
-        $clientes = Cliente::where('nome', 'LIKE', "%$query%")
+        $clientes = Cliente::where('user_id', Auth::id())->where('nome', 'LIKE', "%$query%")
                             ->orWhere('endereco', 'LIKE', "%$query%")
                             ->paginate(10);
 
@@ -149,6 +149,7 @@ class ClientesController extends Controller
             ]);// Código de status HTTP para erros de validação 
         }
         $cliente = new Cliente;
+        $cliente->user_id       = Auth::id();
         $cliente->nome          = $request->nome;
         $cliente->telefone      = $request->telefone;
         $cliente->endereco      = $request->endereco;

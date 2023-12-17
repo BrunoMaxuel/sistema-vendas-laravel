@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('telefone')->nullable();
             $table->string('bairro')->nullable();
             $table->string('cidade')->nullable();
+
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

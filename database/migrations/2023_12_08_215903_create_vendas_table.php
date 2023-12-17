@@ -20,6 +20,9 @@ return new class extends Migration
             $table->decimal('total_venda');
             $table->boolean('item_cancelado')->default(false);
             $table->boolean('venda_finalizada')->default(false);
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->ondelete('cascade');
             $table->timestamps();
         });
     }

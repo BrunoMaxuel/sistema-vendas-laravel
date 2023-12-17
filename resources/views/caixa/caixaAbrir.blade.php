@@ -3,8 +3,8 @@
 @section('title', 'Abertura de caixa')
 
 @section('content')
-	<x-modalMsg.modalMsg/>
-	@if ($aberto == false)
+<x-modalMsg.modalMsg/>
+
 		<div class="row p-5 ">
 			<div class="col-md-4">
 				<form id="abrirForm" method="POST">
@@ -27,7 +27,6 @@
 				</form>
 			</div>
 		</div>
-	@endif
 
 @stop
 @section('js')

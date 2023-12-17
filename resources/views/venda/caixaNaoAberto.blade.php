@@ -104,28 +104,36 @@
 
 @stop
 @section('js')
-<script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
 <script src="{{asset('assets/js/vendas.js')}}"></script>
 <script>
-    $('#btnFinalizar').on('click', function () {
-    $('#modalFinalizarVenda').modal('show');
-        setTimeout(function() {
-            $('#valor_recebido').focus();
-        }, 500);
+   
+   $(function () {
+    $(function () {
+    $('#modalAlert .modal-dialog').addClass('modal-lg'); // ou modal-lg para um modal grande
+    // Adicione outras configurações ou funcionalidades do modal aqui
+});
+
+    $('#modalAlert').modal({
+        backdrop: 'static', // Configuração para o backdrop estático
+        keyboard: false // Opcional: desabilita o fechamento do modal ao pressionar a tecla Escape
     });
-    $('#btnCancelar').on('click', function () {
-        $('#modalAlert').modal('show');
-        $('.modal-title').text('Cancelamento de venda');
-        $('#title-body').text('Deseja cancelar a venda?');
-        $('.btn-cancelar').text('Cancelar');
-        $('#btnSubmit').text('Excluir todos itens');
-    }); _token: $('meta[name="csrf-token"]').attr('content')
-    $('#btnSubmit').on('click', function () {
 
-        $.post('/vender/vendaAndamento/cancelarVenda',{_token: $('meta[name="csrf-token"]').attr('content')}, function (data) {
-            location.reload();
-        });
-    })
+    // Definir textos ou outras configurações do modal
+    $('.modal-title').text('Abrir Caixa');
+    $('#title-body').text('Você precisa abrir o caixa para realizar vendas.');
+    $('.btn-cancelar').text('Página inicial');
+    $('#btnSubmit').text('Prosseguir para abertura');
 
+    $('#btnSubmit').on('click', function() {
+        // Redirecionar para a rota /caixa
+        window.location.href = '/caixa';
+    });
+    $('.btn-cancelar').on('click', function() {
+        // Redirecionar para a rota /caixa
+        window.location.href = '/';
+    });
+});
+
+    
 </script>
 @stop

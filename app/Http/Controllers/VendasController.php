@@ -17,7 +17,7 @@ class VendasController extends Controller
         if(!isset($ultimoRegistroCaixa) || $ultimoRegistroCaixa->aberto == true){
             return view('venda.venda');
         }else{
-            return view('');
+            return view('venda.caixaNaoAberto');
         }
     }
     public function apiListar(Request $request){

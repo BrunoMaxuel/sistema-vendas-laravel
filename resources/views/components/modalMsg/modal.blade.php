@@ -3,7 +3,6 @@
       <div class="modal-content">
         <div class="modal-header" id="modalHeader">
           <h4 class="modal-title">Modal Title</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div id="modalBody" class="modal-body">
             <h3 id="title-body">

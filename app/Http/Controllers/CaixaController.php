@@ -83,7 +83,7 @@ class CaixaController extends Controller
         
     }
     public function fecharCaixa(){
-        $caixa = Caixa::where('user_id', Auth::id());
+        $caixa = Caixa::where('user_id', Auth::id())->latest()->first();
         $caixa->aberto = false;
         $caixa->save();
         return response()->json([

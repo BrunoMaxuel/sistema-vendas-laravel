@@ -24,7 +24,24 @@ class VendasController extends Controller
     public function apiListar(Request $request){
         $letrasAsterisco = $request->search;
         if(strlen($letrasAsterisco) < 13){
-            return Produto::where('user_id', Auth::id())->where('nome', 'LIKE', "%$letrasAsterisco%")->get();
+            // return Produto::where('user_id', Auth::id())->where('nome', 'LIKE', "%$letrasAsterisco%")->get();
+
+
+            $resultados = Produto::where('user_id', Auth::id())
+                ->where('nome', 'LIKE', "%$letrasAsterisco%")
+                ->get();
+
+            // Percorre os resultados para formatar os valores desejados
+            $resultadosFormatados = $resultados->map(function ($produto) {
+                $produto->preco = number_format($produto->preco, 2, ',', '.');
+                $produto->preco_custo = number_format($produto->preco_custo, 2, ',', '.');
+                return $produto;
+            });
+
+            return $resultadosFormatados;
+
+
+
         }else{
             return Produto::where('user_id', Auth::id())->where('codigo_barras', $letrasAsterisco)->get();
         }
@@ -32,7 +49,10 @@ class VendasController extends Controller
     public function vendaEmAndamentoRegistrar(Request $request){
 
         $linha = $request->linha;
-        $produtoTotal = $linha[3] * $linha[6];  
+        $valorItem = str_replace('.', '', $linha[3]);
+        $valorItem = str_replace(',', '.', $valorItem);
+
+        $produtoTotal = $valorItem * $linha[6];  
 
         $venda = new Venda();
         $venda->user_id  = Auth::id();
@@ -40,7 +60,7 @@ class VendasController extends Controller
         $venda->nome_produto = $linha[1];
         $venda->codigo_barras = $linha[2];
         $venda->quantidade = $linha[6];
-        $venda->valor_item = $linha[3];
+        $venda->valor_item = $valorItem;
         $venda->total_venda = $produtoTotal;
         $venda->save();
         Produto::where('user_id', Auth::id())->where('id', $linha[0])->decrement('estoque', $linha[6]);
@@ -51,11 +71,19 @@ class VendasController extends Controller
 
             return response()->json($vendas);
         }
-
     }
 
     public function vendaEmAndamento(){
-        $vendas = Venda::where('user_id', Auth::id())->where('venda_finalizada', false)->where('item_cancelado', false)->get();
+        $resultados = Venda::where('user_id', Auth::id())->where('venda_finalizada', false)->where('item_cancelado', false)->get();
+
+        $vendas = $resultados->map(function ($produto) {
+            $produto->preco = number_format($produto->preco, 2, ',', '.');
+            $produto->preco_custo = number_format($produto->preco_custo, 2, ',', '.');
+            $produto->valor_item = number_format($produto->valor_item, 2, ',', '.');
+            $produto->total_venda = number_format($produto->total_venda, 2, ',', '.');
+            return $produto;
+        });
+
         $vendaRealizada = Venda::where('user_id', Auth::id())->latest()->first();
         if(!isset($vendaRealizada) || $vendaRealizada->venda_finalizada == false){
 

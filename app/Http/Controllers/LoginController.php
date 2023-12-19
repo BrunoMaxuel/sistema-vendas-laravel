@@ -18,15 +18,14 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        // dd($credentials);
         
         if (Auth::attempt($credentials)) {
+
             return redirect()->route('home.index');
             
         } else {
-            // Credenciais inválidas
             return redirect()->back()->withInput($request->only('email'))
-                ->withErrors(['email' => 'Credenciais inválidas']);
+            ->with('error', 'Email ou senha incorreto.');
         }
     }
     public function registrar(){

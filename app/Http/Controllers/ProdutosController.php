@@ -103,12 +103,15 @@ class ProdutosController extends Controller
             if($produto == null){
                 $produto = new Produto();
             }
-            
+            $preco = str_replace('.', '', $request->preco);
+            $preco = str_replace(',', '.', $preco);
+            $preco_custo = str_replace('.', '', $request->preco_custo);
+            $preco_custo = str_replace(',', '.', $preco_custo);
             $produto->user_id = Auth::id();
             $produto->nome      = $request->nome;
             $produto->codigo_barras      = $request->codigo_barras;
-            $produto->preco  = str_replace(',', '.', $request->preco);
-            $produto->preco_custo  = str_replace(',', '.', $request->preco_custo);
+            $produto->preco  = $preco;
+            $produto->preco_custo  = $preco_custo;
             $produto->lucro    = str_replace('%', '', $request->lucro);
             $produto->estoque    = $request->estoque;
             $produto->fornecedor    = $request->fornecedor;

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('suprimentos', function (Blueprint $table) {
             $table->id();
-            $table->string('valor');
+            $table->decimal('valor')->default(0.00);
             $table->string('descricao')->nullable();
 
             $table->unsignedBigInteger('user_id');

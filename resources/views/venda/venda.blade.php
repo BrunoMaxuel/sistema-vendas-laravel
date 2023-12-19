@@ -108,11 +108,11 @@
 <script src="{{asset('assets/js/vendas.js')}}"></script>
 <script>
     $('#btnFinalizar').on('click', function () {
-    $('#modalFinalizarVenda').modal('show');
-        setTimeout(function() {
-            $('#valor_recebido').focus();
-        }, 500);
-    });
+        $('#modalFinalizarVenda').modal('show');
+            setTimeout(function() {
+                $('#valor_recebido').focus();
+            }, 500);
+        });
     $('#btnCancelar').on('click', function () {
         $('#modalAlert').modal('show');
         $('.modal-title').text('Cancelamento de venda');

@@ -42,6 +42,7 @@ $(function() {
             linha: data,
             _token: $('meta[name="csrf-token"]').attr('content')
         }, function(data) {
+            console.log(data);
             updateTableVenda(data);
         });
 
@@ -134,16 +135,14 @@ function updateTable(data) {
     });
 }
 function updateTableVenda(data) {
-    var headerRow = tableVenda.find('tr:first'); // Armazena o cabeçalho
-    tableVenda.empty(); // Limpa apenas o corpo da tabela
-
-    // Reanexa o cabeçalho após limpar o corpo da tabela
+    var headerRow = tableVenda.find('tr:first');
+    tableVenda.empty();
     tableVenda.append(headerRow);
 
     var contador = 1;
     var totalVendas = 0;
     var quantidadeTotal = 0;
-    var tableBody = $('<tbody>'); // Criando um novo corpo da tabela
+    var tableBody = $('<tbody>');
 
     data.forEach(function(item) {
         var newRow = $('<tr>');
@@ -151,9 +150,15 @@ function updateTableVenda(data) {
         newRow.append('<td>' + item.nome_produto + '</td>');
         newRow.append('<td>' + item.codigo_barras + '</td>');
         newRow.append('<td>' + item.quantidade + '</td>');
-        newRow.append('<td>' + item.valor_item + '</td>');
-        newRow.append('<td>' + item.total_venda + '</td>');
-        totalVendas += parseFloat(item.total_venda);
+
+        // Formatando valor_item e total_venda
+        var valorItemFormatado = formatarNumero(item.valor_item);
+        var totalVendaFormatado = formatarNumero(item.total_venda);
+
+        newRow.append('<td>' + valorItemFormatado + '</td>');
+        newRow.append('<td>' + totalVendaFormatado + '</td>');
+
+        totalVendas += parseFloat(item.total_venda.replace(/\./g, '').replace(/,/g, '.'));
         var actionColumn = $('<td>');
         var btnExcluir = $('<i>').addClass('fas fa-trash-alt btn bg-danger').attr('id', item.id_venda).css('font-size', '10px');
         
@@ -167,25 +172,30 @@ function updateTableVenda(data) {
         
         actionColumn.append(btnExcluir);
         newRow.append(actionColumn);
+
         quantidadeTotal += item.quantidade;
         tableBody.append(newRow);
-        $('#total_venda').val(totalVendas.toFixed(2));
-        $('#valor_recebido').val(totalVendas.toFixed(2));
 
+        $('#valor_recebido').val(totalVendas.toFixed(2));
         $('#total_item').val(quantidadeTotal);
-        total.text(totalVendas.toFixed(2));
+        total.text(totalVendas.toFixed(2).replace('.', ','));
         contador++;
     });
 
-    tableVenda.append(tableBody); // Adiciona o novo corpo à tabela
+    tableVenda.append(tableBody);
 
-    // Verifica se há mais de 10 linhas e define a altura máxima com uma barra de rolagem
     if (tableBody.children('tr').length > 10) {
         tableVenda.parent().css('max-height', '590px').css('overflow-y', 'auto');
     } else {
         tableVenda.parent().css('max-height', 'none').css('overflow-y', 'visible');
     }
 }
+
+function formatarNumero(numero) {
+    var numeroFormatado = parseFloat(numero.replace(/\./g, '').replace(/,/g, '.')).toFixed(2);
+    return numeroFormatado.replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+}
+
 
 
 

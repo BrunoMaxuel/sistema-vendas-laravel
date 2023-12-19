@@ -33,14 +33,19 @@
 
 @section('body_class', 'login-page')
 
-@section('body')
+    @section('body')
+    
     <div class="login-box">
         <div class="login-logo">
             <a href="{{ url('/') }}"><img width="200" height="160" src="{{asset('vendor/adminlte/dist/img/invokevendas_m.png')}}" alt=""></a>
             <h3 class="col-md-12 p-3">Entrar no sistema</h3>
         </div>
         <!-- /.login-logo -->
-
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
         <div class="row" >
             <div class="col-md-12">
                 <div class="row">

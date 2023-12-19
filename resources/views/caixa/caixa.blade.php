@@ -27,7 +27,7 @@
 		<div class="small-box bg-green">
 			<div class="inner p-3">
 				<h5> Total  do caixa <br> 
-					<h4>R${{$caixa->total}}</h4> </h5>
+					<h4>R${{number_format($caixa->total, 2, ',', '.')}}</h4> </h5>
 			</div>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 		<div class="small-box bg-green">
 			<div class="inner p-3">
 				<h5>Total em Dinheiro <br> 
-					<h4>R${{$caixa->dinheiro}}</h4> </h5>
+					<h4>R${{number_format($caixa->dinheiro, 2, ',', '.')}}</h4> </h5>
 			</div>
 		</div>
 	</div>
@@ -43,7 +43,7 @@
 		<div class="small-box bg-green">
 			<div class="inner p-3">
 				<h5>Total em Crédito <br> 
-					<h4>R${{$caixa->totalCredito}}</h4></h5>
+					<h4>R${{number_format($caixa->totalCredito, 2, ',', '.')}}</h4></h5>
 			</div>
 		</div>
 	</div>
@@ -51,7 +51,7 @@
 		<div class="small-box bg-green">
 			<div class="inner p-3">
 				<h5>Total em Débito <br> 
-					<h4>R${{$caixa->totalDebito}}</h4></h5>
+					<h4>R${{number_format($caixa->totalDebito, 2, ',', '.')}}</h4></h5>
 			</div>
 		</div>
 	</div>
@@ -86,7 +86,7 @@
 					<td>{{$caixa->descricao}}</td>
 					<td>-</td>
 					<td>-</td>
-					<td>+{{$caixa->valor_inicial}}</td>
+					<td>+{{number_format($caixa->valor_inicial, 2, ',', '.')}}</td>
 				</tr>
 				@foreach($entrada as $entradas)
 					<tr class="bg-success">
@@ -96,7 +96,7 @@
 						<td>{{$entradas->descricao}}</td>
 						<td>-</td>
 						<td>-</td>
-						<td>+{{$entradas->valor}}</td>
+						<td>+{{number_format($entradas->valor, 2, ',', '.')}}</td>
 					</tr>	
 			  	@endforeach
 			  	@foreach($transacoes as $transations)
@@ -109,7 +109,7 @@
 						<td> Venda </td>
 						<td>{{$transations->desconto}}</td>
 						<td>{{$transations->pagamento}}</td>
-						<td>+{{$transations->total}}</td>
+						<td>+{{number_format($transations->total, 2, ',', '.')}}</td>
 					</tr>
 			  	@endforeach
 			  	@foreach($sangria as $transations)
@@ -120,7 +120,7 @@
 						<td>{{$transations->descricao}}</td>
 						<td>-</td>
 						<td>-</td>
-						<td>-{{$transations->valor}}</td>
+						<td>-{{number_format($transations->valor, 2, ',', '.')}}</td>
 					</tr>
 			  @endforeach
 			</tbody>

@@ -22,50 +22,45 @@ class CaixaController extends Controller
             return view('caixa.caixaAbrir', ['aberto'=>$aberto, 'caixa'=>$caixa]);
         }
         else{ 
-            $transacoes = Transacao::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
-            $sangria = Sangria::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
-            $sangriaTotal = Sangria::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
-            $suprimentoTotal = Suprimento::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
-            
-            $suprimento = Suprimento::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
-            $caixa  = (object) null;       
-            $caixa->total = str_replace(',', '.', str_replace('.', '', $ultimoRegistroCaixa->valor_inicial));
+                $transacoes = Transacao::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
+                $sangrias = Sangria::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
+                $sangriaTotal = Sangria::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
+                $suprimentoTotal = Suprimento::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
+                
+                $suprimento = Suprimento::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
+                $caixa  = (object) null;       
 
-            $caixa->created_at = $ultimoRegistroCaixa->created_at;
-            $caixa->descricao = $ultimoRegistroCaixa->descricao;
-            $caixa->totalCredito = Transacao::where('user_id', Auth::id())->where('created_at','>=', $ultimoRegistroCaixa->created_at)
+                $caixa->created_at = $ultimoRegistroCaixa->created_at;
+                $caixa->descricao = $ultimoRegistroCaixa->descricao;
+                $caixa->totalCredito = Transacao::where('user_id', Auth::id())->where('created_at','>=', $ultimoRegistroCaixa->created_at)
                 ->where('pagamento','=','Crédito')
                 ->sum('total'); 
             
-            $caixa->totalDebito = Transacao::where('user_id', Auth::id())->where('created_at','>=', $ultimoRegistroCaixa->created_at)
+                $caixa->totalDebito = Transacao::where('user_id', Auth::id())->where('created_at','>=', $ultimoRegistroCaixa->created_at)
                 ->where('pagamento','=','Débito')
                 ->sum('total'); 
                 
-            $caixa->dinheiro = Transacao::where('user_id', Auth::id())->where('created_at','>=', $ultimoRegistroCaixa->created_at)
+                $caixa->dinheiro = Transacao::where('user_id', Auth::id())->where('created_at','>=', $ultimoRegistroCaixa->created_at)
                 ->where('pagamento','=','Dinheiro')
                 ->sum('total'); 
-                
                 $caixa->totalCreditoDebito = $caixa->totalCredito + $caixa->totalDebito;
-
+                $caixa->total = $ultimoRegistroCaixa->valor_inicial;
                 $caixa->total += $caixa->totalCreditoDebito;
                 $caixa->total -= $sangriaTotal;
                 $caixa->total += $suprimentoTotal;
                 $caixa->total += $caixa->dinheiro;
-
-                
-                
-                $caixa->valor_inicial = $ultimoRegistroCaixa->valor_inicial;      
+                $caixa->valor_inicial = $ultimoRegistroCaixa->valor_inicial;
             
-            return view('caixa.caixa',['aberto'=>$ultimoRegistroCaixa->aberto,'caixa'=>$caixa,'transacoes'=>$transacoes,'sangria'=>$sangria,'entrada'=>$suprimento]);
+            return view('caixa.caixa',['aberto'=>$ultimoRegistroCaixa->aberto,'caixa'=>$caixa,'transacoes'=>$transacoes,'sangria'=>$sangrias,'entrada'=>$suprimento]);
             
         }
     }
 
     public function caixaAbrir(Request $request){
-
+        $valorInicial = str_replace('.', '', $request->valor_inicial);
         $caixa = new Caixa();
         $caixa->user_id = Auth::id();
-        $caixa->valor_inicial = $request->valor_inicial;
+        $caixa->valor_inicial = str_replace(',', '.', $valorInicial);
         $caixa->descricao = $request->descricao;
         $caixa->aberto = true;
 
@@ -92,9 +87,12 @@ class CaixaController extends Controller
         ]);
     }
     public function addDinheiro(Request $request){
-        $suprimento = Suprimento::where('user_id', Auth::id());
-        $suprimento->valor = $request->valor;
+        $valorAdicionar = str_replace('.', '', $request->valor);
+        $valorAdicionar = str_replace(',', '.', $valorAdicionar);
+        $suprimento = new Suprimento();
+        $suprimento->valor = $valorAdicionar;
         $suprimento->descricao = $request->descricao;
+        $suprimento->user_id = Auth::id(); 
         $suprimento->save();
         return response()->json([
             'success' => true,
@@ -103,9 +101,12 @@ class CaixaController extends Controller
         ]);
     }
     public function retirarDinheiro(Request $request){
-        $sangria = Sangria::where('user_id', Auth::id());
-        $sangria->valor = $request->valor;
+        $valorRetirar = str_replace('.', '', $request->valor);
+        $valorRetirar = str_replace(',', '.', $valorRetirar);
+        $sangria = new Sangria();
+        $sangria->valor = $valorRetirar;
         $sangria->descricao = $request->descricao;
+        $sangria->user_id = Auth::id();
         $sangria->save();
         return response()->json([
             'success' => true,

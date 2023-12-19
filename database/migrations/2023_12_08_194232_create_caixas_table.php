@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('caixas', function (Blueprint $table) {
             $table->id();
             $table->string('aberto')->default(false);
-            $table->string('valor_inicial')->default('0,00');
+            $table->decimal('valor_inicial')->default(0.00);
             $table->string('descricao')->nullable();
 
             $table->unsignedBigInteger('user_id');

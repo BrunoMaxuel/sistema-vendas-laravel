@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nome_produto');
             $table->string('codigo_barras')->nullable();
             $table->integer('quantidade');
-            $table->decimal('valor_item');
-            $table->decimal('total_venda');
+            $table->decimal('valor_item')->default(0.00);
+            $table->decimal('total_venda')->default(0.00);
             $table->boolean('item_cancelado')->default(false);
             $table->boolean('venda_finalizada')->default(false);
 

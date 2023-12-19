@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('cliente')->default('Visitante');
             $table->integer('desconto');
             $table->integer('parcela');
-            $table->decimal('valor_parcela');
-            $table->decimal('total');
+            $table->decimal('valor_parcela')->default(0.00);
+            $table->decimal('total')->default(0.00);
             $table->integer('total_item');
             $table->enum('pagamento',['Dinheiro','Crédito','Débito']);
 

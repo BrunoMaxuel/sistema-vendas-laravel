@@ -33,8 +33,13 @@ $(function() {
         }).get();
 
         var data = [];
-        rowData.forEach(function(linha) {
-            data.push(linha)
+        rowData.forEach(function(linha, index) {
+            if(index === 3){
+                var valorNumerico = parseFloat(linha.replace(/\./g, '').replace(',', '.'));
+                data.push(valorNumerico);
+            }else{
+                data.push(linha);
+            }
         });
         data.push(qtd);
 
@@ -42,7 +47,6 @@ $(function() {
             linha: data,
             _token: $('meta[name="csrf-token"]').attr('content')
         }, function(data) {
-            console.log(data);
             updateTableVenda(data);
         });
 
@@ -140,8 +144,7 @@ function updateTableVenda(data) {
     tableVenda.append(headerRow);
 
     var contador = 1;
-    var totalVendas = 0;
-    var quantidadeTotal = 0;
+    var valorVendaTotal = quantidadeTotal = 0;
     var tableBody = $('<tbody>');
 
     data.forEach(function(item) {
@@ -150,15 +153,10 @@ function updateTableVenda(data) {
         newRow.append('<td>' + item.nome_produto + '</td>');
         newRow.append('<td>' + item.codigo_barras + '</td>');
         newRow.append('<td>' + item.quantidade + '</td>');
+        newRow.append('<td>' + item.valor_item + '</td>');
+        newRow.append('<td>' + item.total_venda + '</td>');
+        valorVendaTotal += parseFloat(item.total_venda.replace(/\./g, '').replace(',', '.'));
 
-        // Formatando valor_item e total_venda
-        var valorItemFormatado = formatarNumero(item.valor_item);
-        var totalVendaFormatado = formatarNumero(item.total_venda);
-
-        newRow.append('<td>' + valorItemFormatado + '</td>');
-        newRow.append('<td>' + totalVendaFormatado + '</td>');
-
-        totalVendas += parseFloat(item.total_venda.replace(/\./g, '').replace(/,/g, '.'));
         var actionColumn = $('<td>');
         var btnExcluir = $('<i>').addClass('fas fa-trash-alt btn bg-danger').attr('id', item.id_venda).css('font-size', '10px');
         
@@ -174,11 +172,13 @@ function updateTableVenda(data) {
         newRow.append(actionColumn);
 
         quantidadeTotal += item.quantidade;
+        
         tableBody.append(newRow);
 
-        $('#valor_recebido').val(totalVendas.toFixed(2));
+        $('#valor_recebido').val(valorVendaTotal.toLocaleString('pt-br'));
         $('#total_item').val(quantidadeTotal);
-        total.text(totalVendas.toFixed(2).replace('.', ','));
+        $('#total_venda').val(valorVendaTotal.toLocaleString('pt-br'));
+        total.text(valorVendaTotal.toLocaleString('pt-br', { minimumFractionDigits: 2 }));
         contador++;
     });
 
@@ -190,15 +190,6 @@ function updateTableVenda(data) {
         tableVenda.parent().css('max-height', 'none').css('overflow-y', 'visible');
     }
 }
-
-function formatarNumero(numero) {
-    var numeroFormatado = parseFloat(numero.replace(/\./g, '').replace(/,/g, '.')).toFixed(2);
-    return numeroFormatado.replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-}
-
-
-
-
 $(function() {
     $('#tableApi').on('click', 'tr', function() {
         var row = $(this);

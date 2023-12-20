@@ -49,23 +49,27 @@ class VendasController extends Controller
     public function vendaEmAndamentoRegistrar(Request $request){
 
         $linha = $request->linha;
-        $valorItem = str_replace('.', '', $linha[3]);
-        $valorItem = str_replace(',', '.', $valorItem);
-
-        $produtoTotal = $valorItem * $linha[6];  
-
+        $produtoTotal = $linha[3] * $linha[6];  
         $venda = new Venda();
         $venda->user_id  = Auth::id();
         $venda->id_venda = $linha[0];
         $venda->nome_produto = $linha[1];
         $venda->codigo_barras = $linha[2];
         $venda->quantidade = $linha[6];
-        $venda->valor_item = $valorItem;
+        $venda->valor_item = $linha[3];
         $venda->total_venda = $produtoTotal;
         $venda->save();
         Produto::where('user_id', Auth::id())->where('id', $linha[0])->decrement('estoque', $linha[6]);
+        $resultados = Venda::where('user_id', Auth::id())->where('venda_finalizada', false)->where('item_cancelado', false)->get();
 
-        $vendas = Venda::where('user_id', Auth::id())->where('venda_finalizada', false)->where('item_cancelado', false)->get();
+        $vendas = $resultados->map(function ($produto) {
+            $produto->preco = number_format($produto->preco, 2, ',', '.');
+            $produto->preco_custo = number_format($produto->preco_custo, 2, ',', '.');
+            $produto->valor_item = number_format($produto->valor_item, 2, ',', '.');
+            $produto->total_venda = number_format($produto->total_venda, 2, ',', '.');
+            return $produto;
+        });
+
         $vendaRealizada = Venda::where('user_id', Auth::id())->latest()->first();
         if($vendaRealizada->venda_finalizada == false){
 
@@ -76,13 +80,13 @@ class VendasController extends Controller
     public function vendaEmAndamento(){
         $resultados = Venda::where('user_id', Auth::id())->where('venda_finalizada', false)->where('item_cancelado', false)->get();
 
-        $vendas = $resultados->map(function ($produto) {
-            $produto->preco = number_format($produto->preco, 2, ',', '.');
-            $produto->preco_custo = number_format($produto->preco_custo, 2, ',', '.');
-            $produto->valor_item = number_format($produto->valor_item, 2, ',', '.');
-            $produto->total_venda = number_format($produto->total_venda, 2, ',', '.');
-            return $produto;
-        });
+            $vendas = $resultados->map(function ($produto) {
+                $produto->preco = number_format($produto->preco, 2, ',', '.');
+                $produto->preco_custo = number_format($produto->preco_custo, 2, ',', '.');
+                $produto->valor_item = number_format($produto->valor_item, 2, ',', '.');
+                $produto->total_venda = number_format($produto->total_venda, 2, ',', '.');
+                return $produto;
+            });
 
         $vendaRealizada = Venda::where('user_id', Auth::id())->latest()->first();
         if(!isset($vendaRealizada) || $vendaRealizada->venda_finalizada == false){
@@ -129,15 +133,18 @@ class VendasController extends Controller
     }
     public function finalizarVenda(Request $request){
         $dados = $request->dados;
+        $totalVenda = number_format((float)$dados[0], 2, '.', ',');
+        $valor_parcela = number_format((float)$dados[4], 2, '.', ',');
+
         $transacao = new Transacao();
         $transacao->user_id = Auth::id(); 
-        $transacao->total = $dados[0];
+        $transacao->total = $totalVenda;
         $transacao->total_item = $dados[1];
         $transacao->pagamento = $dados[2];
         $transacao->cliente = $dados[6];
         $transacao->desconto = $dados[5];
         $transacao->parcela = $dados[3];
-        $transacao->valor_parcela = $dados[4];
+        $transacao->valor_parcela = $valor_parcela;
         $transacao->save();
 
         Venda::where('user_id', Auth::id())->whereNotNull('id_venda')->update(['venda_finalizada' => true]);

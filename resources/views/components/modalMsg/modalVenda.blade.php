@@ -19,11 +19,11 @@
                     </div>
                     <div class="col-md-4 col-md-offset-2">
                         <label>Valor recebido</label>
-                        <input id="valor_recebido" data-mask="000 000.00" data-mask-reverse="true" name="valor_dinheiro" class="form-control"/>
+                        <input id="valor_recebido" data-mask="000.000,00" data-mask-reverse="true" name="valor_dinheiro" class="form-control"/>
                     </div>
                     <div class="col-md-4">
                         <label>Troco</label>
-                        <input id="troco" data-mask="000 000.00" data-mask-reverse="true" name="troco" value="0.00" class="form-control" readonly/>
+                        <input id="troco" data-mask="000.000,00" data-mask-reverse="true" name="troco" value="0.00" class="form-control" readonly/>
                     </div>
                     <div class="col-md-4 col-md-offset-2">
                         <label>Desconto</label>

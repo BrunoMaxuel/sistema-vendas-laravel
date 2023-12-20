@@ -27,7 +27,8 @@
     }
     #tableApi tbody tr {
     padding: 0px; /* Ajuste o valor conforme necessário */
-}
+    }
+
 
 </style>
 @stop

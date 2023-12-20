@@ -22,28 +22,19 @@ class VendasController extends Controller
         }
     }
     public function apiListar(Request $request){
-        $letrasAsterisco = $request->search;
-        if(strlen($letrasAsterisco) < 13){
-            // return Produto::where('user_id', Auth::id())->where('nome', 'LIKE', "%$letrasAsterisco%")->get();
-
-
+        $dataSearch = $request->search;
+        if(strlen($dataSearch) < 13){
             $resultados = Produto::where('user_id', Auth::id())
-                ->where('nome', 'LIKE', "%$letrasAsterisco%")
+                ->where('nome', 'LIKE', "%$dataSearch%")
                 ->get();
-
-            // Percorre os resultados para formatar os valores desejados
             $resultadosFormatados = $resultados->map(function ($produto) {
                 $produto->preco = number_format($produto->preco, 2, ',', '.');
                 $produto->preco_custo = number_format($produto->preco_custo, 2, ',', '.');
                 return $produto;
             });
-
             return $resultadosFormatados;
-
-
-
-        }else{
-            return Produto::where('user_id', Auth::id())->where('codigo_barras', $letrasAsterisco)->get();
+        }else if(strlen($dataSearch) === 13){
+            return Produto::where('user_id', Auth::id())->where('codigo_barras', $dataSearch)->get();
         }
     }
     public function vendaEmAndamentoRegistrar(Request $request){
@@ -133,8 +124,11 @@ class VendasController extends Controller
     }
     public function finalizarVenda(Request $request){
         $dados = $request->dados;
-        $totalVenda = number_format((float)$dados[0], 2, '.', ',');
-        $valor_parcela = number_format((float)$dados[4], 2, '.', ',');
+        $totalVenda = str_replace('.', '', $dados[0]);
+        $totalVenda = str_replace(',', '.', $totalVenda);
+        $valor_parcela = str_replace('.', '', $dados[4]);
+        $valor_parcela = str_replace(',', '.', $valor_parcela);
+        
 
         $transacao = new Transacao();
         $transacao->user_id = Auth::id(); 

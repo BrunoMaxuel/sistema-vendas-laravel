@@ -63,7 +63,6 @@
         $('#lucro').on('keyup', function() {
             var mCusto = parseFloat(custo.val().replace(".", "").replace(",", ".")) || 0;
             var mLucro = parseFloat(lucro.cleanVal()) || 0;
-            console.log($('#lucro').val(), $('#preco').val(),  $('#preco_custo').val());
 
             var newPreco = mCusto + (mCusto * (mLucro / 100));
             preco.val(preco.masked(newPreco.toFixed(2)));

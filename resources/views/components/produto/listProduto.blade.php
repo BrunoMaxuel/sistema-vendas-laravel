@@ -21,9 +21,9 @@
                     <th scope="row">{{$produto['id']}}</th>
                     <td><strong>{{$produto['nome']}}</strong></td>
                     <td>{{$produto['codigo_barras']}}</td>
-                    <td>{{$produto['preco']}}</td>
-                    <td>{{$produto['preco_custo']}}</td>
-                    <td>{{$produto['lucro']}}</td>
+                    <td>{{number_format($produto['preco'], 2, ',', '.')}}</td>
+                    <td>{{number_format($produto['preco_custo'], 2, ',', '.')}}</td>
+                    <td>{{$produto['lucro'].'%'}}</td>
                     <td>{{$produto['estoque']}}</td>
                     <td>{{$produto['fornecedor']}}</td>
                     <td>{{$produto['categoria']}}</td>

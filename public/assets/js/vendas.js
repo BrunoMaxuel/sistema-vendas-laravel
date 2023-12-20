@@ -175,9 +175,9 @@ function updateTableVenda(data) {
         
         tableBody.append(newRow);
 
-        $('#valor_recebido').val(valorVendaTotal.toLocaleString('pt-br'));
+        $('#valor_recebido').val(valorVendaTotal.toLocaleString('pt-br', { minimumFractionDigits: 2 }));
         $('#total_item').val(quantidadeTotal);
-        $('#total_venda').val(valorVendaTotal.toLocaleString('pt-br'));
+        $('#total_venda').val(valorVendaTotal.toLocaleString('pt-br', { minimumFractionDigits: 2 }));
         total.text(valorVendaTotal.toLocaleString('pt-br', { minimumFractionDigits: 2 }));
         contador++;
     });
@@ -208,15 +208,15 @@ $(document).on('keydown', function(e) {
         $('#search').focus();
     }
     $(document).on('input', '#total_venda, #valor_recebido', function() {
-        var totalVenda = parseFloat($('#total_venda').val().replace(' ', '').replace(',', '.'));
-        var totalRecebido = parseFloat($('#valor_recebido').val().replace(' ', '').replace(',', '.'));
+        var totalVenda = parseFloat($('#total_venda').val().replace('.', '').replace(',', '.'));
+        var totalRecebido = parseFloat($('#valor_recebido').val().replace('.', '').replace(',', '.'));
 
         if (!isNaN(totalVenda) && !isNaN(totalRecebido)) {
             var troco = totalRecebido - totalVenda;
-            $('#troco').val(troco.toFixed(2));
+            $('#troco').val(troco.toLocaleString('pt-br', {minimumFractionDigits: 2}));
         } else {
 
-            $('#troco').val('Valores inválidos');
+            $('#troco').val('0,00');
         }
     });
 });

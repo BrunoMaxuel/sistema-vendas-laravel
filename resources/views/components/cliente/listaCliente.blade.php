@@ -1,12 +1,5 @@
 
-<form action="{{ route('clientes.search') }}" method="GET" class="form-inline">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Pesquisar clientes" name="query">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="submit">Buscar</button>
-            </div>
-        </div>
-    </form>
+
 <div class="table-responsive">
     <table class="table table-striped align-middle">
         <thead>

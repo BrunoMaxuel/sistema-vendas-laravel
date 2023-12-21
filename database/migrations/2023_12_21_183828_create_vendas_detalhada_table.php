@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vendas', function (Blueprint $table) {
+        Schema::create('vendas_detalhada', function (Blueprint $table) {
             $table->id();
             $table->string('nome_produto');
             $table->string('codigo_barras')->nullable();
@@ -20,10 +20,11 @@ return new class extends Migration
             $table->decimal('total_venda')->default(0.00);
             $table->boolean('item_cancelado')->default(false);
             $table->boolean('venda_finalizada')->default(false);
-            $table->integer('id_transacao')->nullable();
+            // $table->integer('id_transacao')->nullable();
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->ondelete('cascade');
+
+            $table->unsignedBigInteger('id_transacao');
+            $table->foreign('id_transacao')->references('id')->on('transacoes')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vendas');
+        Schema::dropIfExists('vendas_detalhada');
     }
 };

@@ -17,7 +17,7 @@
         display: none;
     }
     .cor-linha{
-        background-color: #17A2B8; 
+        background-color: #0A8DC6; 
         border-radius: 10px;
     }
     .customize{
@@ -38,7 +38,7 @@
 <x-modalMsg.modalVenda/>
 <x-modalMsg.modal/>
 
-<div class="row ">
+<div class="row p-2 cor-linha">
     <div class="col-md-8 p-2 cor-linha">
         <h4 class="text-light" style="margin-left: 17px">Código barras/Nome</h4>
         <div class="input-group-append search-input">
@@ -87,8 +87,8 @@
         </table>
     </div>
     <div class="col-md-4">
-        <div class="row">
-            <div class="col-md-12 bg-info p-3 mb-3 cor-linha" style="height: 75vh;">
+        <div class="row ">
+            <div class="col-md-12 p-3 mb-3 cor-linha text-light" style="height: 75vh;">
                 <div class="p-4">
                     <h1><strong>TOTAL</strong></h1>
                     <h1><strong id="total" class="pl-5 ml-5">0,00</strong></h1>
@@ -98,7 +98,6 @@
                     <h1><strong class="pl-5 ml-5">0,00</strong></h1>
                 </div>
             </div>
-            
         </div>
     </div>
 </div>

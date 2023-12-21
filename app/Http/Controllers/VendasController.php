@@ -6,6 +6,7 @@ use App\Models\Caixa;
 use App\Models\Produto;
 use App\Models\Transacao;
 use App\Models\Venda;
+use App\Models\vendasDetalhadas;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,6 @@ class VendasController extends Controller
         $produtoTotal = $linha[3] * $linha[6];  
         $venda = new Venda();
         $venda->user_id  = Auth::id();
-        $venda->id_venda = $linha[0];
         $venda->nome_produto = $linha[1];
         $venda->codigo_barras = $linha[2];
         $venda->quantidade = $linha[6];
@@ -129,7 +129,6 @@ class VendasController extends Controller
         $valor_parcela = str_replace('.', '', $dados[4]);
         $valor_parcela = str_replace(',', '.', $valor_parcela);
         
-
         $transacao = new Transacao();
         $transacao->user_id = Auth::id(); 
         $transacao->total = $totalVenda;
@@ -141,7 +140,20 @@ class VendasController extends Controller
         $transacao->valor_parcela = $valor_parcela;
         $transacao->save();
 
-        Venda::where('user_id', Auth::id())->whereNotNull('id_venda')->update(['venda_finalizada' => true]);
+        $vendas = Venda::where('venda_finalizada', false)->get();        
+        foreach ($vendas as $venda) {
+            $vendaDetalhada = new vendasDetalhadas();
+            $vendaDetalhada->nome_produto = $venda->nome_produto;
+            $vendaDetalhada->codigo_barras = $venda->codigo_barras;
+            $vendaDetalhada->quantidade = $venda->quantidade;
+            $vendaDetalhada->valor_item = $venda->valor_item;
+            $vendaDetalhada->total_venda = $venda->total_venda;
+            $vendaDetalhada->item_cancelado = $venda->item_cancelado;
+            $vendaDetalhada->id_transacao = $transacao->id;
+            $vendaDetalhada->save();
+        }
+        
+        Venda::where('user_id', Auth::id())->update(['venda_finalizada' => true]);
 
         return response()->json();
     }

@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 class HistoricoVendasController extends Controller
 {
     public function historicoView(){
-        return view('relatorio.historicoVendas');
+        $transacao = Transacao::all();
+        return view('relatorio.historicoVendas', ['transactions' => $transacao]);
     }   
     public function historicoAPI(){
         $tr = Transacao::where('id', Auth::id())->get();

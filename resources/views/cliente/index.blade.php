@@ -1,13 +1,35 @@
 @extends('adminlte::page')
 
 @section('title', 'Clientes Cadastrados')
+@section('css')
+    <style>
+        .cor-fundo{
+            background-color: #0A8DC6;
+            padding: 20px;
+            border-radius: 10px;
+            color:white;
+        }
+    </style>
+@stop
 
 @section('content_header')
-<div>
-    <h3>Total de clientes: {{$clientes->total()  }} </h3>
-</div>
-<div id="btnAdd" class="btn btn-success m-1">
-    Adicionar Cliente
+<div class="row cor-fundo">
+    <div class="col-md-8">
+        <h3>Total de clientes: {{$clientes->total()  }} </h3>
+        <form action="{{ route('clientes.search') }}" method="GET" class="form-inline">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Pesquisar clientes" name="query">
+                <div class="input-group-append">
+                    <button style="border: solid 1px rgb(0, 0, 0); color: black; background-color:white;" class="btn btn-outline-primary" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4 d-flex justify-content-end align-items-center">
+        <div id="btnAdd" class="btn btn-light">
+            Adicionar Cliente
+        </div>
+    </div>
 </div>
 @stop
 

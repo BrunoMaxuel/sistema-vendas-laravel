@@ -15,7 +15,7 @@ class VendasController extends Controller
 {
     public function venderView(){
         $ultimoRegistroCaixa = Caixa::where('user_id', Auth::id())->latest()->first();
-        if(!isset($ultimoRegistroCaixa) || $ultimoRegistroCaixa->aberto == true){
+        if(isset($ultimoRegistroCaixa) && $ultimoRegistroCaixa->aberto == true){
             return view('venda.venda');
         }else{
             return view('venda.caixaNaoAberto');

@@ -341,6 +341,12 @@ return [
                 ],
             ]
         ],
+        [
+            'text' => 'Histórico de Vendas',
+            'icon' => 'fas fa-chart-bar',
+            'url' => '/historico'
+        ]
+        ,
         'configurações',
         [
             'text'    => 'configurações',

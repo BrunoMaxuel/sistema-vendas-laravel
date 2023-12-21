@@ -3,6 +3,7 @@
 use App\Http\Controllers\CaixaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\HistoricoVendasController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\VendasController;
@@ -55,12 +56,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/vender/vendaAndamento/finalizar', [VendasController::class, 'finalizarVenda'])->name('venda.andamento.finalizar');
     Route::post('/vender/vendaAndamento/cancelarVenda', [VendasController::class, 'cancelarVenda'])->name('venda.andamento.cancelar');
 
+
+
+    //historico
+    Route::get('/historico', [HistoricoVendasController::class, 'historicoView'])->name('historico.view'); 
+
 });
-
-//Rotas de clientes
-
-
-// Route::post('/venda', 'VendasController@Registrar')->name('venda.registrar');
-// Route::get('/venda/cupom/', 'VendasController@GerarCupom')->name('venda.cupom.route');
-// Route::get('/venda/cupom/{id}', 'VendasController@GerarCupom')->name('venda.cupom');
-// Route::post('/venda/cancelar/', 'VendasController@CancelarVenda')->name('venda.cancelar');

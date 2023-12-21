@@ -90,7 +90,7 @@
                         </form>
         
                         <p class="mb-1">
-                            <a href="" class="btn btn-primary">Esqueci minha senha</a>
+                            <a href="{{route('registrar')}}" class="btn btn-primary">Esqueci minha senha</a>
                         </p>
                     </div>
                 </div>

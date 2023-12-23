@@ -20,7 +20,7 @@
 			<h2>Histórico de Vendas</h2>
 		</div>
 		<div class="col-md-7 d-flex justify-content-end">
-			<button onclick="imprimirConteudo()"  type="submit" class="btn btn-light p-2">Imprimir Todas Vendas<span class="glyphicon glyphicon-print"></span></button>
+			<button onclick="imprimirConteudo('historico/imprimirVendas')"  type="submit" class="btn btn-light p-2">Imprimir Histórico<span class="glyphicon glyphicon-print"></span></button>
 		</div>
 	</div>
 	
@@ -74,13 +74,11 @@
 				$('#table-modal tbody').empty();
 				
 				$.each(vendaDetalhes, function(index, venda) {
-
+					$('#id_transacao').val(venda.id_transacao);
 					var valorItemFormatted = parseFloat(venda.valor_item).toLocaleString('pt-br', {minimumFractionDigits: 2});
 					var totalVendaFormatted = parseFloat(venda.total_venda).toLocaleString('pt-br', {minimumFractionDigits: 2});
-
-					console.log(venda.cliente);
 					var newRow = '<tr>' +
-						'<td>' + venda.id + '</td>' +
+						'<td>' + venda.id_transacao + '</td>' +
 						'<td>' + venda.nome_produto + '</td>' +
 						'<td>' + venda.quantidade + '</td>' +
 						'<td>' + valorItemFormatted + '</td>' +
@@ -108,15 +106,15 @@
    		  this.contentWindow.print();
    	}
 
-	function imprimirConteudo() {
+	function imprimirConteudo(url) {
 		var newFrame = document.createElement("iframe");
-   		  newFrame.onload = setPrint;
-   		  newFrame.style.visibility = "hidden";
-   		  newFrame.style.position = "fixed";
-   		  newFrame.style.right = "0";
-   		  newFrame.style.bottom = "0";
-   		  newFrame.src = "historico/imprimirVendas";
-   		  document.body.appendChild(newFrame);
-}
+		newFrame.onload = setPrint;
+		newFrame.style.visibility = "hidden";
+		newFrame.style.position = "fixed";
+		newFrame.style.right = "0";
+		newFrame.style.bottom = "0";
+		newFrame.src = url;
+		document.body.appendChild(newFrame);
+	}
 </script>
 @stop

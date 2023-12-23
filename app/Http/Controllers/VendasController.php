@@ -49,6 +49,7 @@ class VendasController extends Controller
         $venda->quantidade = $linha[6];
         $venda->valor_item = $linha[3];
         $venda->total_venda = $produtoTotal;
+        $venda->id_venda = $linha[0];
         $venda->save();
         Produto::where('user_id', Auth::id())->where('id', $linha[0])->decrement('estoque', $linha[6]);
         $resultados = Venda::where('user_id', Auth::id())->where('venda_finalizada', false)->where('item_cancelado', false)->get();
@@ -92,36 +93,6 @@ class VendasController extends Controller
         return response()->json();
     }
     
-    public function apiSave(Request $request){
-        if($request->id != null){
-            try{
-                $estoque = Produto::where('id','=',$request->id)->first();
-                $estoque->estoque      =  $request->estoque;
-                $estoque->nome         =  $request->nome;
-                $estoque->codigo       =  $request->bar_code;
-                $estoque->lucro        =  str_replace("%","",$request->lucro);
-                $estoque->preco_custo  =  str_replace([".",","],["","."],$request->preco_custo);
-                $estoque->preco        =  str_replace([".",","],["","."], $request->preco);
-                $estoque->save();
-                
-                return response()->json([
-                    'success' => 'true',
-                    'message' => 'Estoque alterado com sucesso'
-                ]);
-            }catch(QueryException $e){
-                return response()->json([
-                    'success' => 'false',
-                    'message' => 'Erro '. $e->errorInfo[2]
-                ]);
-            }
-        }
-        else{
-            return response()->json([
-                'success' => 'false',
-                'message' => 'sem indice na busca!'
-            ]);
-        };
-    }
     public function finalizarVenda(Request $request){
         $dados = $request->dados;
         $totalVenda = str_replace('.', '', $dados[0]);

@@ -26,16 +26,19 @@ class HistoricoVendasController extends Controller
     }
     public function historicoBuscarDetalhes(Request $request){
         $id_transacao = $request->dataId;
-        $vendaDetalhe = vendasDetalhadas::where('user_id', Auth::id())->where('id_transacao', $id_transacao)->get();
+        $vendaDetalhe = vendasDetalhadas::where('user_id', Auth::id())->where('item_cancelado', false)->where('id_transacao', $id_transacao)->get();
         return response()->json($vendaDetalhe);
     }
     public function imprimirVendas(){
-        $transacoes = Transacao::where('user_id', Auth::id());
-        $vendasDetalhada = vendasDetalhadas::where('user_id', Auth::id());
-        return view('relatorio.imprimirUnicaVenda', ['transacoes' => $transacoes, 'vendasDetalhada' => $vendasDetalhada]);
+        $transacoes = Transacao::where('user_id', Auth::id())->get();
+        $vendasDetalhada = vendasDetalhadas::where('user_id', Auth::id())->where('item_cancelado', false)->get();
+        
+        return view('relatorio.imprimirTodasVendas', ['transacoes' => $transacoes, 'vendasDetalhada' => $vendasDetalhada]);
     }
-    public function imprimirVenda(){
-        return view('relatorio.imprimirTodasVendas');
+    public function imprimirVenda(Request $request){
+        $id_transacao = $request->id;
+        $vendasDetalhada = vendasDetalhadas::where('user_id', Auth::id())->where('item_cancelado', false)->where('id_transacao', $id_transacao)->get();
+        return view('relatorio.imprimirDetalhesVendas', ['vendasDetalhada' => $vendasDetalhada]);
     }
     
 }

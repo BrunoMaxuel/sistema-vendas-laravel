@@ -162,6 +162,7 @@ function updateTableVenda(data) {
         
         btnExcluir.on('click', function() {
             var idParaExcluir = $(this).attr('id');
+            console.log(idParaExcluir);
             
             $.post("/vender/vendaAndamento/cancelar", {id_venda : idParaExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
                 location.reload();

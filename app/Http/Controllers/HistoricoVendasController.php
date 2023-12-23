@@ -40,5 +40,8 @@ class HistoricoVendasController extends Controller
         $vendasDetalhada = vendasDetalhadas::where('user_id', Auth::id())->where('item_cancelado', false)->where('id_transacao', $id_transacao)->get();
         return view('relatorio.imprimirDetalhesVendas', ['vendasDetalhada' => $vendasDetalhada]);
     }
+    public function backupView(){
+        return view('relatorio.backup');
+    }
     
 }

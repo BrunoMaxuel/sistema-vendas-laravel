@@ -359,7 +359,7 @@ return [
                 ],
                 [
                     'text'    => 'Backup do Sistema',
-                    'url'     => '#',
+                    'url'     => 'backup',
                     'icon'    => 'fas fa-fw fa-download',
                     'icon_color' => 'success'
                 ],

@@ -5,7 +5,7 @@
     <style>
         .cor-fundo{
             background-color: #0A8DC6;
-            padding: 20px;
+            padding: 30px 10px 30px 10px;
             border-radius: 10px;
             color:white;
         }
@@ -14,8 +14,7 @@
 
 @section('content_header')
 <div class="row cor-fundo">
-    <div class="col-md-8">
-        <h3>Total de clientes: {{$clientes->total()  }} </h3>
+    <div class="col-md-4">
         <form action="{{ route('clientes.search') }}" method="GET" class="form-inline">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Pesquisar clientes" name="query">
@@ -25,12 +24,17 @@
             </div>
         </form>
     </div>
-    <div class="col-md-4 d-flex justify-content-end align-items-center">
+    <div class="col-md-5">
+        <h3>TOTAL DE CLIENTES  <i class="fas fa-sm fa-arrow-right" style="width: 50px;"></i> <strong>{{$clientes->total()}}</strong> </h3>
+    </div>
+    <div class="col-md-3 d-flex justify-content-end align-items-center">
         <div id="btnAdd" class="btn btn-light">
-            Adicionar Cliente
+            Adicionar cliente
         </div>
     </div>
 </div>
+
+
 @stop
 
 @section('content')

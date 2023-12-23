@@ -131,7 +131,7 @@ return [
     'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
-    'usermenu_desc' => false,
+    // 'usermenu_desc' => true,
     'usermenu_profile_url' => false,
 
     /*
@@ -347,7 +347,6 @@ return [
             'url' => '/historico'
         ]
         ,
-        'configurações',
         [
             'text'    => 'configurações',
             'icon'    => 'fas fa-fw fa-share',
@@ -370,13 +369,6 @@ return [
                 ],
             ],
         ],
-        'Sair do sistema',
-        [
-            'text'       => 'Sair',
-            'icon_color' => 'green',
-            'icon' => 'fas fa-fw fa-power-off',
-            'url'        => '#',
-        ]
     ],
 
     /*

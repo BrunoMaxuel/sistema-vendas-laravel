@@ -143,6 +143,7 @@ class VendasController extends Controller
         $vendas = Venda::where('venda_finalizada', false)->get();        
         foreach ($vendas as $venda) {
             $vendaDetalhada = new vendasDetalhadas();
+            $vendaDetalhada->user_id = Auth::id();
             $vendaDetalhada->nome_produto = $venda->nome_produto;
             $vendaDetalhada->codigo_barras = $venda->codigo_barras;
             $vendaDetalhada->quantidade = $venda->quantidade;

@@ -15,6 +15,7 @@ class ClienteFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => 1,
             'nome' => $this->faker->name,
             'endereco' => $this->faker->streetAddress,
             'telefone' => $this->faker->phoneNumber,

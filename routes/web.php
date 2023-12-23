@@ -60,5 +60,9 @@ Route::middleware(['auth'])->group(function(){
 
     //historico
     Route::get('/historico', [HistoricoVendasController::class, 'historicoView'])->name('historico.view'); 
+    Route::post('/historico', [HistoricoVendasController::class, 'historicoBuscarDetalhes'])->name('historico.detalhes'); 
+    Route::get('/historico/imprimirVendas', [HistoricoVendasController::class, 'imprimirVendas'])->name('historico.imprimir.vendas'); 
+    Route::post('/historico/imprimirVenda', [HistoricoVendasController::class, 'imprimirVenda'])->name('historico.imprimir.venda'); 
+
 
 });

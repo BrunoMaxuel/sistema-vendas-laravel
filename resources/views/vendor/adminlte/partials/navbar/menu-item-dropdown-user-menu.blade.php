@@ -12,22 +12,23 @@
     @php( $logout_url = $logout_url ? url($logout_url) : '' )
 @endif
 
-<li class="nav-item dropdown user-menu">
+<li style="margin-right: 100px;" class="nav-item dropdown user-menu">
 
     {{-- User menu toggler --}}
-    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+    <a  href="#" class="nav-link dropdown-toggle " data-toggle="dropdown">
         @if(config('adminlte.usermenu_image'))
             <img src="{{ Auth::user()->adminlte_image() }}"
                  class="user-image img-circle elevation-2"
-                 alt="{{ Auth::user()->name }}">
+                 alt="{{ Auth::user()->name }} ">
         @endif
         <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
-            {{ Auth::user()->name }}
+            <h4>
+                <i class="fas fa-user"></i> Perfil</strong></h4>
         </span>
     </a>
 
     {{-- User menu dropdown --}}
-    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+    <ul  class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
         {{-- User menu header --}}
         @if(!View::hasSection('usermenu_header') && config('adminlte.usermenu_header'))
@@ -39,7 +40,7 @@
                          alt="{{ Auth::user()->name }}">
                 @endif
                 <p class="@if(!config('adminlte.usermenu_image')) mt-0 @endif">
-                    {{ Auth::user()->name }}
+                   Bem-vindo, {{ Auth::user()->name }}
                     @if(config('adminlte.usermenu_desc'))
                         <small>{{ Auth::user()->adminlte_desc() }}</small>
                     @endif
@@ -67,10 +68,10 @@
                     {{ __('adminlte::menu.profile') }}
                 </a>
             @endif
-            <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif"
+            <a class="btn btn-success @if(!$profile_url) btn-block @endif"
                href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <i class="fa fa-fw fa-power-off text-red"></i>
-                {{ __('adminlte::adminlte.log_out') }}
+                <i class="fa fa-fw fa-power-off "></i>
+                Sair do sistema
             </a>
             <form id="logout-form" action="{{ $logout_url }}" method="POST" style="display: none;">
                 @if(config('adminlte.logout_method'))

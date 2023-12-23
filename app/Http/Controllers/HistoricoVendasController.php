@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class HistoricoVendasController extends Controller
 {
     public function historicoView(){
-        $transacao = Transacao::all();
+        $transacao = Transacao::where('user_id', Auth::id())->get();
         return view('relatorio.historicoVendas', ['transactions' => $transacao]);
     }   
     public function historicoAPI(){

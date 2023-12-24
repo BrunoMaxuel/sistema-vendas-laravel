@@ -90,13 +90,11 @@
                         </form>
         
                         <p class="mb-1">
-                            <a href="{{route('registrar')}}" class="btn btn-primary">Esqueci minha senha</a>
+                            <a href="{{route('registrar')}}" class="btn btn-primary">Criar sua Conta</a>
                         </p>
                     </div>
                 </div>
             </div>
-            <!-- /.login-card-body -->
         </div>
     </div>
-    <!-- /.login-box -->
 @stop

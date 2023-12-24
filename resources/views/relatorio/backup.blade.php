@@ -31,7 +31,7 @@
         
         .cor-fundo{
             background-color: #0A8DC6;
-            padding: 30px 10px 30px 10px;
+            padding: 20px 5px 20px 5px;
             border-radius: 10px;
             color:white;
         }
@@ -39,45 +39,83 @@
 @stop
 @section('content_header')
 <div class="row cor-fundo">
-    {{-- <div class="col-md-4">
-        <form action="{{ route('clientes.search') }}" method="GET" class="form-inline">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Pesquisar clientes" name="query">
-                <div class="input-group-append">
-                    <button style="border: solid 1px rgb(0, 0, 0); color: black; background-color:white;" class="btn btn-outline-primary" type="submit">Buscar</button>
-                </div>
-            </div>
-        </form>
-    </div> --}}
     <div class="col-md-12 ">
-        <h3>BACKUP DOS REGISTROS DO SISTEMA</h3>
+        <h3><strong>Backup e restauração do sistema</strong></h3>
     </div>
 </div>
 @stop
 
 @section('content')
+    <x-modalMsg.modalMsg/>
+    @if(session('msg'))
+        <script>
+            showModal(session('msg'));
+        </script>
+    @endif
+
     <div class="row">
-        <div class="col-md-4 box-parent">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-4 cor-fundo">
             <div class="box box-danger text-center">
-                <h3 class="header">Restaurar Database</h3>
-                <p>Restaura de um arquivo .SQL os registro. Isso irá apagar os registros de seu banco de dados atual!</p>
-                    <button class="btn btn-danger" onclick="">IMPORTAR</button>
-                    <form id="form_import" action="" method="post" enctype="multipart/form-data">
+                <h2 class="header">Restaurar Database</h2>
+                <p>Isso vai redefinir todos os seus dados do sistema.</p>
+                    <button class="btn btn-danger pl-5 pr-5" onclick="importData()">IMPORTAR</button>
+                    <form id="form_import" action="{{ route('backup.importBackup')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input id="file-sql" type="file" name="file-sql" style="display: none;" />
                     </form>
-                    
+                    {{-- {{ isset($import) ? $import : '' }} --}}
                 <div class="col-md-12 text-center">
                 </div>
             </div> 
         </div>
-        <div class="col-md-4 box-parent">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-4 cor-fundo">
             <div class="box box-success text-center">
-                <h3 class="header">Exportar Database</h3>
-                <p>Salva todos os registro do seu banco de dados em um arquivo .SQL</p>
-                    <a  href="#" ><button class="btn btn-primary" type="button">EXPORTAR</button></a>
+                <h2 class="header">Exportar Database</h2>
+                    <p>Isso gera um arquivo com os dados do sistema.</p>
+                        <a download="{{$mysql->filename}}" href="data:application/octet-stream;base64,{{$mysql->file}}" ><button class="btn btn-success pl-5 pr-5" type="button">EXPORTAR</button></a>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-1">
+
+        </div>
     </div>
+@stop
+@section('js')
+    <script>
+        @if(session('msg'))
+            showModal('{{ session('msg') }}');
+        @endif
+        document.getElementById('file-sql').value = '';
+
+        document.getElementById('file-sql').onchange = function(e){
+            $("#background-text").addClass("bg-blue");
+            $("#titulo-msg").css('font-size', 23);
+            $("#titulo-msg").html("Restaurando dados, aguarde...");
+            $('#modal-msg').modal('show');
+            document.getElementById('form_import').submit();
+        }
+
+        function importData(){
+            document.getElementById('file-sql').click();
+        }
+        function showModal(msg){
+            $("#background-text").addClass("bg-success");
+            $("#titulo-msg").css('font-size', 20);
+            $("#titulo-msg").html(msg);
+            setTimeout(function() {
+                    $('#modal-msg').modal('show');
+            }, 500); 
+            setTimeout(function() {
+                    $('#modal-msg').modal('hide');
+            }, 3000); 
+        }
+    </script>
 @stop

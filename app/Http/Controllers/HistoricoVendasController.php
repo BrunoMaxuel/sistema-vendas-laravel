@@ -41,7 +41,43 @@ class HistoricoVendasController extends Controller
         return view('relatorio.imprimirDetalhesVendas', ['vendasDetalhada' => $vendasDetalhada]);
     }
     public function backupView(){
-        return view('relatorio.backup');
+        return view('relatorio.backup', ['mysql'=>$this->MakeTmpBackup()]);
+    }
+
+    function MakeTmpBackup(){
+        $ds = DIRECTORY_SEPARATOR;
+        $path = database_path() . $ds . 'backups' . $ds . date('Y') . $ds . date('m') . $ds;
+        $file = date('Y-m-d-H-i-s') . '.SQL';
+        $fullfile = "\"" . $path . $file . "\"";
+        $command = "mysqldump --user=".getenv('DB_USERNAME')." --password=".getenv('DB_PASSWORD')." --host=".getenv('DB_HOST'). " " . getenv('DB_DATABASE')." --add-drop-database -r {$fullfile}";
+
+        if (!is_dir($path)) {
+            mkdir($path, 0755, true);
+        }
+        exec($command, $output);
+        $data = file_get_contents($path . $file);
+
+        unlink($path . $file);
+        return (object)array(
+            'filename'=> $file,
+            'file' => base64_encode($data)
+         );
+    }
+    function importBackup(Request $request){
+        if($request->hasFile('file-sql')){
+            $file = $request->file('file-sql')->store('temp');
+            $sqlfile = storage_path('app/') . $file;
+            $this->RestoreDatabase($sqlfile);
+            $import = "Banco de dados restaurado com sucesso!";
+        }else{
+            $import = "Nenhum arquivo selecionado.";
+        }
+        return redirect()->route('backup.view')->with('msg', $import);
+    }
+    function RestoreDatabase($sqlfile){
+        $command = "mysql --user=".getenv('DB_USERNAME')." --password=".getenv('DB_PASSWORD')." --host=".getenv('DB_HOST'). " " . getenv('DB_DATABASE')." < {$sqlfile}";
+        exec($command, $output);
+        unlink($sqlfile);
     }
     
 }

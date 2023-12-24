@@ -364,8 +364,10 @@ return [
                     'icon_color' => 'success'
                 ],
                 [
-                    'text' => 'config3',
+                    'text' => 'Configurar Sessão',
                     'url'  => '#',
+                    'icon'    => 'fas fa-fw fa-certificate',
+                    'icon_color' => 'success'
                 ],
             ],
         ],

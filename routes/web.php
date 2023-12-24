@@ -64,4 +64,5 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/historico/imprimirVendas', [HistoricoVendasController::class, 'imprimirVendas'])->name('historico.imprimir.vendas'); 
     Route::get('/historico/imprimirVendaDetalhada/{id}', [HistoricoVendasController::class, 'imprimirVenda'])->name('historico.imprimir.venda');
     Route::get('/backup', [HistoricoVendasController::class, 'backupView'])->name('backup.view'); 
+    Route::post('/backup', [HistoricoVendasController::class, 'importBackup'])->name('backup.importBackup'); 
 });

@@ -31,16 +31,15 @@
                             <div class="btn-group">
                                 <div>
                                     <button type="button" id="{{$produto['id']}}"  class="btnEditar btn btn-secondary-soft btn-sm btn-success mr-2">
-                                    <i class="bi bi-pencil-square"></i> Editar
+                                    <i class="fas fa-pen"></i>
                                     </button>
                                 </div>
                                 <div>
                                     <button type="button" id="{{$produto['id']}}" class="btnExcluir btn btn-danger btn-sm mt-2 mt-sm-0">
-                                    <i class="bi bi-trash"></i> Excluir
+                                    <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
                             </div>
-                            
                         </td>
                     </tr>
                 @endforeach
@@ -52,15 +51,3 @@
         </tbody>
     </table>
 </div>
-@section('js')
-    <script>
-        var tabela = $('#tabela-produto');
-        var numTabela = tabela.find('tbody').find('tr').length;
-        if(numTabela > 7){
-                tabela.parent().css('max-height', '400px').css('overflow-y', 'auto');
-            }
-            else{
-                table.parent().css('max-height', 'none').css('overflow-y', 'visible');    
-            }
-    </script>
-@stop

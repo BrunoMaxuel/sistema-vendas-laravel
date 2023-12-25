@@ -9,6 +9,17 @@
 			padding: 15px;
 			border-radius: 5px;
 		}
+		.custom-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        padding: 4px; /* Ajuste o valor conforme necessário */
+        text-align: left;
+        border-bottom: 1px solid #ddd; /* Adicione uma borda inferior para separar as linhas */
+    }
 	</style>
 @stop
 @section('content_header')
@@ -27,7 +38,7 @@
 @section('content')
 	<x-modalMsg.modalHistorico/>	
 	<div class="table-responsive">
-		<table id="transations-table" class=" table hover order-column compact table-bordered" cellspacing="0" width="100%">
+		<table id="transations-table" class="custom-table table hover order-column compact table-bordered" cellspacing="0" width="100%">
 			<thead class="thead-light">
 			<tr>
 				<th scope="col">N°</th>

@@ -22,7 +22,7 @@ class CaixaController extends Controller
             return view('caixa.caixaAbrir', ['aberto'=>$aberto, 'caixa'=>$caixa]);
         }
         else{ 
-                $transacoes = Transacao::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
+                $transacoes = Transacao::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->orderby('id', 'desc')->get();
                 $sangrias = Sangria::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->get();
                 $sangriaTotal = Sangria::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');
                 $suprimentoTotal = Suprimento::where('user_id', Auth::id())->where('created_at', '>=', $ultimoRegistroCaixa->created_at)->sum('valor');

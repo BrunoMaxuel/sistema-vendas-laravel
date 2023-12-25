@@ -1,6 +1,22 @@
 @extends('adminlte::page')
 
 @section('title', 'Gerenciamento de Caixa')
+@section('css')
+	<style>
+		.custom-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        padding: 4px; /* Ajuste o valor conforme necessário */
+        text-align: left;
+        border-bottom: 1px solid #ddd; /* Adicione uma borda inferior para separar as linhas */
+    }
+	</style>
+@stop
+
 @section('content_header')
 <div class="modal fade" id="modalAlert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog " role="document">
@@ -70,7 +86,7 @@
 @section('content')
   <div class="row">
 	  <div class="col-md-12">
-		 <table id="transations-table" class="table compact table-bordered" width="100%">
+		 <table id="transations-table" class="custom-table table compact table-bordered" width="100%">
 			<thead class="thead-light">
 				<tr>
 					<th scope="col">#</th>
@@ -104,7 +120,7 @@
 					</tr>	
 			  	@endforeach
 			  	@foreach($transacoes as $transations)
-					<tr class="bg-success">
+					<tr style="background-color: #0A8DC6; color: white;">
 						<td> + </td>
 						<td>{{$transations->created_at}}</td>
 						<td>{{$transations->cliente}}</td>

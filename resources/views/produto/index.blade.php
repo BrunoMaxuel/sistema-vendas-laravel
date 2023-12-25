@@ -87,6 +87,7 @@
         });
         function editar(index){
             $.post("{{route('produtos.editar')}}", { id: index, _token: $('meta[name="csrf-token"]').attr('content')}, function( data )	{
+             
               $("#id").val(data.id);
               $("#nome").val(data.nome);
               $("#codigo_barras").val(data.codigo_barras);
@@ -182,6 +183,15 @@
                 }
           });
       });
+
+      var tabela = $('#tabela-produto');
+        var numTabela = tabela.find('tbody').find('tr').length;
+        if(numTabela > 7){
+            tabela.parent().css('max-height', '400px').css('overflow-y', 'auto');
+        }
+        else{
+            tabela.parent().css('max-height', 'none').css('overflow-y', 'visible');    
+        }
   });
   </script>
 @stop

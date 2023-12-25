@@ -1,11 +1,26 @@
 @extends('adminlte::page')
 
 @section('title', 'Adicionar Cliente')
+@section('css')
+    <style>
+         .cor-fundo{
+            background-color: #0A8DC6;
+            padding: 20px 10px 20px 10px;
+            border-radius: 10px;
+            color:white;
+        }
+    </style>
+
+@stop
+
+
 
 @section('content_header')
-    <div class="m-3">
-        <h1>Adicionar Cliente</h1>
+<div class="row ml-3 mr-1">
+    <div class="col-md-6 cor-fundo">
+        <h5>Adicionar Cliente</h5>
     </div>
+</div>
 @stop
 
 @section('content')

@@ -15,8 +15,7 @@ class HistoricoVendasController extends Controller
         return view('relatorio.historicoVendas', ['transactions' => $transacao]);
     }   
     public function historicoAPI(){
-        $tr = Transacao::where('id', Auth::id())->get();
-        
+        $tr = Transacao::where('id', Auth::id())->orderby('id', 'desc')->get();
         foreach ($tr as $value){
             $value->total = number_format($value->total, 2, ',', '.');
         }

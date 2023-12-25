@@ -18,6 +18,9 @@ class ProdutosController extends Controller
     public function editarView(Request $request){
         if($request->id != null){
             $produto = Produto::where('user_id', Auth::id())->where('id', $request->id)->first();
+            $produto->preco = number_format($produto->preco, 2, ',', '.');
+            $produto->preco_custo = number_format($produto->preco_custo, 2, ',', '.');
+
             return response()->json($produto);
         }
         else{

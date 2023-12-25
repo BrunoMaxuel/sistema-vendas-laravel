@@ -22,7 +22,6 @@
     }
     .customize{
         border-radius: 10px;
-        background-color: #6c757d;
         background-color: #007BFF;
     }
     #tableApi tbody tr {

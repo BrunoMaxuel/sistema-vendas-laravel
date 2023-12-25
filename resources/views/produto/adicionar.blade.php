@@ -1,10 +1,27 @@
 @extends('adminlte::page')
 @section('title', 'Adicionar Produto')
+@section('css')
+    <style>
+         .cor-fundo{
+            background-color: #0A8DC6;
+            padding: 20px 10px 20px 10px;
+            border-radius: 10px;
+            color:white;
+        }
+    </style>
+
+@stop
+@section('content_header')
+    <div class="row ml-3">
+        <div class="col-md-6 cor-fundo">
+            <h5>Adicionar novo Produto</h5>
+        </div>
+    </div>
+@stop
 @section('content')
 <x-modalMsg.modalMsg/>
 <div class="row ml-2">
-    <div class="col-md-7">
-        <h5>Alterar Informações do Produto</h5>
+    <div class="col-md-6">
         <form id="formUp">
             @csrf
             <input type="hidden" name="id" id="id">
@@ -29,7 +46,7 @@
                     <span id="error-preco" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-row">
+            <div class="row">
                 <div class="form-group col-md-3">
                     <label for="lucro">Lucro<span class="text-danger">*</span></label>
                     <input type="text" id="lucro" name="lucro" class="form-control">
@@ -44,17 +61,21 @@
                     <label for="fornecedor">Fornecedor</label>
                     <input type="text" id="fornecedor" name="fornecedor" class="form-control">
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="categoria">Categoria</label>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-6">
                     <select id="categoria" name="categoria" class="form-control">
-                        <option value="Não selecionado" selected="selected">Não selecionado</option>
+                        <option value="Não selecionado" selected="selected">Selecione uma categoria</option>
                         <option value="Eletronico">Eletrônicos</option>
                         <option value="Cama mesa e banho">Cama, mesa e banho</option>
                         <option value="Artigos para presente">Artigos para presente</option>
                     </select>
                 </div>
+                <div class="form-group col-md-6">
+                    <button type="button" id="btnSubmit" class="btn btn-primary">Salvar alterações</button>
+                </div>
             </div>
-            <button type="button" id="btnSubmit" class="btn btn-primary">Salvar alterações</button>
         </form>
     </div>
 </div>

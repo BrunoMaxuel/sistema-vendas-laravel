@@ -5,15 +5,11 @@
     
     <style>
     .login-box {
-        /* position: absolute;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%); */
-        width: 500px; 
+        width: 400px; 
         margin: auto;
-        margin-top: 6%; 
+        margin-top: 5%; 
         background-color: #d8d8d8; 
-        padding: 30px; 
+        padding: 25px; 
         border-radius: 8px; 
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     }
@@ -37,8 +33,8 @@
     
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url('/') }}"><img width="200" height="160" src="{{asset('vendor/adminlte/dist/img/invokevendas_m.png')}}" alt=""></a>
-            <h3 class="col-md-12 p-3">Entrar no sistema</h3>
+            <a href="{{ url('/') }}"><img width="80" height="70" src="{{asset('vendor/adminlte/dist/img/invokevendas_m.png')}}" alt=""></a>
+            <h4 class="col-md-12 p-3">Entrar no sistema</h4>
         </div>
         <!-- /.login-logo -->
         @if(session('error'))
@@ -73,7 +69,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary btn-block p-3">Entrar</button>
+                                    <button type="submit" class="btn btn-primary btn-block ">Entrar</button>
                                 </div>
                                 
                             </div>

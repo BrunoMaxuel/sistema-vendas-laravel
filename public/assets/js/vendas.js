@@ -137,6 +137,12 @@ function updateTable(data) {
         newRow.append('<td>' + item.estoque + '</td>');
         tableBody.append(newRow);
     });
+
+    if (tableBody.children('tr').length > 6) {
+        tableApi.parent().css('max-height', '400px').css('overflow-y', 'auto');
+    } else {
+        tableApi.parent().css('max-height', 'none').css('overflow-y', 'visible');
+    }
 }
 function updateTableVenda(data) {
     var headerRow = tableVenda.find('tr:first');
@@ -185,8 +191,8 @@ function updateTableVenda(data) {
 
     tableVenda.append(tableBody);
 
-    if (tableBody.children('tr').length > 10) {
-        tableVenda.parent().css('max-height', '590px').css('overflow-y', 'auto');
+    if (tableBody.children('tr').length > 6) {
+        tableVenda.parent().css('max-height', '370px').css('overflow-y', 'auto');
     } else {
         tableVenda.parent().css('max-height', 'none').css('overflow-y', 'visible');
     }

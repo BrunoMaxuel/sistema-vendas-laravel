@@ -352,12 +352,6 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'Meu Perfil',
-                    'url'  => 'admin/settings',
-                    'icon' => 'fas fa-fw fa-user',
-                    'icon_color' => 'warning'
-                ],
-                [
                     'text'    => 'Backup do Sistema',
                     'url'     => 'backup',
                     'icon'    => 'fas fa-fw fa-download',

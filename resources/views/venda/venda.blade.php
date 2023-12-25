@@ -9,8 +9,8 @@
 		margin-left: 15px;
 		margin-bottom: 15px;
 		width: 350px;
-		height: 40px;
-		font-size: 25px;
+		height: 35px;
+		font-size: 17px;
         border-radius: 5px;
 	}
     #display-tableApi{
@@ -32,31 +32,31 @@
 
 </style>
 @stop
-
-@section('content')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<x-modalMsg.modalVenda/>
-<x-modalMsg.modal/>
-
+@section('content_header')
 <div class="row p-2 cor-linha">
-    <div class="col-md-8 p-2 cor-linha">
-        <h4 class="text-light" style="margin-left: 17px">Código barras/Nome</h4>
+    <div class="col-md-8 cor-linha">
+        <h5 class="text-light" style="margin-left: 17px">Código barras/Nome</h5>
         <div class="input-group-append search-input">
             <input type="text" id="search" placeholder="Pesquisar item para venda" oninput="convertToUpper(this)">
         </div>
     </div>
     <div class="col-md-4 cor-linha d-flex align-items-center justify-content-center">
         <div id="btnFinalizar">
-            <button class="btn btn-light p-1 mr-3 pt-3 pb-3"><strong>Finalizar Venda</strong></button>
+            <button class="btn btn-light mr-2 "><strong>Finalizar Venda</strong></button>
         </div>
         <div id="btnCancelar">
-            <button class="btn btn-light p-1 pt-3 pb-3"><strong>Cancelar Venda</strong></button>
+            <button class="btn btn-light "><strong>Cancelar Venda</strong></button>
         </div>
     </div>
 </div> 
-<div class="row mt-2">
+@stop
+@section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<x-modalMsg.modalVenda/>
+<x-modalMsg.modal/>
+<div class="row">
     <div class="col-md-8" id="display-tableApi">
-        <table id="tableApi" style="cursor: pointer;"  class="moverProduto table p-5 hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
+        <table id="tableApi" style="cursor: pointer;"  class="moverProduto table hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
@@ -88,7 +88,7 @@
     </div>
     <div class="col-md-4">
         <div class="row ">
-            <div class="col-md-12 p-3 mb-3 cor-linha text-light" style="height: 75vh;">
+            <div class="col-md-12 p-3 mb-3 cor-linha text-light" style="height: 63vh;">
                 <div class="p-4">
                     <h1><strong>TOTAL</strong></h1>
                     <h1><strong id="total" class="pl-5 ml-5">0,00</strong></h1>

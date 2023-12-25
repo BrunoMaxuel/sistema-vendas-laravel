@@ -6,25 +6,28 @@
 		.cor-linha{
 			background-color: #0A8DC6;
 			color:white;
-			padding: 30px;
+			padding: 15px;
 			border-radius: 5px;
 		}
-
 	</style>
 @stop
-
-@section('content')
-	<x-modalMsg.modalHistorico/>
+@section('content_header')
 	<div class="row cor-linha">
-		<div class="col-md-5">
-			<h2>Histórico de Vendas</h2>
+		<div class="col-md-6">
+			<h3>Histórico de Vendas</h3>
 		</div>
-		<div class="col-md-7 d-flex justify-content-end">
-			<button onclick="imprimirConteudo('historico/imprimirVendas')"  type="submit" class="btn btn-light p-2">Imprimir Histórico<span class="glyphicon glyphicon-print"></span></button>
+		<div class="col-md-3 ">
+			{{-- <button onclick="imprimirConteudo('historico/imprimirVendas')" class="btn btn-light">Imprimir Histórico</button> --}}
+		</div>
+		<div class="col-md-3 ">
+			<button onclick="imprimirConteudo('historico/imprimirVendas')" class="btn btn-light">Imprimir Histórico</button>
 		</div>
 	</div>
-	
-		<table id="transations-table" class="table hover order-column compact table-bordered" cellspacing="0" width="100%">
+@stop
+@section('content')
+	<x-modalMsg.modalHistorico/>	
+	<div class="table-responsive">
+		<table id="transations-table" class=" table hover order-column compact table-bordered" cellspacing="0" width="100%">
 			<thead class="thead-light">
 			<tr>
 				<th scope="col">N°</th>
@@ -59,7 +62,8 @@
 				</tr>
 				@endforeach
 			</tbody>
-		</table>
+		</table>	
+	</div>
 @stop
 @section('js')
 <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
@@ -98,6 +102,15 @@
         $('.excluir').click(function() {
             console.log('Excluindo');
         });
+		var tabela = $('#transations-table');
+            var numCliente = tabela.find('tbody').find('tr').length;
+            if(numCliente > 7){
+                tabela.parent().css('max-height', '400px').css('overflow-y', 'auto');
+            }
+            else{
+                table.parent().css('max-height', 'none').css('overflow-y', 'visible');    
+            }
+
     });
 	function closePrint () {
     		  document.body.removeChild(this.__container__);
@@ -116,5 +129,7 @@
 		newFrame.src = url;
 		document.body.appendChild(newFrame);
 	}
+
+
 </script>
 @stop

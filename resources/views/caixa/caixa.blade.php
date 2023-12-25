@@ -1,8 +1,7 @@
 @extends('adminlte::page')
 
 @section('title', 'Gerenciamento de Caixa')
-
-@section('content')
+@section('content_header')
 <div class="modal fade" id="modalAlert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog " role="document">
 	  	<div class="modal-content p-4">
@@ -22,10 +21,10 @@
 </div>
   <x-modalMsg.modalCaixa/>
   <x-modalMsg.modalMsg/>
-<div class="row p-3">
+<div class="row">
 	<div class="col-sm-3">
 		<div class="small-box bg-green">
-			<div class="inner p-3">
+			<div class="inner p-2">
 				<h5> Total  do caixa <br> 
 					<h4>R${{number_format($caixa->total, 2, ',', '.')}}</h4> </h5>
 			</div>
@@ -33,7 +32,7 @@
 	</div>
 	<div class="col-sm-3">
 		<div class="small-box bg-green">
-			<div class="inner p-3">
+			<div class="inner p-2">
 				<h5>Total em Dinheiro <br> 
 					<h4>R${{number_format($caixa->dinheiro, 2, ',', '.')}}</h4> </h5>
 			</div>
@@ -41,7 +40,7 @@
 	</div>
 	<div class="col-sm-3">
 		<div class="small-box bg-green">
-			<div class="inner p-3">
+			<div class="inner p-2">
 				<h5>Total em Crédito <br> 
 					<h4>R${{number_format($caixa->totalCredito, 2, ',', '.')}}</h4></h5>
 			</div>
@@ -49,29 +48,34 @@
 	</div>
 	<div class="col-sm-3">
 		<div class="small-box bg-green">
-			<div class="inner p-3">
+			<div class="inner p-2">
 				<h5>Total em Débito <br> 
 					<h4>R${{number_format($caixa->totalDebito, 2, ',', '.')}}</h4></h5>
 			</div>
 		</div>
 	</div>
-	<button class="btn btn-info m-2" id="close">Fechar o caixa</button>
-	<button class="btn btn-success m-2" id="btnAdd">Suprimento</button>
-	<button class="btn btn-danger m-2" id="btnRemove">Sangria de caixa</button>
-</div>
 	
-
-  
-  <hr>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<div><h4>Movimentações do Caixa</h4></div>
+	</div>
+	<div class="col-md-8 d-flex justify-content-end">
+		<button class="btn btn-info mr-2" id="close">Fechar o caixa</button>
+		<button class="btn btn-success mr-2" id="btnAdd">Suprimento</button>
+		<button class="btn btn-danger" id="btnRemove">Sangria de caixa</button>
+	</div>
+</div>
+@stop
+@section('content')
   <div class="row">
 	  <div class="col-md-12">
-	  <h4>Movimentações do caixa</h4>
-		 <table id="transations-table" class="table hover order-column compact table-bordered" cellspacing="0" width="100%">
+		 <table id="transations-table" class="table compact table-bordered" width="100%">
 			<thead class="thead-light">
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Data de movimento</th>
-					<th scope="col">Cliente ou Ação</th>
+					<th scope="col">Data e Hora</th>
+					<th scope="col">Cliente ou Ações</th>
 					<th scope="col">Descrição</th>
 					<th scope="col">Desconto</th>
 					<th scope="col">Pagamento</th>
@@ -101,11 +105,9 @@
 			  	@endforeach
 			  	@foreach($transacoes as $transations)
 					<tr class="bg-success">
-						{{-- <td>{{$transations->id}}</td> --}}
 						<td> + </td>
 						<td>{{$transations->created_at}}</td>
 						<td>{{$transations->cliente}}</td>
-						{{-- <td><a target="_blank" href="{{route('venda.cupom', ['id'=>$transations->id])}}">{!!nl2br($transations->detalhes)!!}</a></td> --}}
 						<td> Venda </td>
 						<td>{{$transations->desconto}}</td>
 						<td>{{$transations->pagamento}}</td>
@@ -131,7 +133,6 @@
 
 @section('js')
 <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
-<script src="{{ asset('vendor/datatables.min.js') }}"></script>
 <script type="text/javascript">
     $(function() {
     	$.ajaxSetup({
@@ -156,28 +157,6 @@
 			$('#descricao').val('Retirando dinheiro...');
         	$('#modalCaixa').modal('show');
         });
-		
-    	
-    	 $('#transations-table').DataTable( {
-			"scrollY": "390px", 
-			"scrollCollapse": true,
-    		 "bPaginate": false,
-			 "columnDefs": [
-				{ "orderable": false, "targets": 1 } // O índice da coluna começa de 0
-			],
- 	        "language": {
- 	            "lengthMenu": "Exibir _MENU_ registros por página",
- 	            "zeroRecords": "Nada encontrado",
- 	            "info": "Exibindo _PAGE_ de _PAGES_",
- 	            "infoEmpty": "Nenhum registro encontrado",
- 	            "infoFiltered": "(filtrado de _MAX_ todos os registros)",
- 	            "search" : " Pesquisar "
- 	        },
- 	       "initComplete": function( settings, json ) {
- 	            $('.bg-success').css('background-color','#dff0d8');
- 	           	$('.bg-danger').css('background-color','#f2dede');
- 	            }
-    	    });
  	    $('#btnSubmit').click(function(){
 				$.post("{{route('caixa.fechar')}}", function( data ){
 					if(data.success == true){
@@ -204,7 +183,6 @@
 				$valor = $('#valor').val();
 				$descricao = $('#descricao').val();
 				$addOrSangria = $('#addOrSangria').val();
-				console.log($addOrSangria);
 				if($addOrSangria == 'add'){
 					$.post("{{route('caixa.add')}}", {valor: $valor, descricao: $descricao} , function( data ){
 							if(data.success == true){
@@ -236,6 +214,14 @@
      				);
 				}
  	    	});
+			 	var table = $('#transations-table');
+				var numberOfRows = table.find('tbody').find('tr').length;
+
+				if (numberOfRows > 5) {
+					table.parent().css('max-height', '340px').css('overflow-y', 'auto');
+				} else {
+					table.parent().css('max-height', 'none').css('overflow-y', 'visible');
+				}
     	});
 </script>
 @stop

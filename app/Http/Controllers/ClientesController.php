@@ -11,15 +11,12 @@ use Illuminate\Support\Facades\Validator;
 class ClientesController extends Controller
 {
     public function index(){
-        $quantidade = 10; 
-        $clientes = Cliente::where('user_id', Auth::id())->orderBy('id', 'desc')->paginate($quantidade);
         
+        $clientes = Cliente::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
         return view('cliente/index', ['clientes' => $clientes]);
     }
     
     public function editarView(Request $request){
-        
-
 
         if($request->id != null){
             $cliente = Cliente::where('user_id', Auth::id())->where('id', $request->id)->first();

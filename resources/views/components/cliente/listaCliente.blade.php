@@ -1,7 +1,5 @@
-
-
 <div class="table-responsive">
-    <table class="table table-striped align-middle">
+    <table id="table-cliente" class="table table-striped align-middle">
         <thead>
         <tr>
             <th scope="col">Id</th>
@@ -14,44 +12,37 @@
         </tr>
         </thead>
         <tbody>
-        @if(count($clientes) > 0)
-            @foreach($clientes as $cliente)
+            @if(count($clientes) > 0)
+                @foreach($clientes as $cliente)
+                    <tr>
+                        <th scope="row">{{$cliente['id']}}</th>
+                        <td><strong>{{$cliente['nome']}}</strong></td>
+                        <td>{{$cliente['endereco']}}</td>
+                        <td>{{$cliente['telefone']}}</td>
+                        <td>{{$cliente['bairro']}}</td>
+                        <td>{{$cliente['cidade']}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <div>
+                                    <button type="button" id="{{$cliente['id']}}"  class="btnEditar btn btn-secondary-soft btn-sm btn-success mr-2">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="button" id="{{$cliente['id']}}" class="btnExcluir btn btn-danger btn-sm mt-2 mt-sm-0">
+                                    <i class="bi bi-trash"></i> Excluir
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </td>
+                    </tr>
+                @endforeach
+            @else
                 <tr>
-                    <th scope="row">{{$cliente['id']}}</th>
-                    <td><strong>{{$cliente['nome']}}</strong></td>
-                    <td>{{$cliente['endereco']}}</td>
-                    <td>{{$cliente['telefone']}}</td>
-                    <td>{{$cliente['bairro']}}</td>
-                    <td>{{$cliente['cidade']}}</td>
-                    <td>
-                        <div class="btn-group">
-                            <div>
-                                <button type="button" id="{{$cliente['id']}}"  class="btnEditar btn btn-secondary-soft btn-sm btn-success mr-2">
-                                <i class="bi bi-pencil-square"></i> Editar
-                                </button>
-                            </div>
-                            <div>
-                                <button type="button" id="{{$cliente['id']}}" class="btnExcluir btn btn-danger btn-sm mt-2 mt-sm-0">
-                                <i class="bi bi-trash"></i> Excluir
-                                </button>
-                            </div>
-                        </div>
-                        
-                    </td>
+                    <td colspan="8" class="text-center">Nenhum usuário encontrado</td>
                 </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="8" class="text-center">Nenhum usuário encontrado</td>
-            </tr>
-        @endif
+            @endif
         </tbody>
     </table>
-</div>
-</div>
-<div class="d-flex justify-content-center">
-    {{ $clientes->links('pagination::bootstrap-4') }}
-</div>
-
-
 </div>

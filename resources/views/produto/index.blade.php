@@ -5,7 +5,7 @@
     <style>
         .cor-fundo{
             background-color: #0A8DC6;
-            padding: 30px 10px 30px 10px;
+            padding: 20px 10px 20px 10px;
             border-radius: 10px;
             color:white;
         }
@@ -15,27 +15,26 @@
     </style>
 @stop
 @section('content_header')
-<div class="row cor-fundo">
-    <div class="col-md-4">
-        
-        <form action="{{ route('produtos.search') }}" method="GET" class="form-inline">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Pesquisar clientes" name="query">
-                <div class="input-group-append">
-                    <button style="border: solid 1px rgb(0, 0, 0); color: black; background-color:white;" class="btn btn-outline-primary" type="submit">Buscar</button>
+    <div class="row cor-fundo">
+        <div class="col-md-4">
+            <form action="{{ route('produtos.search') }}" method="GET" class="form-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Pesquisar clientes" name="query">
+                    <div class="input-group-append">
+                        <button style="border: solid 1px rgb(0, 0, 0); color: black; background-color:white;" class="btn btn-outline-primary" type="submit">Buscar</button>
+                    </div>
                 </div>
+            </form>
+        </div>
+        <div class="col-md-5">
+            <h3>TOTAL DE PRODUTOS  <i class="fas fa-sm fa-arrow-right" style="width: 50px;"></i> <strong>{{$produtos->total()}}</strong> </h3>
+        </div>
+        <div class="col-md-3 d-flex justify-content-end align-items-center">
+            <div id="btnAdd" class="btn btn-light">
+                Adicionar produto
             </div>
-        </form>
-    </div>
-    <div class="col-md-5">
-        <h3>TOTAL DE PRODUTOS  <i class="fas fa-sm fa-arrow-right" style="width: 50px;"></i> <strong>{{$produtos->total()}}</strong> </h3>
-    </div>
-    <div class="col-md-3 d-flex justify-content-end align-items-center">
-        <div id="btnAdd" class="btn btn-light">
-            Adicionar produto
         </div>
     </div>
-</div>
 @stop
 
 

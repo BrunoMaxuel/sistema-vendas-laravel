@@ -20,12 +20,21 @@
         background-color: #0A8DC6; 
         border-radius: 10px;
     }
-    .customize{
-        border-radius: 10px;
-        background-color: #007BFF;
-    }
     #tableApi tbody tr {
-    padding: 0px; /* Ajuste o valor conforme necessário */
+        padding: 2px; 
+
+    }
+    .custom-table {
+        border-collapse: collapse;
+        width: 100%;
+        cursor: pointer;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        padding: 4px; /* Ajuste o valor conforme necessário */
+        text-align: left;
+        border-bottom: 1px solid #ddd; /* Adicione uma borda inferior para separar as linhas */
     }
 
 
@@ -54,13 +63,13 @@
 <x-modalMsg.modalVenda/>
 <x-modalMsg.modal/>
 <div class="row">
-    <div class="col-md-8" id="display-tableApi">
-        <table id="tableApi" style="cursor: pointer;"  class="moverProduto table hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
+    <div class="col-md-9" id="display-tableApi">
+        <table id="tableApi"  class="custom-table moverProduto table hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nome do produto</th>
-                    <th scope="col">Código</th>
+                    <th scope="col">Código barras</th>
                     <th scope="col">Preço</th>
                     <th scope="col">Custo</th>
                     <th scope="col">Estoque</th>
@@ -70,11 +79,10 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-8" id="display-tableVenda">
-        <table id="tableVenda" style="cursor: default;"   class="table hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
+    <div class="col-md-9" id="display-tableVenda">
+        <table id="tableVenda" style="cursor: default;"   class="custom-table table hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
             <thead class="thead-light">
                 <tr>
-                    <th style="width: 1%" class="removeLinha" scope="col">Item</th>
                     <th scope="col">Nome do produto</th>
                     <th scope="col">Código</th>
                     <th style="width: 5%" scope="col">UN</th>
@@ -85,16 +93,16 @@
             </thead>
         </table>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="row ">
-            <div class="col-md-12 p-3 mb-3 cor-linha text-light" style="height: 63vh;">
-                <div class="p-4">
-                    <h1><strong>TOTAL</strong></h1>
-                    <h1><strong id="total" class="pl-5 ml-5">0,00</strong></h1>
+            <div class="col-md-12 cor-linha text-light" style="height: 63vh;">
+                <div class="p-3">
+                    <h2><strong>TOTAL</strong></h2>
+                    <h2><strong id="total" class="pl-3 ml-3">0,00</strong></h2>
                 </div>
-                <div class="p-4">
-                    <h1><strong id="troco">TROCO</strong></h1>
-                    <h1><strong class="pl-5 ml-5">0,00</strong></h1>
+                <div class="p-3">
+                    <h2><strong >Itens</strong></h2>
+                    <h2><strong id="total_itens" class="pl-3 ml-3">0</strong></h2>
                 </div>
             </div>
         </div>
@@ -125,6 +133,7 @@
             location.reload();
         });
     })
+    
 
 </script>
 @stop

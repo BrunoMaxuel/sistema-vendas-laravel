@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Validator;
 class ClientesController extends Controller
 {
     public function index(){
-        
         $clientes = Cliente::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
         return view('cliente/index', ['clientes' => $clientes]);
     }
@@ -22,36 +21,26 @@ class ClientesController extends Controller
             $cliente = Cliente::where('user_id', Auth::id())->where('id', $request->id)->first();
             return response()->json($cliente);
         }
-        else{
-            return response()->json([
-                'success' => 'false',
-                'message' => 'sem indice na busca!'
-            ]);
-        }
     }
     public function saveEditar(Request $request){
         $validator = Validator::make($request->all(), [
             'nome' => 'required',
         ], [
             'nome.required' => 'Por favor, preencha o campo nome.',
-            // Adicione mensagens para os demais campos
         ]);
         
-    
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Erro na validação',
                 'errors' => $validator->errors()
-            ]);// Código de status HTTP para erros de validação 
+            ]);
         }
         try{
             $cliente = null;
             if(!blank($request->id)){
                 $cliente = Cliente::where('user_id', Auth::id())->find($request->id);
-            }
-    
-            if($cliente == null){
+            }else{
                 $cliente = new Cliente();
             }
             $cliente->user_id   = Auth::id(); 
@@ -120,12 +109,10 @@ class ClientesController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-
         $clientes = Cliente::where('user_id', Auth::id())->where('nome', 'LIKE', "%$query%")
-                            ->orWhere('endereco', 'LIKE', "%$query%")
-                            ->paginate(10);
+            ->orWhere('endereco', 'LIKE', "%$query%")->get();
 
-        return view('cliente/index', ['clientes' => $clientes]);
+            return view('cliente/index', ['clientes' => $clientes]);
     }
 
 

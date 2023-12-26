@@ -155,7 +155,6 @@ function updateTableVenda(data) {
 
     data.forEach(function(item) {
         var newRow = $('<tr>');
-        newRow.append('<td>' + contador + '</td>');
         newRow.append('<td>' + item.nome_produto + '</td>');
         newRow.append('<td>' + item.codigo_barras + '</td>');
         newRow.append('<td>' + item.quantidade + '</td>');
@@ -179,6 +178,7 @@ function updateTableVenda(data) {
         newRow.append(actionColumn);
 
         quantidadeTotal += item.quantidade;
+        $('#total_itens').text(quantidadeTotal);
         
         tableBody.append(newRow);
 

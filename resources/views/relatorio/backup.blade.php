@@ -59,7 +59,7 @@
         </div>
         <div class="col-md-4 cor-fundo">
             <div class="box box-danger text-center">
-                <h2 class="header">Restaurar Database</h2>
+                <h3 class="header">Restaurar Database</h3>
                 <p>Isso vai redefinir todos os seus dados do sistema.</p>
                     <button class="btn btn-danger pl-5 pr-5" onclick="importData()">IMPORTAR</button>
                     <form id="form_import" action="{{ route('backup.importBackup')}}" method="post" enctype="multipart/form-data">

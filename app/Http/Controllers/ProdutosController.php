@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Validator;
 class ProdutosController extends Controller
 {
     public function index(){
-        $quantidade = 10;
-        $produtos = Produto::where('user_id', Auth::id())->orderBy('id', 'desc')->paginate($quantidade);
+
+        $produtos = Produto::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
 
         return view('produto/index', ['produtos'=>$produtos]);
     }
@@ -143,10 +143,13 @@ class ProdutosController extends Controller
     public function search(Request $request){
         $query = $request->input('query');
 
-        $produtos = Produto::where('nome', 'LIKE', "%$query%")
-                            ->orWhere('codigo_barras', 'LIKE', "%$query%")
-                            ->paginate(10);
-
-        return view('produto/index', ['produtos' => $produtos]);
+       if($query != null){
+            $produtos = Produto::where('user_id', Auth::id())->where('nome', 'LIKE', "%$query%")
+            ->orWhere('codigo_barras', 'LIKE', "%$query%")->orderby('id', 'desc')->get();
+            return view('produto/index', ['produtos' => $produtos]);
+       }else{
+            $produtos = Produto::where('user_id', Auth::id())->get();
+            return view('produto/index', ['produtos' => $produtos]);
+       }
     }
 }

@@ -1,5 +1,4 @@
 @extends('adminlte::page')
-
 @section('content_header') <div class="row">
     <div class="col-sm-4">
         <div class="small-box bg-green">
@@ -12,7 +11,6 @@
                 <i class="fas fa-chart-line"></i>
             </div>
             <a href="" class="small-box-footer p-2" style="font-size: 20px">Abrir <i class="fa fa-arrow-circle-right"></i></a>
-            {{-- {{route('historico')}} --}}
         </div>
     </div>
     <div class="col-sm-4">

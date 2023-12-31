@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table id="tabela-produto" class="table table-striped align-middle">
+    <table id="tabela-produto" class="custom-table table table-striped align-middle">
         <thead>
             <tr>
                 <th scope="col">#</th>

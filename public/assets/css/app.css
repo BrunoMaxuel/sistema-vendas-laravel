@@ -1,0 +1,8 @@
+/* Estilos para telas menores que 1366px */
+@media screen and (max-width: 1366px) {
+    /* Adicione estilos para ajustar elementos específicos */
+    .login-box {
+        width: 300px;
+    }
+}
+  

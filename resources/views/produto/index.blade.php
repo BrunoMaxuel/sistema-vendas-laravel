@@ -12,6 +12,17 @@
         tbody tr td{
        text-transform: uppercase;
         }
+        .custom-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        padding: 4px; /* Ajuste o valor conforme necessário */
+        text-align: left;
+        border-bottom: 1px solid #ddd; /* Adicione uma borda inferior para separar as linhas */
+    }
     </style>
 @stop
 @section('content_header')

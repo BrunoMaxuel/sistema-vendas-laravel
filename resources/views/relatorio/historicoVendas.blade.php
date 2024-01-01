@@ -31,7 +31,7 @@
 			{{-- <button onclick="imprimirConteudo('historico/imprimirVendas')" class="btn btn-light">Imprimir Histórico</button> --}}
 		</div>
 		<div class="col-md-3 ">
-			<button onclick="imprimirConteudo('historico/imprimirVendas')" class="btn btn-light">Imprimir Histórico</button>
+			<x-form.button onclick="imprimirConteudo('historico/imprimirVendas')" type="button" theme="light"  label="Imprimir Histórico" />
 		</div>
 	</div>
 @stop
@@ -62,13 +62,10 @@
 					<td>{{$transacao->parcela}} x {{number_format($transacao->valor_parcela, 2, ',', '.')}}</td>
 					<td>{{number_format($transacao->total, 2, ',', '.')}}</td>
 					<td>
-						<i style="cursor: pointer; background-color:#ddd; border-radius:4px; padding: 10px;" data-id="{{$transacao->id}}" class="fas fa-eye text-blue visualizar"></i>
-
-						<i class="m-2"></i>
+						<x-form.button class="visualizar" data-id="{{$transacao->id}}" type="button" theme="primary" icon="fas fa-eye" label="" />
+						<x-form.button class="editar" data-id="{{$transacao->id}}" type="button" theme="success" icon="fas fa-edit" label="" />
+						<x-form.button class="excluir" data-id="{{$transacao->id}}" type="button" theme="danger" icon="fas fa-trash-alt" label="" />
 						
-						<i style="cursor: pointer; background-color:#ddd; border-radius:4px; padding: 10px;" class="fas fa-edit text-success editar"></i>
-						<i class="m-2"></i>
-						<i style="cursor: pointer; background-color:#ddd; border-radius:4px; padding: 10px;" class="fas fa-trash-alt text-danger excluir"></i>
 					</td>
 				</tr>
 				@endforeach

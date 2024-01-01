@@ -76,5 +76,8 @@ class HistoricoVendasController extends Controller
         exec($command, $output);
         unlink($sqlfile);
     }
+    function teste(){
+       return view('teste');
+    }
     
 }

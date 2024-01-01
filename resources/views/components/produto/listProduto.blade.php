@@ -4,7 +4,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
-                <th scope="col">Cdigo Barras</th>
+                <th scope="col">Codigo Barras</th>
                 <th scope="col">Preço</th>
                 <th scope="col">Custo</th>
                 <th scope="col">Lucro</th>
@@ -30,14 +30,10 @@
                         <td>
                             <div class="btn-group">
                                 <div>
-                                    <button type="button" id="{{$produto['id']}}"  class="btnEditar btn btn-secondary-soft btn-sm btn-success mr-2">
-                                    <i class="fas fa-pen"></i>
-                                    </button>
+                                    <x-form.button id="{{$produto['id']}}" class="btnEditar mr-2" type="submit" theme="success" icon="fas fa-edit" label="" />
                                 </div>
                                 <div>
-                                    <button type="button" id="{{$produto['id']}}" class="btnExcluir btn btn-danger btn-sm mt-2 mt-sm-0">
-                                    <i class="fas fa-trash"></i>
-                                    </button>
+                                    <x-form.button id="{{$produto['id']}}" class="btnExcluir" type="submit" theme="danger" icon="fas fa-trash" label="" />
                                 </div>
                             </div>
                         </td>

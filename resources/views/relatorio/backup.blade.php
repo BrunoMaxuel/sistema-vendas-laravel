@@ -54,10 +54,8 @@
     @endif
 
     <div class="row">
-        <div class="col-md-1">
-
-        </div>
-        <div class="col-md-4 cor-fundo">
+        
+        <div class="col-md-5 cor-fundo">
             <div class="box box-danger text-center">
                 <h3 class="header">Restaurar Database</h3>
                 <p>Isso vai redefinir todos os seus dados do sistema.</p>
@@ -74,7 +72,7 @@
         <div class="col-md-2">
 
         </div>
-        <div class="col-md-4 cor-fundo">
+        <div class="col-md-5 cor-fundo">
             <div class="box box-success text-center">
                 <h2 class="header">Exportar Database</h2>
                     <p>Isso gera um arquivo com os dados do sistema.</p>
@@ -82,9 +80,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-1">
-
         </div>
     </div>
 @stop

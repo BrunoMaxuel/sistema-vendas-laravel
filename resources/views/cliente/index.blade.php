@@ -28,8 +28,8 @@
             <h3>TOTAL DE CLIENTES  <i class="fas fa-sm fa-arrow-right" style="width: 50px;"></i> <strong>{{count($clientes)}}</strong> </h3>
         </div>
         <div class="col-md-3 d-flex justify-content-end align-items-center">
-            <div id="btnAdd" class="btn btn-light">
-                Adicionar cliente
+            <div>
+                <x-form.button id="btnAdd" type="submit" theme="light" icon="fas fa-icon-name" label="Adicionar Cliente" />
             </div>
         </div>
     </div>

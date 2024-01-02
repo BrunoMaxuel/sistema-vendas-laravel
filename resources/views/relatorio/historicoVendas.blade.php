@@ -37,6 +37,7 @@
 @stop
 @section('content')
 	<x-modalMsg.modalHistorico/>	
+	<x-modalMsg.modalVenda/>
 	<div class="table-responsive">
 		<table id="transations-table" class="custom-table table hover order-column compact table-bordered" cellspacing="0" width="100%">
 			<thead class="thead-light">
@@ -65,7 +66,6 @@
 						<x-form.button class="visualizar" data-id="{{$transacao->id}}" type="button" theme="primary" icon="fas fa-eye" label="" />
 						<x-form.button class="editar" data-id="{{$transacao->id}}" type="button" theme="success" icon="fas fa-edit" label="" />
 						<x-form.button class="excluir" data-id="{{$transacao->id}}" type="button" theme="danger" icon="fas fa-trash-alt" label="" />
-						
 					</td>
 				</tr>
 				@endforeach
@@ -105,7 +105,18 @@
 			});
 		});
         $('.editar').click(function() {
-            console.log('Editando...');
+			
+            var id = $(this).data('id');
+			var token = "{{ csrf_token() }}";
+
+			$.post('/historico/editar', { dataId: id, _token: token })
+			.done(function(transacao) {
+				
+				$('#modalFinalizarVenda').modal('show');
+			})
+			.fail(function(error) {
+				console.error(error);
+			});
         });
         $('.excluir').click(function() {
             console.log('Excluindo');

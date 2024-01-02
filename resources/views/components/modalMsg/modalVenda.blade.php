@@ -2,34 +2,37 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header" id="modalHeader">
-            <h4 class="modal-title">Finalização de venda</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h6 class="modal-title">Finalização de venda</h6>
         </div>
         <div id="modalBody" class="modal-body p-3">
             <form id="vendaForm" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-md-6">
-                        <label>Total da venda</label>
-                        <input id="total_venda"  name="total" class="form-control" readonly/>
+                    <div style="background-color: #0A8DC6; color:white;" class="col-md-4  border">
+                        <h5>Total da venda</h5>
+                        <h5 id="total_venda" class="ml-5" name="total"><strong>0,00</strong></h5>
                     </div> 
-                    <div class="col-md-6">
-                        <label>Total de itens</label>
-                        <input id="total_item" class="form-control" readonly/>
+                    <div style="background-color: #0A8DC6; color:white;" class="col-md-4 ">
+                        <h5>Venda com desconto</h5>
+                        <h5 id="venda_desconto" class="ml-5" name="total"><strong>0,00</strong></h5>
+                    </div> 
+                    <div style="background-color: #0A8DC6; color:white;" class="col-md-4  border">
+                        <h5>Itens</h5>
+                        <h5 id="total_itens" class="ml-5"><strong>0</strong></h5>
                     </div>
-                    <div class="col-md-4 col-md-offset-2">
+                    <div class="col-md-4">
                         <label>Valor recebido</label>
                         <input id="valor_recebido" data-mask="000.000,00" data-mask-reverse="true" name="valor_dinheiro" class="form-control"/>
                     </div>
-                    <div class="col-md-4">
-                        <label>Troco</label>
-                        <input id="troco" data-mask="000.000,00" data-mask-reverse="true" name="troco" value="0.00" class="form-control" readonly/>
-                    </div>
-                    <div class="col-md-4 col-md-offset-2">
+                    <div class="col-md-3 ">
                         <label>Desconto</label>
-                        <input id="desconto" data-mask="000%" value="0%" readonly data-mask-reverse="true" name="desconto" class="form-control"/>
+                        <input id="desconto" data-mask="000%" value="%" data-mask-reverse="true" name="desconto" class="form-control"/>
                     </div>
-                    <div class="col-md-4 ">
+                    <div class="col-md-5 d-flex justify-content-center align-items-end">
+                        <h4>TROCO <i class="fas fa-arrow-right"> </i><h3 id="troco" class="ml-3"><strong>0,00</strong></h3></h4> 
+                        
+                    </div>
+                    <div class="col-md-3">
                         <label>Pagamento</label>
                         <select id="pagamento" name="pagamento" class="form-control">
                             <option value="Dinheiro">Dinheiro</option>
@@ -37,7 +40,8 @@
                             <option value="Débito">Débito</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    
+                    <div class="col-md-2">
                         <label>Parcela </label>
                         <select id="parcela" name="parcelas" class="form-control"readonly="readonly">
                             <option value="1">1x</option>
@@ -55,11 +59,11 @@
                             
                         </select>
                     </div>
-                    <div class="col-md-4">
-                        <label>Valor da parcela:</label>
-                        <input id="valor_parcela" name="valor_parcelas" readonly value="0.00"  data-mask="000 000.00" data-mask-reverse="true" class="form-control"/>
+                    <div class="col-md-2">
+                        <label>Parcela(R$)</label>
+                        <input id="valor_parcela" name="valor_parcelas" readonly data-mask-reverse="true" class="form-control"/>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-7">
                         <label for="">Cliente</label>
                         <input  id="cliente" class="form-control" name="cliente" placeholder="Pesquisar cliente" value="Visitante"/>
                     </div>

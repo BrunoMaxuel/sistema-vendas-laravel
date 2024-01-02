@@ -3,35 +3,13 @@
 @section('title', 'Backup dos Registros')
 @section('css')
     <style>
-        .progressBar{
-            background-color: #dadada;
-            height: 10px;
-                
-        }
-        .progress-bar{
-            background-Color:green;
-        }
-        .color-green{
-            color:green;
-        }
-        .container{
-            display:flex;
-            justify-content: center;
-        }
-        .box-parent{
-            margin:2rem;
-        }
         .btn{
-            margin-bottom:2rem;
-            border-radius:20px
+            padding: 10px 25px 10px 25px;
+            border-radius:25px
         }
-        .box p {
-            margin:2rem;
-        }
-        
         .cor-fundo{
             background-color: #0A8DC6;
-            padding: 20px 5px 20px 5px;
+            padding: 25px 5px 25px 5px;
             border-radius: 10px;
             color:white;
         }
@@ -52,33 +30,26 @@
             showModal(session('msg'));
         </script>
     @endif
-
-    <div class="row">
-        
+    <div class="row pr-5 pl-5">
         <div class="col-md-5 cor-fundo">
             <div class="box box-danger text-center">
                 <h3 class="header">Restaurar Database</h3>
                 <p>Isso vai redefinir todos os seus dados do sistema.</p>
-                    <button class="btn btn-danger pl-5 pr-5" onclick="importData()">IMPORTAR</button>
+                <x-form.button theme="danger" type="button" label="Inserir Arquivo"  onclick="importData()" />
                     <form id="form_import" action="{{ route('backup.importBackup')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input id="file-sql" type="file" name="file-sql" style="display: none;" />
                     </form>
-                    {{-- {{ isset($import) ? $import : '' }} --}}
-                <div class="col-md-12 text-center">
-                </div>
             </div> 
         </div>
-        <div class="col-md-2">
+        <div class="col-md-1">
 
         </div>
         <div class="col-md-5 cor-fundo">
             <div class="box box-success text-center">
                 <h2 class="header">Exportar Database</h2>
-                    <p>Isso gera um arquivo com os dados do sistema.</p>
-                        <a download="{{$mysql->filename}}" href="data:application/octet-stream;base64,{{$mysql->file}}" ><button class="btn btn-success pl-5 pr-5" type="button">EXPORTAR</button></a>
-                    </div>
-                </div>
+                <p>Isso gera um arquivo com os dados do sistema.</p>
+                <x-form.button theme="success" type="button" label="Baixar Arquivo"  onclick="downloadFile('{{$mysql->filename}}', '{{$mysql->file}}');" />
             </div>
         </div>
     </div>
@@ -112,5 +83,18 @@
                     $('#modal-msg').modal('hide');
             }, 3000); 
         }
+
+        function downloadFile(filename, file) {
+        const element = document.createElement('a');
+        element.setAttribute('href', 'data:application/octet-stream;base64,' + file);
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
     </script>
 @stop

@@ -18,8 +18,6 @@
         height: 20px;
         cursor: pointer;
     }
-   
-
     .cor{
         background-color: #00A2E8;
     }
@@ -84,10 +82,6 @@
                                 </div>
                             </div>
                         </form>
-        
-                        <p class="mb-1">
-                            <a href="{{route('registrar')}}" class="btn btn-primary">Criar sua Conta</a>
-                        </p>
                     </div>
                 </div>
             </div>

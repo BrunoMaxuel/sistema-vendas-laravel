@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-md-3 ">
                         <label>Desconto</label>
-                        <input id="desconto" data-mask="000%" value="%" data-mask-reverse="true" name="desconto" class="form-control"/>
+                        <input id="desconto" data-mask="000%" value="0" data-mask-reverse="true" name="desconto" class="form-control"/>
                     </div>
                     <div class="col-md-5 d-flex justify-content-center align-items-end">
                         <h4>TROCO <i class="fas fa-arrow-right"> </i><h3 id="troco" class="ml-3"><strong>0,00</strong></h3></h4> 
@@ -71,7 +71,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button id="finalizarVenda" type="submit" class="btn btn-success">Finalizar venda</button>
+            <button id="finalizarVenda" type="button" class="btn btn-success">Finalizar venda</button>
             <button id="btnCancel" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         </div>
       </div>

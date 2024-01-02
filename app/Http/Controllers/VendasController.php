@@ -99,13 +99,16 @@ class VendasController extends Controller
         $totalVenda = str_replace(',', '.', $totalVenda);
         $valor_parcela = str_replace('.', '', $dados[4]);
         $valor_parcela = str_replace(',', '.', $valor_parcela);
-        
+        $vendaComDesconto = str_replace('.', '', $dados[7]);
+        $vendaComDesconto = str_replace(',', '.', $vendaComDesconto);
+
         $transacao = new Transacao();
         $transacao->user_id = Auth::id(); 
         $transacao->total = $totalVenda;
         $transacao->total_item = $dados[1];
         $transacao->pagamento = $dados[2];
         $transacao->cliente = $dados[6];
+        $transacao->venda_com_desconto = $vendaComDesconto;
         $transacao->desconto = $dados[5];
         $transacao->parcela = $dados[3];
         $transacao->valor_parcela = $valor_parcela;

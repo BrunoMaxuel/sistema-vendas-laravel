@@ -24,5 +24,14 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('users')->insert([
+            'name' => 'Visitante',
+            'email' => 'visitante@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('visitante123'), // Use Hash para criar a senha criptografada
+            'remember_token' => null, // Pode ser null ou um token gerado com Str::random(10)
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

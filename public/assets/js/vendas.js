@@ -62,16 +62,21 @@ $(function() {
     
     $('#finalizarVenda').on('click', function() {
         var dados = [];
-        var totalVenda = $('#total_venda').val();
-        var totalItem = $('#total_item').val();
+        var totalVenda = $('#total_venda').text();
+        var vendaComDesconto = $('#venda_desconto').text();
+        var totalItem = $('#total_itens').text();
         var pagamento = $('#pagamento').val();
         var parcela = $('#parcela').val();
         var valorParcela = $('#valor_parcela').val();
         var desconto = $('#desconto').val();
+        console.log(desconto);
+        if(desconto == null){
+            desconto = 1;
+        }
         desconto = desconto.replace('%', '');
         var cliente = $('#cliente').val();
 
-        dados.push(totalVenda, totalItem, pagamento, parcela, valorParcela, desconto, cliente);
+        dados.push(totalVenda, totalItem, pagamento, parcela, valorParcela, desconto, cliente, vendaComDesconto);
 
         $.post("/vender/vendaAndamento/finalizar", {dados: dados , _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
             location.reload();
@@ -250,8 +255,24 @@ $(document).on('keydown', function(e) {
         }
     });
 
-
+    if (e.which === 118) { 
+        e.preventDefault();
+        $('#btnFinalizar').click();
+    }
 });
+
+$(document).ready(function() {
+    $('#vendaForm input').keydown(function(event) {
+        if (event.which == 13) { 
+                event.preventDefault(); 
+                $('#finalizarVenda').click(); 
+        }
+    });
+  });
+
+
+
+
 $(document).on('change', '#parcela', function() {
     var totalVenda = parseFloat($('#total_venda').text().replace('.', '').replace(',', '.'));
     var parcela = parseInt($(this).val());

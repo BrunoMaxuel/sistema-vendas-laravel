@@ -8,6 +8,7 @@
             <form id="vendaForm" method="post">
                 @csrf
                 <div class="row">
+                    <input type="hidden" id="id_transacao">
                     <div style="background-color: #0A8DC6; color:white;" class="col-md-4  border">
                         <h5>Total da venda</h5>
                         <h5 id="total_venda" class="ml-5" name="total"><strong>0,00</strong></h5>

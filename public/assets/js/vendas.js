@@ -90,7 +90,6 @@ $(function() {
         }
     });
 
-
     $('#search').on('keyup', function(e) {
         var search = $(this).val();
 
@@ -159,6 +158,7 @@ function updateTableVenda(data) {
     var tableBody = $('<tbody>');
 
     data.forEach(function(item) {
+        
         var newRow = $('<tr>');
         newRow.append('<td>' + item.nome_produto + '</td>');
         newRow.append('<td>' + item.codigo_barras + '</td>');
@@ -191,7 +191,6 @@ function updateTableVenda(data) {
         var totalVenda = parseFloat($('#total_venda').text().replace('.', '').replace(',', '.'));
         $('#venda_desconto').text(totalVenda.toLocaleString('pt-br', {minimumFractionDigits: 2}));
         var parcela = parseInt($('#parcela').val());
-        var valorParcela;
         if(parcela > 1){
             valorParcela = totalVenda / parcela;
         }
@@ -199,7 +198,9 @@ function updateTableVenda(data) {
             $('#valor_parcela').val(totalVenda.toLocaleString('pt-br', { minimumFractionDigits: 2 }));
         }
         total.text(valorVendaTotal.toLocaleString('pt-br', { minimumFractionDigits: 2 }));
-    });
+        
+    });$('#btnFinalizar button').prop('disabled', false);
+    $('#btnCancelar button').prop('disabled', false);
 
     tableVenda.append(tableBody);
 
@@ -254,10 +255,12 @@ $(document).on('keydown', function(e) {
             $('#troco').text('0,00');
         }
     });
-
     if (e.which === 118) { 
+        var linhas = $('#tableVenda tbody tr').length;
         e.preventDefault();
-        $('#btnFinalizar').click();
+        if(linhas !== 0){
+            $('#btnFinalizar').click();
+        }
     }
 });
 

@@ -44,7 +44,7 @@
     <x-cliente.modalEdit/>
 
     {{-- Modal excluir --}}
-    <x-cliente.modalExcluir/>
+    <x-modalMsg.modalExcluir/>
 
 
     {{-- Exibição de mensagem apos excluir ou alterar --}}

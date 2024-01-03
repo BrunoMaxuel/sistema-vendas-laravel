@@ -1,5 +1,5 @@
 <div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="modalHeader" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lgs" role="document">
       <div class="modal-content">
         
           <div class="modal-header">
@@ -9,8 +9,8 @@
             </button>
           </div>
           <div class="modal-body">
-            <div style="margin-top: 40px; margin-bottom: 40px ">
-              <h3>Tem certeza que deseja excluir o cliente?</h3>
+            <div style="margin-top: 30px; margin-bottom: 30px ">
+              <h4 id="msg">Tem certeza que deseja excluir o cliente?</h4>
             </div>
           </div>
           <form id="formUpExcluir">

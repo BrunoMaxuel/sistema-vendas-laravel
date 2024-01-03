@@ -14,6 +14,38 @@ class HistoricoVendasController extends Controller
         $transacao = Transacao::where('user_id', Auth::id())->orderby('id', 'desc')->get();
         return view('relatorio.historicoVendas', ['transactions' => $transacao]);
     }   
+    public function editarTransacao(Request $request){
+        $dados = $request->dados;
+        $valor_parcela = str_replace('.', '', $dados[2]);
+        $valor_parcela = str_replace(',', '.', $valor_parcela);
+        $vendaComDesconto = str_replace('.', '', $dados[5]);
+        $vendaComDesconto = str_replace(',', '.', $vendaComDesconto);
+        $transacao = Transacao::where('user_id', Auth::id())->where('id', $dados[6])->first();
+        if ($transacao) {
+            $transacao->pagamento = $dados[0];
+            $transacao->parcela = $dados[1];
+            $transacao->valor_parcela = $valor_parcela;
+            $transacao->desconto = $dados[3];
+            $transacao->cliente = $dados[4];
+            $transacao->venda_com_desconto = $vendaComDesconto;
+            $transacao->save();
+            return response()->json($transacao);
+        } else {
+            return response()->json(['error' => 'Transação não encontrada']);
+        }  
+    }   
+    public function excluirTransacao(Request $request){
+        $id = $request->id;
+        $transacao = Transacao::where('user_id', Auth::id())->where('id', $id)->first();
+    
+        if($transacao){
+            $transacao->delete();
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['error' => 'Transação não encontrada ou você não tem permissão para excluí-la']);
+        }
+    }
+    
     
     public function historicoAPI(){
         $tr = Transacao::where('id', Auth::id())->orderby('id', 'desc')->get();
@@ -28,11 +60,11 @@ class HistoricoVendasController extends Controller
         return response()->json($vendaDetalhe);
     }
 
-    public function historicoEdit(Request $request){
-        $id_transacao = $request->dataId;
-        $transacao = Transacao::where('user_id', Auth::id())->where('id', $id_transacao)->first();
-        return response()->json($transacao);
-    }
+    // public function historicoEdit(Request $request){
+    //     $id_transacao = $request->dataId;
+    //     $transacao = Transacao::where('user_id', Auth::id())->where('id', $id_transacao)->first();
+    //     return response()->json($transacao);
+    // }
 
     public function imprimirVendas(){
         $transacoes = Transacao::where('user_id', Auth::id())->get();

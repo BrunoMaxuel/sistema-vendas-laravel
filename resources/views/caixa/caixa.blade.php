@@ -7,6 +7,10 @@
         border-collapse: collapse;
         width: 100%;
     }
+	.cor-fundo{
+		background-color: #0A8DC6;
+		color: white;
+	}
 
     .custom-table th,
     .custom-table td {
@@ -39,7 +43,7 @@
   <x-modalMsg.modalMsg/>
 <div class="row">
 	<div class="col-sm-3">
-		<div class="small-box bg-green">
+		<div class="small-box cor-fundo">
 			<div class="inner p-2">
 				<h5> Total  do caixa <br> 
 					<h4>R${{number_format($caixa->total, 2, ',', '.')}}</h4> </h5>
@@ -47,7 +51,7 @@
 		</div>
 	</div>
 	<div class="col-sm-3">
-		<div class="small-box bg-green">
+		<div class="small-box cor-fundo">
 			<div class="inner p-2">
 				<h5>Total em Dinheiro <br> 
 					<h4>R${{number_format($caixa->dinheiro, 2, ',', '.')}}</h4> </h5>
@@ -55,7 +59,7 @@
 		</div>
 	</div>
 	<div class="col-sm-3">
-		<div class="small-box bg-green">
+		<div class="small-box cor-fundo">
 			<div class="inner p-2">
 				<h5>Total em Crédito <br> 
 					<h4>R${{number_format($caixa->totalCredito, 2, ',', '.')}}</h4></h5>
@@ -63,7 +67,7 @@
 		</div>
 	</div>
 	<div class="col-sm-3">
-		<div class="small-box bg-green">
+		<div class="small-box cor-fundo">
 			<div class="inner p-2">
 				<h5>Total em Débito <br> 
 					<h4>R${{number_format($caixa->totalDebito, 2, ',', '.')}}</h4></h5>
@@ -125,7 +129,7 @@
 						<td>{{$transations->created_at}}</td>
 						<td>{{$transations->cliente}}</td>
 						<td> Venda </td>
-						<td>{{$transations->desconto}}</td>
+						<td>{{$transations->desconto}}%</td>
 						<td>{{$transations->pagamento}}</td>
 						<td>+{{number_format($transations->total, 2, ',', '.')}}</td>
 					</tr>

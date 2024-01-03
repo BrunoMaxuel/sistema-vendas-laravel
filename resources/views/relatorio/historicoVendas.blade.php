@@ -38,6 +38,8 @@
 @section('content')
 	<x-modalMsg.modalHistorico/>	
 	<x-modalMsg.modalVenda/>
+	<x-modalMsg.modalExcluir/>
+	<x-modalMsg.modalMsg/>
 	<div class="table-responsive">
 		<table id="transations-table" class="custom-table table hover order-column compact table-bordered" cellspacing="0" width="100%">
 			<thead class="thead-light">
@@ -45,8 +47,10 @@
 				<th scope="col">N°</th>
 				<th scope="col">Cliente</th>
 				<th scope="col">Data</th>
-				<th scope="col">Pag/desconto</th>
+				<th scope="col">Pagamento</th>
+				<th scope="col">Desc</th>
 				<th scope="col">Itens</th>
+				<th scope="col">Parcela</th>
 				<th scope="col">Parcela(R$)</th>
 				<th scope="col">Total(R$)</th>
 				<th scope="col">Ação</th>
@@ -58,14 +62,16 @@
 					<td>{{$transacao->id}}</td>
 					<td>{{$transacao->cliente}}</td>
 					<td>{{$transacao->created_at->toDateString()}}</td>
-					<td>{{$transacao->pagamento}} / {{$transacao->desconto}}%</td>
+					<td>{{$transacao->pagamento}}</td>
+					<td>{{$transacao->desconto}}%</td>
 					<td>{{$transacao->total_item}}</td>
-					<td>{{$transacao->parcela}} x {{number_format($transacao->valor_parcela, 2, ',', '.')}}</td>
+					<td>{{$transacao->parcela}}x</td>
+					<td>{{number_format($transacao->valor_parcela, 2, ',', '.')}}</td>
 					<td>{{number_format($transacao->total, 2, ',', '.')}}</td>
 					<td>
-						<x-form.button class="visualizar" data-id="{{$transacao->id}}" type="button" theme="primary" icon="fas fa-eye" label="" />
-						<x-form.button class="editar" data-id="{{$transacao->id}}" type="button" theme="success" icon="fas fa-edit" label="" />
-						<x-form.button class="excluir" data-id="{{$transacao->id}}" type="button" theme="danger" icon="fas fa-trash-alt" label="" />
+						<x-form.button class="visualizar " data-id="{{$transacao->id}}" type="button" theme="primary" icon="fas fa-eye" label="" />
+						<x-form.button class="editar " data-id="{{$transacao->id}}" type="button" theme="success" icon="fas fa-edit" label="" />
+						<x-form.button class="excluir " data-id="{{$transacao->id}}" type="button" theme="danger" icon="fas fa-trash-alt" label="" />
 					</td>
 				</tr>
 				@endforeach
@@ -75,6 +81,7 @@
 @stop
 @section('js')
 <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
+<script src="{{ asset('assets/js/historicoVendas.js') }}"></script>
 <script type="text/javascript">
     $(function() {
 			$('.visualizar').click(function() {
@@ -105,22 +112,59 @@
 			});
 		});
         $('.editar').click(function() {
-			
-            var id = $(this).data('id');
-			var token = "{{ csrf_token() }}";
+			$('#id_transacao').val(this.getAttribute('data-id'));
+        	const linha = $(this).closest('tr');
 
-			$.post('/historico/editar', { dataId: id, _token: token })
-			.done(function(transacao) {
-				
-				$('#modalFinalizarVenda').modal('show');
-			})
-			.fail(function(error) {
-				console.error(error);
-			});
+			$('#cliente').val(linha.find('td:nth-child(2)').text());
+			$('#pagamento').val(linha.find('td:nth-child(4)').text());
+            $('#total_itens').text(linha.find('td:nth-child(6)').text());
+            $('#parcela').val(linha.find('td:nth-child(7)').text().replace('x', ''));
+            $('#valor_parcela').val(linha.find('td:nth-child(8)').text());
+            $('#desconto').val(linha.find('td:nth-child(5)').text());
+            $('#total_venda').text(linha.find('td:nth-child(9)').text());
+            $('#valor_recebido').val(linha.find('td:nth-child(9)').text());
+
+			$('#modalFinalizarVenda').modal('show');
         });
         $('.excluir').click(function() {
-            console.log('Excluindo');
+			var transacaoId = $(this).data('id');
+
+			// Define o ID da transação no campo hidden
+			$('#modalExcluir').modal('show');
+			setTimeout(function() {  $('#idExcluir').val(transacaoId); }, 100);
+			
+			// console.log($('#idExcluir').val());
+			$("#formUpExcluir")[0].reset();
+				$('#msg').text('Tem certeza que deseja excluir a seguinte transação?');
+				$('#btnModalExcluir').text('Excluir Transação');
+				$('#modalHeaderExcluir').text('Excluir Transação');
+				$("#idExcluir").val($(this).attr('id')); 
+
         });
+
+
+		$('#btnModalExcluir').click(function () {
+				var transacaoId = $('#idExcluir').val();
+				console.log(transacaoId);
+                $.post("historico/excluir", { id: transacaoId, _token: $('meta[name="csrf-token"]').attr('content') }, function (data){
+                    if(data.success === true){
+                        $("#background-text").addClass("bg-success");
+                        $("#titulo-msg").html("Cliente excluido com sucesso!");
+                        $('#modal-msg').modal('show');
+                        $('#modalExcluir').modal('hide');
+                        setTimeout(function() {
+                                window.location.reload(); 
+                        }, 1100); 
+                    }
+                    else{
+                        $("#background-text").addClass("modal-header alert alert-danger");
+                        $("#titulo-msg").html("Erro ao excluir cliente!");
+                    }
+                });
+            });
+
+
+
 		var tabela = $('#transations-table');
             var numCliente = tabela.find('tbody').find('tr').length;
             if(numCliente > 7){

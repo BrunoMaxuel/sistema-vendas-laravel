@@ -114,26 +114,46 @@
 <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
 <script src="{{asset('assets/js/vendas.js')}}"></script>
 <script>
-    $('#btnFinalizar').on('click', function () {
+   $(document).ready(function() {
+    // Verifica o número de linhas na tabela de venda ao carregar a página
+    
+    $('#btnFinalizar').on('click', function() {
         $('#modalFinalizarVenda').modal('show');
-            setTimeout(function() {
-                $('#valor_recebido').focus();
-            }, 500);
-        });
-    $('#btnCancelar').on('click', function () {
+        setTimeout(function() {
+            $('#valor_recebido').focus();
+        }, 500);
+    });
+    
+    $('#btnCancelar').on('click', function() {
         $('#modalAlert').modal('show');
         $('.modal-title').text('Cancelamento de venda');
         $('#title-body').text('Deseja cancelar a venda?');
         $('.btn-cancelar').text('Cancelar');
         $('#btnSubmit').text('Excluir todos itens');
-    }); _token: $('meta[name="csrf-token"]').attr('content')
-    $('#btnSubmit').on('click', function () {
+    });
 
-        $.post('/vender/vendaAndamento/cancelarVenda',{_token: $('meta[name="csrf-token"]').attr('content')}, function (data) {
+    $('#btnSubmit').on('click', function() {
+        $.post('/vender/vendaAndamento/cancelarVenda', {
+            _token: $('meta[name="csrf-token"]').attr('content')
+        }, function(data) {
             location.reload();
         });
-    })
+    });
     
-
+    // Verifica o número de linhas na tabela de venda
+    function verificarLinhasTabelaVenda() {
+        var linhas = $('#tableVenda tbody tr').length;
+        if (linhas === 0) {
+            // Se não houver linhas na tabela, desabilite os botões
+            $('#btnFinalizar button').prop('disabled', true);
+            $('#btnCancelar button').prop('disabled', true);
+        } else {
+            // Se houver linhas na tabela, habilite os botões
+            $('#btnFinalizar button').prop('disabled', false);
+            $('#btnCancelar button').prop('disabled', false);
+        }
+    }
+    setTimeout(verificarLinhasTabelaVenda, 100);
+});
 </script>
 @stop

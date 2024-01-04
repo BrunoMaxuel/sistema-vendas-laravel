@@ -1,12 +1,12 @@
 $(document).on('change', '#parcela', function() {
-    var totalVenda = parseFloat($('#total_venda').text().replace('.', '').replace(',', '.'));
+    var vendaDescont = parseFloat($('#venda_desconto').text().replace('.', '').replace(',', '.'));
     var parcela = parseInt($(this).val());
-    var valorParcela = totalVenda / parcela;
+    var valorParcela = vendaDescont / parcela;
     $('#valor_parcela').val(valorParcela.toLocaleString('pt-br', {minimumFractionDigits: 2}));
 
 
     if (!isNaN(totalVenda) && !isNaN(parcela) && parcela !== 0) {
-        var valorParcela = totalVenda / parcela;
+        var valorParcela = vendaDescont / parcela;
         $('#valor_parcela').val(valorParcela.toFixed(2).replace('.', ','));
     } else {
         $('#valor_parcela').val('0,00');
@@ -18,7 +18,7 @@ $(document).on('keydown', function(e) {
     if (!$('#modalFinalizarVenda').is(':visible')) {
         $('#search').focus();
     }
-    $(document).on('input', '#total_venda, #valor_recebido, #desconto', function() {
+    $(document).on('input', '#valor_recebido, #desconto', function() {
         var totalVenda = parseFloat($('#total_venda').text().replace('.', '').replace(',', '.'));
         var desconto = parseInt($('#desconto').val());
 
@@ -31,8 +31,10 @@ $(document).on('keydown', function(e) {
         if (!isNaN(totalVenda) && !isNaN(totalRecebido)) {
             var totalComDesconto = totalVenda - (totalVenda * (desconto / 100));
             $('#venda_desconto').text(totalComDesconto.toLocaleString('pt-br', {minimumFractionDigits: 2}));
+            var valor_parcela = totalComDesconto / $('#parcela').val();
+            $('#valor_parcela').val(valor_parcela.toLocaleString('pt-br', {minimumFractionDigits: 2}));
             var troco = totalRecebido - totalComDesconto;
-    
+            
             $('#troco').text(troco.toLocaleString('pt-br', {minimumFractionDigits: 2}));
         } else {
             $('#troco').text('0,00');

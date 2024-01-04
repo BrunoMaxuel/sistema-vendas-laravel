@@ -52,6 +52,7 @@
 				<th scope="col">Itens</th>
 				<th scope="col">Parcela</th>
 				<th scope="col">Parcela(R$)</th>
+				<th scope="col">Com Desc(R$)</th>
 				<th scope="col">Total(R$)</th>
 				<th scope="col">Ação</th>
 			</tr>
@@ -67,6 +68,7 @@
 					<td>{{$transacao->total_item}}</td>
 					<td>{{$transacao->parcela}}x</td>
 					<td>{{number_format($transacao->valor_parcela, 2, ',', '.')}}</td>
+					<td>{{number_format($transacao->venda_com_desconto, 2, ',', '.')}}</td>
 					<td>{{number_format($transacao->total, 2, ',', '.')}}</td>
 					<td>
 						<x-form.button class="visualizar " data-id="{{$transacao->id}}" type="button" theme="primary" icon="fas fa-eye" label="" />
@@ -122,6 +124,7 @@
             $('#valor_parcela').val(linha.find('td:nth-child(8)').text());
             $('#desconto').val(linha.find('td:nth-child(5)').text());
             $('#total_venda').text(linha.find('td:nth-child(9)').text());
+            $('#venda_desconto').text(linha.find('td:nth-child(9)').text());
             $('#valor_recebido').val(linha.find('td:nth-child(9)').text());
 
 			$('#modalFinalizarVenda').modal('show');
@@ -129,11 +132,8 @@
         $('.excluir').click(function() {
 			var transacaoId = $(this).data('id');
 
-			// Define o ID da transação no campo hidden
 			$('#modalExcluir').modal('show');
 			setTimeout(function() {  $('#idExcluir').val(transacaoId); }, 100);
-			
-			// console.log($('#idExcluir').val());
 			$("#formUpExcluir")[0].reset();
 				$('#msg').text('Tem certeza que deseja excluir a seguinte transação?');
 				$('#btnModalExcluir').text('Excluir Transação');

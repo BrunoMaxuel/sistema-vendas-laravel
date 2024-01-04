@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content p-3">
         <div style="background-color: #0A8DC6; color: white;" class="modal-header d-flex justify-content-center" id="modalHeader">
-            <h4 class="modal-title">Detalhes da venda</h4>
+            <h4 class="modal-title-visualizar">Detalhes da venda</h4>
             <input type="hidden" id="id_transacao">
         </div>
         <div id="modalBody" class="modal-body p-3">
@@ -20,7 +20,6 @@
                     
                 </tbody>
             </table>
-            {{-- 'historico/imprimirVendaDetalhada/' + venda.id_transacao --}}
         </div>
         <div class="modal-footer">
             <button onclick="imprimir()" type="submit" class="btn btn-success">Imprimir</button>

@@ -14,8 +14,9 @@ class ClienteFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
-            'user_id' => 1,
+            'user_id' => $this->faker->randomElement([1, 2]),
             'nome' => $this->faker->name,
             'endereco' => $this->faker->streetAddress,
             'telefone' => $this->faker->phoneNumber,

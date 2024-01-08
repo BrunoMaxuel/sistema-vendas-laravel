@@ -10,7 +10,7 @@ use App\Http\Controllers\VendasController;
 use Illuminate\Support\Facades\Route;
  
 Route::get('/login', [LoginController::class, 'loginView'])->name('login.view');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login.auth');
+Route::post('/login', [LoginController::class, 'autenticar'])->name('login.auth');
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
@@ -45,10 +45,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/vender', [VendasController::class, 'venderView'])->name('venda.view');
     Route::post('/venda/registrar', [VendasController::class, 'registrarVenda'])->name('venda.registrar');
     
-    Route::post('api/delete', [VendasController::class, 'apiDelete'])->name('estoque.api.delete');
-    Route::post('/vender/estoque', [VendasController::class, 'apiListar'])->name('estoque.api.listar');
+    Route::post('/vender/estoque', [VendasController::class, 'buscarProdutos'])->name('estoque.api.listar');
     Route::post('/vender/vendaAndamento', [VendasController::class, 'vendaEmAndamento'])->name('venda.andamento');
-    Route::post('/vender/vendaAndamento/cancelar', [VendasController::class, 'apiCancelar'])->name('venda.cancelar');
+    Route::post('/vender/vendaAndamento/cancelar', [VendasController::class, 'cancelarItemVenda'])->name('venda.cancelar');
     Route::post('/vender/vendaAndamento/registrar', [VendasController::class, 'vendaEmAndamentoRegistrar'])->name('venda.andamento.registrar');
     Route::post('/vender/vendaAndamento/finalizar', [VendasController::class, 'finalizarVenda'])->name('venda.andamento.finalizar');
     Route::post('/vender/vendaAndamento/cancelarVenda', [VendasController::class, 'cancelarVenda'])->name('venda.andamento.cancelar');
@@ -71,7 +70,7 @@ Route::middleware(['auth'])->group(function(){
 
 
 
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('/logout', [LoginController::class, 'deslogar'])->name('logout');
     Route::get('/registrar', [LoginController::class, 'registrar'])->name('registrar');
-    Route::post('/registrar', [LoginController::class, 'registrarAction'])->name('registrar.action');
+    Route::post('/registrar', [LoginController::class, 'processoRegistrar'])->name('registrar.action');
 });

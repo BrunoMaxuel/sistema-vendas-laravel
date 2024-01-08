@@ -2,56 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegistrarRequest;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function loginView(){
-        if(Auth::check()){
-            return redirect(route('home.index'));
-        }else{
-            return view('vendor.adminlte.login');
-        }
-    }
-    public function authenticate(Request $request)
+    /**
+     * Tela de login
+     *
+     * @return \Illuminate\View\View
+     */
+    public function loginView()
     {
-        $credentials = $request->only('email', 'password');
-        
-        if (Auth::attempt($credentials)) {
-
-            return redirect()->route('home.index');
-            
-        } else {
-            return redirect()->back()->withInput($request->only('email'))
-            ->with('error', 'Email ou senha incorreto.');
-        }
+        return view('vendor.adminlte.login');
     }
+    /**
+     * ação de autenticar
+     *
+     * @return \Illuminate\View\View
+     */
+    public function autenticar(LoginRequest $request)
+    {
+        $request->processoAutenticar();
+        $request->session()->regenerate();
+        return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
     public function registrar(){
         return view('vendor/adminlte/auth/register');
     }
-
-    public function registrarAction(Request $request)
+    /**
+     * Tela de registrar
+     *
+     * @return \Illuminate\View\View
+     */
+    public function processoRegistrar(RegistrarRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|min:3',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
-
-        // Criação de um novo usuário
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password']), 
-        ]);
-        Auth::login($user);
-        return redirect(route('login.view'));
+        $request->criarUsuario();
     }
-    public function logout(){
-        Auth::logout();
-        return redirect(route('login.view'));
+
+    /**
+     * Ação de deslogar
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deslogar(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
 }

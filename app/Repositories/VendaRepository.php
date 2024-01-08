@@ -39,16 +39,16 @@ class VendaRepository
         return Produto::where('user_id', Auth::id())->where('codigo_barras', $search)->first();
     }
     public function salvarVenda($produto){
-        $coluna = $produto;
-        $produtoTotal = $coluna[3] * $coluna[6];  
-        $venda = new Venda();
-        $venda->user_id  = Auth::id();
-        $venda->nome_produto = $coluna[1];
+        $coluna               = $produto;
+        $produtoTotal         = $coluna[3] * $coluna[6];  
+        $venda                = new Venda();
+        $venda->user_id       = Auth::id();
+        $venda->nome_produto  = $coluna[1];
         $venda->codigo_barras = $coluna[2];
-        $venda->quantidade = $coluna[6];
-        $venda->valor_item = $coluna[3];
-        $venda->total_venda = $produtoTotal;
-        $venda->id_venda = $coluna[0];
+        $venda->quantidade    = $coluna[6];
+        $venda->valor_item    = $coluna[3];
+        $venda->total_venda   = $produtoTotal;
+        $venda->id_venda      = $coluna[0];
         $venda->save();
         Produto::where('user_id', Auth::id())->where('id', $coluna[0])->decrement('estoque', $coluna[6]);
     }
@@ -62,30 +62,33 @@ class VendaRepository
 
     public function criarTransacao($totalVenda, $valorParcela, $vendaComDesconto, $dados)
     {
-        $transacao = new Transacao();
-        $transacao->user_id = Auth::id();
-        $transacao->total = $totalVenda;
-        $transacao->total_item = $dados[1];
-        $transacao->pagamento = $dados[2];
-        $transacao->cliente = $dados[6];
-        $transacao->venda_com_desconto = $vendaComDesconto;
-        $transacao->desconto = $dados[5];
-        $transacao->parcela = $dados[3];
-        $transacao->valor_parcela = $valorParcela;
+        $transacao                      = new Transacao();
+        $transacao->user_id             = Auth::id();
+        $transacao->total               = $totalVenda;
+        $transacao->total_item          = $dados[1];
+        $transacao->pagamento           = $dados[2];
+        $transacao->cliente             = $dados[6];
+        $transacao->venda_com_desconto  = $vendaComDesconto;
+        $transacao->desconto            = $dados[5];
+        $transacao->parcela             = $dados[3];
+        $transacao->valor_parcela       = $valorParcela;
         $transacao->save();
     }
     public function criarVendaDetalhada($venda){
-        $transacao = Transacao::orderBy('id', 'desc')->latest()->first();
-        $vendaDetalhada = new vendasDetalhadas();
-        $vendaDetalhada->user_id = Auth::id();
-        $vendaDetalhada->nome_produto = $venda->nome_produto;
-        $vendaDetalhada->codigo_barras = $venda->codigo_barras;
-        $vendaDetalhada->quantidade = $venda->quantidade;
-        $vendaDetalhada->valor_item = $venda->valor_item;
-        $vendaDetalhada->total_venda = $venda->total_venda;
+        $transacao                      = Transacao::orderBy('id', 'desc')->latest()->first();
+        $vendaDetalhada                 = new vendasDetalhadas();
+        $vendaDetalhada->user_id        = Auth::id();
+        $vendaDetalhada->nome_produto   = $venda->nome_produto;
+        $vendaDetalhada->codigo_barras  = $venda->codigo_barras;
+        $vendaDetalhada->quantidade     = $venda->quantidade;
+        $vendaDetalhada->valor_item     = $venda->valor_item;
+        $vendaDetalhada->total_venda    = $venda->total_venda;
         $vendaDetalhada->item_cancelado = $venda->item_cancelado;
-        $vendaDetalhada->id_transacao = $transacao->id;
+        $vendaDetalhada->id_transacao   = $transacao->id;
         $vendaDetalhada->save();
+    }
+    public function consultarProduto($consulta){
+        return Produto::find($consulta);
     }
 }
 

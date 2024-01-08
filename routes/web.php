@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/caixa/sangria', [CaixaController::class, 'retirarDinheiro'])->name('caixa.sangria');
     
 
-    Route::get('/vender', [VendasController::class, 'venderView'])->name('venda.view');
+    Route::get('/vender', [VendasController::class, 'painelVenda'])->name('venda.view');
     Route::post('/venda/registrar', [VendasController::class, 'registrarVenda'])->name('venda.registrar');
     
     Route::post('/vender/estoque', [VendasController::class, 'buscarProdutos'])->name('estoque.api.listar');

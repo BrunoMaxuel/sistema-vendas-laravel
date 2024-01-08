@@ -40,7 +40,7 @@ class VendaService
 
     public function registrarVenda($produto){
         $this->vendaRepository->salvarVenda($produto);
-        $vendas = $this->vendaRepository->consultarVendaEmAndamento();
+        $vendas = $this->buscarVendaEmAndamento();
         return response()->json($vendas);
     }
 
@@ -53,7 +53,7 @@ class VendaService
             $produto->total_venda = number_format($produto->total_venda, 2, ',', '.');
             return $produto;
         });
-        return response()->json($vendas);
+        return $vendas;
     }
 
     public function cancelarItem($id_item){
@@ -61,16 +61,33 @@ class VendaService
     }
 
     public function finalizarVenda($dados){
-         $totalVenda = number_format((float)$dados[0], 2, '.', '');
-         $valorParcela = number_format((float)$dados[4], 2, '.', '');
-         $vendaComDesconto = number_format((float)$dados[7], 2, '.', '');
-         $this->vendaRepository->criarTransacao($totalVenda, $valorParcela, $vendaComDesconto, $dados);
-         
+        $totalVenda = number_format((float)$dados[0], 2, '.', '');
+        $valorParcela = number_format((float)$dados[4], 2, '.', '');
+        $vendaComDesconto = number_format((float)$dados[7], 2, '.', '');
+
+        $this->vendaRepository->criarTransacao($totalVenda, $valorParcela, $vendaComDesconto, $dados);
         $vendas = $this->vendaRepository->buscarVendasParaFinalizar();
 
         foreach ($vendas as $venda) {
             $this->vendaRepository->criarVendaDetalhada($venda);
         }
+    }
+
+    public function cancelarVenda(){
+        $vendaAndamento = $this->vendaRepository->consultarVendaEmAndamento();
+        foreach ($vendaAndamento as $venda) {
+            $quantidadeVendida = intval($venda->quantidade);
+            $idProduto = intval($venda->id_venda);
+
+            $produto = $this->vendaRepository->consultarProduto($idProduto);
+        
+            if ($produto) {
+                $produto->estoque += $quantidadeVendida;
+                $produto->save();
+            }
+            $venda->delete();
+        }
+    
     }
 
 }

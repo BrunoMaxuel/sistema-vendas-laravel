@@ -20,6 +20,17 @@
         text-align: left;
         border-bottom: 1px solid #ddd; /* Adicione uma borda inferior para separar as linhas */
     }
+	.custom-input {
+		border: none; /* Remove a borda padrão */
+		background-color: #0A8DC6; /* Cor de fundo */
+		color: white; /* Cor do texto */
+		font-size: 1.25rem; /* Tamanho da fonte */
+		padding: 0.375rem 0.75rem; /* Espaçamento interno */
+		margin-left: 1.25rem; /* Margem esquerda para alinhar ao texto */
+		font-weight: bold; /* Negrito */
+		width: 150px;
+	}
+
 	</style>
 @stop
 @section('content_header')
@@ -36,10 +47,10 @@
 	</div>
 @stop
 @section('content')
-	<x-modalMsg.modalHistorico/>	
-	<x-modalMsg.modalVenda/>
-	<x-modalMsg.modalExcluir/>
-	<x-modalMsg.modalMsg/>
+	<x-modals.modalHistorico/>	
+	<x-modals.modalVenda/>
+	<x-modals.modalExcluir/>
+	<x-modals.modalMsg/>
 	<div class="table-responsive">
 		<table id="transations-table" class="custom-table table hover order-column compact table-bordered" cellspacing="0" width="100%">
 			<thead class="thead-light">
@@ -113,57 +124,38 @@
 				console.error(error);
 			});
 		});
+
         $('.editar').click(function() {
-			$('#id_transacao').val(this.getAttribute('data-id'));
-        	const linha = $(this).closest('tr');
-
+			const linha = $(this).closest('tr');
+			var total = parseFloat(linha.find('td:nth-child(10)').text().replace('.', '').replace(',', '.'));
+			var desconto = linha.find('td:nth-child(5)').text();
+			var totalDesconto = total - total * (parseFloat(desconto.replace('%', '')) / 100);
+			var parcela = parseInt(linha.find('td:nth-child(7)').text().replace('x',''));
+			var valorParcela = totalDesconto / parcela;
+			$('#idTransacao').val(linha.find('td:nth-child(1)').text()); 
 			$('#cliente').val(linha.find('td:nth-child(2)').text());
-			$('#pagamento').val(linha.find('td:nth-child(4)').text());
-            $('#total_itens').text(linha.find('td:nth-child(6)').text());
-            $('#parcela').val(linha.find('td:nth-child(7)').text().replace('x', ''));
-            $('#valor_parcela').val(linha.find('td:nth-child(8)').text());
-            $('#desconto').val(linha.find('td:nth-child(5)').text());
-            $('#total_venda').text(linha.find('td:nth-child(9)').text());
-            $('#venda_desconto').text(linha.find('td:nth-child(9)').text());
+			$('#pagamento').val(linha.find('td:nth-child(4)').text()); 
+            $('#total_item').val(linha.find('td:nth-child(6)').text()); 
+            $('#parcela').val(linha.find('td:nth-child(7)').text());   
+            $('#valor_parcela').val(totalDesconto.toLocaleString('pt-br', {minimumFractionDigits: 2}));
+            $('#desconto').val(linha.find('td:nth-child(5)').text()); 
+            $('#total_venda').val(linha.find('td:nth-child(10)').text());   
+            $('#venda_desconto').val(totalDesconto.toLocaleString('pt-br', {minimumFractionDigits: 2})); 
             $('#valor_recebido').val(linha.find('td:nth-child(9)').text());
-
-			$('#modalFinalizarVenda').modal('show');
+			const rota = "{{route('historico.editar')}}";
+			$('.modal-title').text('Edição de venda');
+			$('#btnSubmit').text('Salvar Alterações');
+			$('#formTransacao').attr('action', rota);
+			$('#modalTransacao').modal('show');
         });
+
         $('.excluir').click(function() {
 			var transacaoId = $(this).data('id');
-
 			$('#modalExcluir').modal('show');
-			setTimeout(function() {  $('#idExcluir').val(transacaoId); }, 100);
-			$("#formUpExcluir")[0].reset();
-				$('#msg').text('Tem certeza que deseja excluir a seguinte transação?');
-				$('#btnModalExcluir').text('Excluir Transação');
-				$('#modalHeaderExcluir').text('Excluir Transação');
-				$("#idExcluir").val($(this).attr('id')); 
-
+			$('#idExcluir').val(transacaoId);
+			const rota = "{{route('historico.excluir')}}";
+			$('#formExcluir').attr('action', rota);
         });
-
-
-		$('#btnModalExcluir').click(function () {
-				var transacaoId = $('#idExcluir').val();
-				console.log(transacaoId);
-                $.post("historico/excluir", { id: transacaoId, _token: $('meta[name="csrf-token"]').attr('content') }, function (data){
-                    if(data.success === true){
-                        $("#background-text").addClass("bg-success");
-                        $("#titulo-msg").html("Cliente excluido com sucesso!");
-                        $('#modal-msg').modal('show');
-                        $('#modalExcluir').modal('hide');
-                        setTimeout(function() {
-                                window.location.reload(); 
-                        }, 1100); 
-                    }
-                    else{
-                        $("#background-text").addClass("modal-header alert alert-danger");
-                        $("#titulo-msg").html("Erro ao excluir cliente!");
-                    }
-                });
-            });
-
-
 
 		var tabela = $('#transations-table');
             var numCliente = tabela.find('tbody').find('tr').length;
@@ -171,10 +163,10 @@
                 tabela.parent().css('max-height', '400px').css('overflow-y', 'auto');
             }
             else{
-                table.parent().css('max-height', 'none').css('overflow-y', 'visible');    
+                tabela.parent().css('max-height', 'none').css('overflow-y', 'visible');    
             }
-
     });
+
 	function closePrint () {
     		  document.body.removeChild(this.__container__);
     	}

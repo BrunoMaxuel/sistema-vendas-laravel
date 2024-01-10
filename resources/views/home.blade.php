@@ -24,7 +24,7 @@
                 <div class="icon">
                     <i class="fas fa-boxes"></i>
                 </div>
-                <a href="{{route('produtos.view')}}" class="small-box-footer p-2" style="font-size: 20px">Abrir estoque <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{route('produto.index')}}" class="small-box-footer p-2" style="font-size: 20px">Abrir estoque <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-sm-4">

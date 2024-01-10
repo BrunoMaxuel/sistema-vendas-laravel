@@ -39,18 +39,14 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Modal dados -->
-
-    <x-cliente.modalEdit/>
-
+    <!-- Modal editar dados -->
+    <x-modals.modalEditarCliente/>
     {{-- Modal excluir --}}
-    <x-modalMsg.modalExcluir/>
-
-
+    <x-modals.modalExcluir/>
     {{-- Exibição de mensagem apos excluir ou alterar --}}
-    <x-modalMsg.modalMsg/>
+    <x-modals.modalMsg/>
     {{-- Tabela de clientes --}}
-    <x-cliente.listaCliente :clientes="$clientes"/>
+    <x-listaCliente :clientes="$clientes"/>
 @stop
 
 @section('js')
@@ -104,34 +100,11 @@
                 });
             });
             $('.btnExcluir').click(function () {
-                $("#formUpExcluir")[0].reset();
-                excluir($(this).attr('id'));
-            });
-            function excluir(idExcluir) {
-                $.post("{{route('clientes.excluir')}}", { id: idExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function (data) {
-                    $("#idExcluir").val(data.id); 
-                });
+                $('#idExcluir').val($(this).attr('id')); 
+                const rota = "{{ route('cliente.excluir') }}";
+                $('#formExcluir').attr('action', rota);
                 $('#modalExcluir').modal('show');
-            }
-
-            $('#btnModalExcluir').click(function () {
-                var idExcluir = $('#idExcluir').val();
-                $.post("{{route('clientes.excluirAction')}}", { id: idExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function (data){
-                    if(data.success === true){
-                        $("#background-text").addClass("bg-success");
-                        $("#titulo-msg").html("Cliente excluido com sucesso!");
-                        $('#modal-msg').modal('show');
-                        $('#modalExcluir').modal('hide');
-                        setTimeout(function() {
-                                window.location.reload(); 
-                        }, 1100); 
-                    }
-                    else{
-                        $("#background-text").addClass("modal-header alert alert-danger");
-                        $("#titulo-msg").html("Erro ao excluir cliente!");
-                    }
-                });
-            });
+            }); 
 
             var tabela = $('#table-cliente');
             var numCliente = tabela.find('tbody').find('tr').length;

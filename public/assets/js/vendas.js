@@ -58,31 +58,6 @@ $(function() {
 });
 
 $(function() {
-    
-    
-    $('#finalizarVenda').on('click', function() {
-        var dados = [];
-        var totalVenda = $('#total_venda').text();
-        var vendaComDesconto = $('#venda_desconto').text();
-        var totalItem = $('#total_itens').text();
-        var pagamento = $('#pagamento').val();
-        var parcela = $('#parcela').val();
-        var valorParcela = $('#valor_parcela').val();
-        var desconto = $('#desconto').val();
-        console.log(desconto);
-        if(desconto == null){
-            desconto = 1;
-        }
-        desconto = desconto.replace('%', '');
-        var cliente = $('#cliente').val();
-
-        dados.push(totalVenda, totalItem, pagamento, parcela, valorParcela, desconto, cliente, vendaComDesconto);
-
-        $.post("/vender/vendaAndamento/finalizar", {dados: dados , _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
-            location.reload();
-        });
-    });
-
 
     $.post("/vender/vendaAndamento", { _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
         if(data){
@@ -174,7 +149,7 @@ function updateTableVenda(data) {
             var idParaExcluir = $(this).attr('id');
             console.log(idParaExcluir);
             
-            $.post("/vender/vendaAndamento/cancelar", {id_venda : idParaExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
+            $.post("/vender/vendaAndamento/cancelar", {id_venda : idParaExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function() {
                 location.reload();
             });
         });
@@ -185,19 +160,19 @@ function updateTableVenda(data) {
         contador++;
         //preencher modal
         quantidadeTotal += item.quantidade;
-        $('#total_itens').text(quantidadeTotal);
-        $('#valor_recebido').val(valorVendaTotal.toLocaleString('pt-br', { minimumFractionDigits: 2 }));
-        $('#total_venda').text(valorVendaTotal.toLocaleString('pt-br', { minimumFractionDigits: 2 }));
-        var totalVenda = parseFloat($('#total_venda').text().replace('.', '').replace(',', '.'));
-        $('#venda_desconto').text(totalVenda.toLocaleString('pt-br', {minimumFractionDigits: 2}));
+        $('#total_item').val(quantidadeTotal);
+        $('#valor_recebido').val(valorVendaTotal.toLocaleString('pt-br', { maximumFractionDigits: 2 }));
+        $('#total_venda').val(valorVendaTotal.toLocaleString('pt-br', { maximumFractionDigits: 2 }));
+        var totalVenda = parseFloat($('#total_venda').val().replace('.', '').replace(',', '.'));
+        $('#venda_desconto').val(totalVenda.toLocaleString('pt-br', {maximumFractionDigits: 2}));
         var parcela = parseInt($('#parcela').val());
         if(parcela > 1){
             valorParcela = totalVenda / parcela;
         }
         else{
-            $('#valor_parcela').val(totalVenda.toLocaleString('pt-br', { minimumFractionDigits: 2 }));
+            $('#valor_parcela').val(totalVenda.toLocaleString('pt-br', { maximumFractionDigits: 2 }));
         }
-        total.text(valorVendaTotal.toLocaleString('pt-br', { minimumFractionDigits: 2 }));
+        total.text(valorVendaTotal.toLocaleString('pt-br', { maximumFractionDigits: 2 }));
         
     });$('#btnFinalizar button').prop('disabled', false);
     $('#btnCancelar button').prop('disabled', false);
@@ -226,13 +201,12 @@ $(function() {
 
 
 $(document).on('keydown', function(e) {
-    if (!$('#modalFinalizarVenda').is(':visible')) {
+    if (!$('#modalTransacao').is(':visible')) {
         $('#search').focus();
     }
     $(document).on('input', '#valor_recebido, #desconto', function() {
-        var totalVenda = parseFloat($('#total_venda').text().replace('.', '').replace(',', '.'));
-        var desconto = parseInt($('#desconto').val());
-
+        var totalVenda    = parseFloat($('#total_venda').val().replace('.', '').replace(',', '.'));
+        var desconto      = parseInt($('#desconto').val().replace('%', ''));
         var totalRecebido = parseFloat($('#valor_recebido').val().replace('.', '').replace(',', '.'));        
         
         if (isNaN(desconto)) {
@@ -240,13 +214,14 @@ $(document).on('keydown', function(e) {
         }
     
         if (!isNaN(totalVenda) && !isNaN(totalRecebido)) {
+            var parcela          = parseInt($('#parcela').val().replace('x', ''));
             var totalComDesconto = totalVenda - (totalVenda * (desconto / 100));
-            $('#venda_desconto').text(totalComDesconto.toLocaleString('pt-br', {minimumFractionDigits: 2}));
-            var valor_parcela = totalComDesconto / $('#parcela').val();
-            $('#valor_parcela').val(valor_parcela.toLocaleString('pt-br', {minimumFractionDigits: 2}));
-            var troco = totalRecebido - totalComDesconto;
-            
-            $('#troco').text(troco.toLocaleString('pt-br', {minimumFractionDigits: 2}));
+            var valor_parcela    = totalComDesconto / parcela;
+            var troco            = totalRecebido - totalComDesconto;
+    
+            $('#venda_desconto').val(totalComDesconto.toLocaleString('pt-br', {maximumFractionDigits: 2}));
+            $('#valor_parcela').val(valor_parcela.toLocaleString('pt-br', {maximumFractionDigits: 2}));
+            $('#troco').text(troco.toLocaleString('pt-br', {maximumFractionDigits: 2}));
         } else {
             $('#troco').text('0,00');
         }
@@ -267,24 +242,54 @@ $(document).ready(function() {
                 $('#finalizarVenda').click(); 
         }
     });
+
+
+    $('#btnFinalizar').on('click', function() {
+        $('#modalTransacao').modal('show');
+        setTimeout(function() {
+            $('#valor_recebido').focus();
+        }, 1000);
+    });
+    
+    // $('#btnCancelar').on('click', function() {
+    //     $('#modalAlert').modal('show');
+    //     $('.modal-title').text('Cancelamento de venda');
+    //     $('#title-body').text('Deseja cancelar a venda?');
+    //     $('.btn-cancelar').text('Cancelar');
+    //     $('#btnSubmit').text('Excluir todos itens');
+    // });
+
+    $('#btnSubmit').on('click', function() {
+        console.log("asdas");
+        const rota = "/vender/finalizar";
+        $('#formTransacao').attr('action', rota);
+    });
+    
+    function verificarLinhasTabelaVenda() {
+        var linhas = $('#tableVenda tbody tr').length;
+        if (linhas === 0) {
+            $('#btnFinalizar button').prop('disabled', true);
+            $('#btnCancelar button').prop('disabled', true);
+        } else {
+            $('#btnFinalizar button').prop('disabled', false);
+            $('#btnCancelar button').prop('disabled', false);
+        }
+    }
+    setTimeout(verificarLinhasTabelaVenda,400);
   });
 
 
-
-
 $(document).on('change', '#parcela', function() {
-    var vendaDescont = parseFloat($('#venda_desconto').text().replace('.', '').replace(',', '.'));
-    var parcela = parseInt($(this).val());
+    var vendaDescont = parseFloat($('#venda_desconto').val().replace('.', '').replace(',', '.'));
+    var parcela = parseInt($('#parcela').val().replace('x', ''));
     var valorParcela = vendaDescont / parcela;
-    $('#valor_parcela').val(valorParcela.toLocaleString('pt-br', {minimumFractionDigits: 2}));
+    
 
 
-    if (!isNaN(totalVenda) && !isNaN(parcela) && parcela !== 0) {
+    if (!isNaN(vendaDescont) && !isNaN(parcela) && parcela !== 0) {
         var valorParcela = vendaDescont / parcela;
-        $('#valor_parcela').val(valorParcela.toFixed(2).replace('.', ','));
+        $('#valor_parcela').val(valorParcela.toLocaleString('pt-br', {maximumFractionDigits: 2}));
     } else {
         $('#valor_parcela').val('0,00');
     }
 });
-
-

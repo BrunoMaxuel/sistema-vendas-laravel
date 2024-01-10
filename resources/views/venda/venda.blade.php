@@ -36,7 +36,16 @@
         text-align: left;
         border-bottom: 1px solid #ddd; /* Adicione uma borda inferior para separar as linhas */
     }
-
+    .custom-input {
+		border: none; /* Remove a borda padrão */
+		background-color: #0A8DC6; /* Cor de fundo */
+		color: white; /* Cor do texto */
+		font-size: 1.25rem; /* Tamanho da fonte */
+		padding: 0.375rem 0.75rem; /* Espaçamento interno */
+		margin-left: 1.25rem; /* Margem esquerda para alinhar ao texto */
+		font-weight: bold; /* Negrito */
+		width: 150px;
+	}
 
 </style>
 @stop
@@ -59,9 +68,8 @@
 </div> 
 @stop
 @section('content')
+<x-modals.modalVenda/>
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<x-modalMsg.modalVenda/>
-<x-modalMsg.modal/>
 <div class="row">
     <div class="col-md-9" id="display-tableApi">
         <table id="tableApi"  class="custom-table moverProduto table hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
@@ -111,49 +119,6 @@
 
 @stop
 @section('js')
-<script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
-<script src="{{asset('assets/js/vendas.js')}}"></script>
-<script>
-   $(document).ready(function() {
-    // Verifica o número de linhas na tabela de venda ao carregar a página
-    
-    $('#btnFinalizar').on('click', function() {
-        $('#modalFinalizarVenda').modal('show');
-        setTimeout(function() {
-            $('#valor_recebido').focus();
-        }, 500);
-    });
-    
-    $('#btnCancelar').on('click', function() {
-        $('#modalAlert').modal('show');
-        $('.modal-title').text('Cancelamento de venda');
-        $('#title-body').text('Deseja cancelar a venda?');
-        $('.btn-cancelar').text('Cancelar');
-        $('#btnSubmit').text('Excluir todos itens');
-    });
-
-    $('#btnSubmit').on('click', function() {
-        $.post('/vender/vendaAndamento/cancelarVenda', {
-            _token: $('meta[name="csrf-token"]').attr('content')
-        }, function(data) {
-            location.reload();
-        });
-    });
-    
-    // Verifica o número de linhas na tabela de venda
-    function verificarLinhasTabelaVenda() {
-        var linhas = $('#tableVenda tbody tr').length;
-        if (linhas === 0) {
-            // Se não houver linhas na tabela, desabilite os botões
-            $('#btnFinalizar button').prop('disabled', true);
-            $('#btnCancelar button').prop('disabled', true);
-        } else {
-            // Se houver linhas na tabela, habilite os botões
-            $('#btnFinalizar button').prop('disabled', false);
-            $('#btnCancelar button').prop('disabled', false);
-        }
-    }
-    setTimeout(verificarLinhasTabelaVenda, 100);
-});
-</script>
+    <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
+    <script src="{{asset('assets/js/vendas.js')}}"></script>
 @stop

@@ -18,7 +18,7 @@
             @if(count($produtos) > 0)
                 @foreach($produtos as $produto)
                     <tr>
-                        <th scope="row">{{$produto['id']}}</th>
+                        <td scope="row">{{$produto['id']}}</td>
                         <td><strong>{{$produto['nome']}}</strong></td>
                         <td>{{$produto['codigo_barras']}}</td>
                         <td>{{number_format($produto['preco'], 2, ',', '.')}}</td>

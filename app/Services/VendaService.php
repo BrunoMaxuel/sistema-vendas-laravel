@@ -1,16 +1,18 @@
 <?php
 
 namespace App\Services;
-
+use App\Repositories\TransacaoRepository;
 use App\Repositories\VendaRepository;
 use Illuminate\Support\Facades\Auth;
 
 class VendaService
 {
     protected $vendaRepository;
-    public function __construct(VendaRepository $vendaRepository)
+    protected $repositoryTransacao;
+    public function __construct(VendaRepository $vendaRepository, TransacaoRepository $repositoryTransacao)
     {
         $this->vendaRepository = $vendaRepository;
+        $this->repositoryTransacao = $repositoryTransacao;
     }
 
     public function exibirPainelVendas()
@@ -60,17 +62,22 @@ class VendaService
         $this->vendaRepository->cancelarItem($id_item);
     }
 
-    public function finalizarVenda($dados){
-        $totalVenda = number_format((float)$dados[0], 2, '.', '');
-        $valorParcela = number_format((float)$dados[4], 2, '.', '');
-        $vendaComDesconto = number_format((float)$dados[7], 2, '.', '');
-
-        $this->vendaRepository->criarTransacao($totalVenda, $valorParcela, $vendaComDesconto, $dados);
-        $vendas = $this->vendaRepository->buscarVendasParaFinalizar();
-
-        foreach ($vendas as $venda) {
-            $this->vendaRepository->criarVendaDetalhada($venda);
+    public function finalizarVenda($request){
+        if($request->desconto == "" || $request->desconto == "%"){
+            $request->desconto = "0";
         }
+        $request->desconto         = str_replace('%', '', $request->desconto);
+        $request->parcela         = str_replace('x', '', $request->parcela);
+        $request->valor_parcela    = str_replace(['.', ','], ['', '.'], $request->valor_parcela);
+        $request->venda_desconto = str_replace(['.', ','], ['', '.'], $request->venda_desconto);
+        $request->total_venda = str_replace(['.', ','], ['', '.'], $request->total_venda);
+        $transacao = $this->repositoryTransacao->criarTransacao($request);
+        if ($transacao) {
+            $vendas = $this->vendaRepository->buscarVendasParaFinalizar();
+            foreach ($vendas as $venda) {
+                $this->vendaRepository->criarVendaDetalhada($venda);
+            }
+        } 
     }
 
     public function cancelarVenda(){

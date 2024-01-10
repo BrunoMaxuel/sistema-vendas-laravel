@@ -76,4 +76,29 @@ class CaixaService{
         }
     }
 
+    public function adicionarSuprimento($request){
+        $valorAdicionar = str_replace('.', '', $request->valor);
+        $request->valor = str_replace(',', '.', $valorAdicionar);
+        if($this->repositorioCaixa->adicionarSuprimento($request))
+        {    
+            return response()->json([
+                'success' => true,
+                'message' => 'Dinheiro adicionado com sucesso!'
+    
+            ]);
+        }
+    }
+
+    public function adicionarSangria($request){
+        $valorRetirar = str_replace('.', '', $request->valor);
+        $request->valor = str_replace(',', '.', $valorRetirar);
+        if($this->repositorioCaixa->adicionarSangria($request))
+        {
+            return response()->json([
+                'success' => true,
+                'message' => 'Dinheiro removido com sucesso!'
+            ]);
+        }
+    }
+
 }

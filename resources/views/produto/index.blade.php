@@ -53,28 +53,23 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- Modal -->
-<x-produto.modalExcluir/>
-<x-produto.modalEdit/>
-<x-modalMsg.modalMsg/>
-
-<x-produto.listProduto :produtos="$produtos"/>
+<x-modals.modalExcluir/>
+<x-modals.modalEditarProduto/>
+<x-listaProduto :produtos="$produtos"/>
 @stop
 @section('js')
 <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
   <script type="text/javascript">
     $(function() {
+        var preco = $('#preco');
+        var lucro = $('#lucro');
+        var custo = $('#preco_custo');
         $('#btnAdd').click(function() {
             $("#formUp")[0].reset();
+            $('#formUp').attr("action", "{{ route('produto.adicionar')}}")
             $('#modalAlert').modal('show');
         });
 
-        $('#preco').mask('000.000,00', {reverse: true});
-        $('#preco_custo').mask('000.000,00', {reverse: true});
-        $('#lucro').mask('000%', {reverse: true});
-
-        var preco = $('#preco');
-    	var lucro = $('#lucro');
-    	var custo = $('#preco_custo');
     	
     	$('#preco, #preco_custo').on('keyup', function() {
             var mCusto = parseFloat(custo.val().replace(".", "").replace(",", ".")) || 0;
@@ -86,114 +81,36 @@
         $('#lucro').on('keyup', function() {
             var mCusto = parseFloat(custo.val().replace(".", "").replace(",", ".")) || 0;
             var mLucro = parseFloat(lucro.cleanVal()) || 0;
-
             var newPreco = mCusto + (mCusto * (mLucro / 100));
             preco.val(preco.masked(newPreco.toFixed(2)));
            
         });
 
         $('.btnEditar').click(function() {
-            $("#formUp")[0].reset();
-            editar($(this).attr('id'));
+            var linhaTabela = $(this).closest('tr');
+            var colunas = linhaTabela.find('td');
+            $('#id_hidden').val(colunas[0].innerText);
+            $('#nome').val(colunas[1].innerText);
+            $('#codigo_barras').val(colunas[2].innerText);
+            $('#preco').val(colunas[3].innerText);
+            $('#preco_custo').val(colunas[4].innerText);
+            $('#categoria').val(colunas[8].innerText);
+            $('#lucro').val(colunas[5].innerText);
+            $('#estoque').val(colunas[6].innerText);
+            $('#fornecedor').val(colunas[7].innerText);
+            $('#modalAlert').modal('show');
+            $("#formUp").attr("action", "{{ route('produto.editar') }}");
         });
-        function editar(index){
-            $.post("{{route('produtos.editar')}}", { id: index, _token: $('meta[name="csrf-token"]').attr('content')}, function( data )	{
-             
-              $("#id").val(data.id);
-              $("#nome").val(data.nome);
-              $("#codigo_barras").val(data.codigo_barras);
-              $("#preco").val(data.preco);
-              $("#preco_custo").val(data.preco_custo);
-              $("#lucro").val(data.lucro);
-              $("#categoria").val(data.categoria);
-              $("#fornecedor").val(data.fornecedor);
-              $("#estoque").val(data.estoque);
-            }
-        );
-        $('#modalAlert').modal('show');
-
-        };
-        $('#btnSubmit').click(function() {
-            var dados = $("#formUp").serialize();
-            $.post("{{route('produtos.saveEdit')}}",dados, function( data )	{
-                
-
-                if(data.success == true){
-                    $('#modalAlert').modal('hide');
-                    $("#background-text").addClass("bg-success");
-                    $("#titulo-msg").html(data.message);
-                    $('#modal-msg').modal('show');
-                    setTimeout(function() {
-                        window.location.reload(); 
-                    }, 1100); 
-                }
-                else{
-                    if (data.errors.hasOwnProperty('nome')) {
-                    // Exibe a mensagem de erro ao lado do campo 'nome'
-                    var errorMessage = data.errors.nome[0];
-                    $('#error-nome').text(errorMessage);
-                }
-                if (data.errors.hasOwnProperty('codigo_barras')) {
-                    // Exibe a mensagem de erro ao lado do campo 'codigo_barras'
-                    var errorMessage = data.errors.codigo_barras[0];
-                    $('#error-cod-barras').text(errorMessage);
-                }
-                if (data.errors.hasOwnProperty('preco')) {
-                    // Exibe a mensagem de erro ao lado do campo 'preco'
-                    var errorMessage = data.errors.preco[0];
-                    $('#error-preco').text(errorMessage);
-                }
-                if (data.errors.hasOwnProperty('preco_custo')) {
-                    // Exibe a mensagem de erro ao lado do campo 'preco_custo'
-                    var errorMessage = data.errors.preco_custo[0];
-                    $('#error-preco-custo').text(errorMessage);
-                }
-                if (data.errors.hasOwnProperty('lucro')) {
-                    // Exibe a mensagem de erro ao lado do campo 'preco_custo'
-                    var errorMessage = data.errors.lucro[0];
-                    $('#error-lucro').text(errorMessage);
-                }
-                if (data.errors.hasOwnProperty('estoque')) {
-                    // Exibe a mensagem de erro ao lado do campo 'preco_custo'
-                    var errorMessage = data.errors.estoque[0];
-                    $('#error-estoque').text(errorMessage);
-                }
-                // Adicione condições semelhantes para outros campos, se necessário
-
-                }
-              }
-            );
-        });
+            
+        
 
         $('.btnExcluir').click(function () {
-              $("#formUpExcluir")[0].reset();
-              excluir($(this).attr('id'));
-        });
-        function excluir(idExcluir) {
-            $.post("{{route('produtos.excluir')}}", { id: idExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function (data) {
-                $("#idExcluir").val(data.id); 
-            });
-            $('#modalExcluir').modal('show');
-        }
+              $('#idExcluir').val($(this).attr('id')); 
+              const rota = "{{route('produto.excluir')}}";
+              $('#formExcluir').attr('action', rota);
+              $('#modalExcluir').modal('show');
+        }); 
 
-        $('#btnModalExcluir').click(function () {
-            var idExcluir = $('#idExcluir').val();
-            $.post("{{route('produtos.excluir.action')}}", { id: idExcluir, _token: $('meta[name="csrf-token"]').attr('content') }, function (data){
-                if(data.success === true){
-                    $('#modalExcluir').modal('hide');
-                    $("#background-text").addClass("bg-success");
-                    $("#titulo-msg").html("Cliente excluido com sucesso!");
-                    $('#modal-msg').modal('show');
-                    setTimeout(function() {
-                            window.location.reload(); 
-                    }, 1100); 
-                }
-                else{
-                    $("#background-text").addClass("modal-header alert alert-danger");
-                    $("#titulo-msg").html("Erro ao excluir cliente!");
-                }
-          });
-      });
 
       var tabela = $('#tabela-produto');
         var numTabela = tabela.find('tbody').find('tr').length;

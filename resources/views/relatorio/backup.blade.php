@@ -24,7 +24,7 @@
 @stop
 
 @section('content')
-    <x-modalMsg.modalMsg/>
+    <x-modals.modalMsg/>
     @if(session('msg'))
         <script>
             showModal(session('msg'));

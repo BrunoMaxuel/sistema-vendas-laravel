@@ -21,7 +21,7 @@ class VendasController extends Controller
         $this->vendaService =$vendaService;
     }
 
-    public function painelVenda(){
+    public function index(){
         return view($this->vendaService->exibirPainelVendas());
     }
 
@@ -42,7 +42,8 @@ class VendasController extends Controller
     }
     
     public function finalizarVenda(Request $request){
-        $this->vendaService->finalizarVenda($request->dados);
+        $this->vendaService->finalizarVenda($request);
+        return redirect(route('venda.index'));
     }
     
     public function cancelarVenda(){

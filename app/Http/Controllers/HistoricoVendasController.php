@@ -2,38 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TransacaoRequest;
 use App\Models\Transacao;
 use App\Models\Venda;
 use App\Models\vendasDetalhadas;
+use App\Services\TransacaoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HistoricoVendasController extends Controller
 {
-    public function historicoView(){
+    protected $transacaoService;
+
+    public function __construct(TransacaoService $transacaoService)
+    {   
+        $this->transacaoService = $transacaoService;
+    }
+
+    public function index(){
         $transacao = Transacao::where('user_id', Auth::id())->orderby('id', 'desc')->get();
         return view('relatorio.historicoVendas', ['transactions' => $transacao]);
     }   
-    public function editarTransacao(Request $request){
-        $dados = $request->dados;
-        $valor_parcela = str_replace('.', '', $dados[2]);
-        $valor_parcela = str_replace(',', '.', $valor_parcela);
-        $vendaComDesconto = str_replace('.', '', $dados[5]);
-        $vendaComDesconto = str_replace(',', '.', $vendaComDesconto);
-        $transacao = Transacao::where('user_id', Auth::id())->where('id', $dados[6])->first();
-        if ($transacao) {
-            $transacao->pagamento = $dados[0];
-            $transacao->parcela = $dados[1];
-            $transacao->valor_parcela = $valor_parcela;
-            $transacao->desconto = $dados[3];
-            $transacao->cliente = $dados[4];
-            $transacao->venda_com_desconto = $vendaComDesconto;
-            $transacao->save();
-            return response()->json($transacao);
-        } else {
-            return response()->json(['error' => 'Transação não encontrada']);
-        }  
-    }   
+    public function editarTransacao(TransacaoRequest $request){
+        return $this->transacaoService->editarTransacao($request);
+    }
+    
     public function excluirTransacao(Request $request){
         $id = $request->id;
         $transacao = Transacao::where('user_id', Auth::id())->where('id', $id)->first();
@@ -45,7 +38,6 @@ class HistoricoVendasController extends Controller
             return response()->json(['error' => 'Transação não encontrada ou você não tem permissão para excluí-la']);
         }
     }
-    
     
     public function historicoAPI(){
         $tr = Transacao::where('id', Auth::id())->orderby('id', 'desc')->get();
@@ -59,12 +51,6 @@ class HistoricoVendasController extends Controller
         $vendaDetalhe = vendasDetalhadas::where('user_id', Auth::id())->where('item_cancelado', false)->where('id_transacao', $id_transacao)->get();
         return response()->json($vendaDetalhe);
     }
-
-    // public function historicoEdit(Request $request){
-    //     $id_transacao = $request->dataId;
-    //     $transacao = Transacao::where('user_id', Auth::id())->where('id', $id_transacao)->first();
-    //     return response()->json($transacao);
-    // }
 
     public function imprimirVendas(){
         $transacoes = Transacao::where('user_id', Auth::id())->get();

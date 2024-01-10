@@ -89,4 +89,22 @@ class CaixaRepository{
         $caixa->save();
         return true;
     }
+
+    public function adicionarSuprimento($request){
+        $suprimento = new Suprimento();
+        $suprimento->valor = $request->valor;
+        $suprimento->descricao = $request->descricao;
+        $suprimento->user_id = Auth::id(); 
+        $suprimento->save();
+        return true;
+    }
+
+    public function adicionarSangria($request){
+        $sangria = new Sangria();
+        $sangria->valor = $request->valor;
+        $sangria->descricao = $request->descricao;
+        $sangria->user_id = Auth::id();
+        $sangria->save();
+        return true;
+    }
 }

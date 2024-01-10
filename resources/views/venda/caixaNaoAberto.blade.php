@@ -1,106 +1,8 @@
 @extends('adminlte::page')
 @section('title', 'Realizar venda')
 
-@section('css')
-
-<link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables.min.css') }}"/>
-<style>
-	#search{
-		margin-left: 15px;
-		margin-bottom: 15px;
-		width: 350px;
-		height: 40px;
-		font-size: 25px;
-        border-radius: 5px;
-	}
-    #display-tableApi{
-        display: none;
-    }
-    .cor-linha{
-        background-color: #17A2B8; 
-        border-radius: 10px;
-    }
-    .customize{
-        border-radius: 10px;
-        background-color: #6c757d;
-        background-color: #007BFF;
-    }
-    #tableApi tbody tr {
-    padding: 0px; /* Ajuste o valor conforme necessário */
-}
-
-</style>
-@stop
-
 @section('content')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<x-modalMsg.modalVenda/>
-<x-modalMsg.modal/>
-
-<div class="row ">
-    <div class="col-md-8 p-2 cor-linha">
-        <h4 class="text-light" style="margin-left: 17px">Código barras/Nome</h4>
-        <div class="input-group-append search-input">
-            <input type="text" id="search" placeholder="Pesquisar item para venda" oninput="convertToUpper(this)">
-        </div>
-    </div>
-    <div class="col-md-4 cor-linha d-flex align-items-center justify-content-center">
-        <div id="btnFinalizar">
-            <button class="btn btn-light p-1 mr-3 pt-3 pb-3"><strong>Finalizar Venda</strong></button>
-        </div>
-        <div id="btnCancelar">
-            <button class="btn btn-light p-1 pt-3 pb-3"><strong>Cancelar Venda</strong></button>
-        </div>
-    </div>
-</div> 
-<div class="row mt-2">
-    <div class="col-md-8" id="display-tableApi">
-        <table id="tableApi" style="cursor: pointer;"  class="moverProduto table p-5 hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome do produto</th>
-                    <th scope="col">Código</th>
-                    <th scope="col">Preço</th>
-                    <th scope="col">Custo</th>
-                    <th scope="col">Estoque</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-8" id="display-tableVenda">
-        <table id="tableVenda" style="cursor: default;"   class="table hover order-column table-striped compact table-bordered" cellspacing="0" width="100%">
-            <thead class="thead-light">
-                <tr>
-                    <th style="width: 1%" class="removeLinha" scope="col">Item</th>
-                    <th scope="col">Nome do produto</th>
-                    <th scope="col">Código</th>
-                    <th style="width: 5%" scope="col">UN</th>
-                    <th scope="col">Preço</th>
-                    <th scope="col">Total</th>
-                    <th style="width: 5%;" scope="col">Deletar</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div class="col-md-4">
-        <div class="row">
-            <div class="col-md-12 bg-info p-3 mb-3 cor-linha" style="height: 75vh;">
-                <div class="p-4">
-                    <h1><strong>TOTAL</strong></h1>
-                    <h1><strong id="total" class="pl-5 ml-5">0,00</strong></h1>
-                </div>
-                <div class="p-4">
-                    <h1><strong id="troco">TROCO</strong></h1>
-                    <h1><strong class="pl-5 ml-5">0,00</strong></h1>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-</div>
+<x-modals.modalExcluir/>
 
 @stop
 @section('js')
@@ -109,31 +11,30 @@
    
    $(function () {
     $(function () {
-    $('#modalAlert .modal-dialog').addClass('modal-lg'); // ou modal-lg para um modal grande
-    // Adicione outras configurações ou funcionalidades do modal aqui
-});
+        $('#modalAlert .modal-dialog').addClass('modal-lg'); 
+        $('')
+    });
 
-    $('#modalAlert').modal({
+    $('#modalExcluir').modal({
         backdrop: 'static', // Configuração para o backdrop estático
         keyboard: false // Opcional: desabilita o fechamento do modal ao pressionar a tecla Escape
     });
 
     // Definir textos ou outras configurações do modal
-    $('.modal-title').text('Abrir Caixa');
-    $('#title-body').text('Você precisa abrir o caixa para realizar vendas.');
-    $('.btn-cancelar').text('Página inicial');
-    $('#btnSubmit').text('Prosseguir para abertura');
-
-    $('#btnSubmit').on('click', function() {
-        // Redirecionar para a rota /caixa
+    $('#titulo').text('O caixa está fechado');
+    $('#corpo').text('Abra o caixa para realizar vendas');
+    $('#btnModalCancelar').text('Página inicial');
+    $('#btnModalExcluir').text('Prosseguir para abertura');
+    $('#btnModalExcluir').addClass('bg-success border');
+    $('#btnModalExcluir').on('click', function(evento) {
+        event.preventDefault();
         window.location.href = '/caixa';
     });
-    $('.btn-cancelar').on('click', function() {
-        // Redirecionar para a rota /caixa
+    $('#btnModalCancelar').on('click', function(evento) {
+        event.preventDefault();
         window.location.href = '/';
     });
 });
 
-    
 </script>
 @stop

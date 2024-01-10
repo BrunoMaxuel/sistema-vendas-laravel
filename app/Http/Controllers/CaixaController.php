@@ -20,7 +20,7 @@ class CaixaController extends Controller
         $this->caixa = $caixa;
     }
 
-    public function caixaView(){
+    public function index(){
         $caixa = $this->caixa->painelCaixa();
         
         if($caixa !== false &&  $caixa->aberto) {
@@ -29,38 +29,16 @@ class CaixaController extends Controller
             return view('caixa.caixaAbrir');
         }
     }
-    public function caixaAbrir(Request $request){
+    public function iniciarCaixa(Request $request){
         return $this->caixa->iniciarCaixa($request);        
     }
     public function fecharCaixa(){
         return $this->caixa->fecharCaixa();
     }
-    public function addDinheiro(Request $request){
-        $valorAdicionar = str_replace('.', '', $request->valor);
-        $valorAdicionar = str_replace(',', '.', $valorAdicionar);
-        $suprimento = new Suprimento();
-        $suprimento->valor = $valorAdicionar;
-        $suprimento->descricao = $request->descricao;
-        $suprimento->user_id = Auth::id(); 
-        $suprimento->save();
-        return response()->json([
-            'success' => true,
-            'message' => 'Dinheiro adicionado com sucesso!'
-
-        ]);
+    public function adicionarSuprimento(Request $request){
+        return $this->caixa->adicionarSuprimento($request);
     }
-    public function retirarDinheiro(Request $request){
-        $valorRetirar = str_replace('.', '', $request->valor);
-        $valorRetirar = str_replace(',', '.', $valorRetirar);
-        $sangria = new Sangria();
-        $sangria->valor = $valorRetirar;
-        $sangria->descricao = $request->descricao;
-        $sangria->user_id = Auth::id();
-        $sangria->save();
-        return response()->json([
-            'success' => true,
-            'message' => 'Dinheiro removido com sucesso!'
-
-        ]);
+    public function adicionarSangria(Request $request){
+        return $this->caixa->adicionarSangria($request);
     }
 }

@@ -53,7 +53,7 @@ class LoginRequest extends FormRequest
         RateLimiter::clear($this->chaveLimiteTentativa());
     }
 
-    /** garantir o login requisição nao taxa nao limitada
+    /** garantir o login requisição taxa nao limitada
      * Ensure the login request is not rate limited.
      *
      * @return void

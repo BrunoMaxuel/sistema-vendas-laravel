@@ -60,20 +60,6 @@ class VendaRepository
         Venda::where('user_id', Auth::id())->where('id_venda', $id_item)->update(['item_cancelado' => true]);
     }
 
-    public function criarTransacao($totalVenda, $valorParcela, $vendaComDesconto, $dados)
-    {
-        $transacao                      = new Transacao();
-        $transacao->user_id             = Auth::id();
-        $transacao->total               = $totalVenda;
-        $transacao->total_item          = $dados[1];
-        $transacao->pagamento           = $dados[2];
-        $transacao->cliente             = $dados[6];
-        $transacao->venda_com_desconto  = $vendaComDesconto;
-        $transacao->desconto            = $dados[5];
-        $transacao->parcela             = $dados[3];
-        $transacao->valor_parcela       = $valorParcela;
-        $transacao->save();
-    }
     public function criarVendaDetalhada($venda){
         $transacao                      = Transacao::orderBy('id', 'desc')->latest()->first();
         $vendaDetalhada                 = new vendasDetalhadas();

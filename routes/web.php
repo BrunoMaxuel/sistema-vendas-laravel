@@ -15,13 +15,12 @@ Route::post('/login', [LoginController::class, 'autenticar'])->name('login.auth'
 Route::middleware(['auth'])->group(function(){
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     
-    Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.view');
-    Route::post('/clientes/editar', [ClientesController::class, 'editarView'])->name('clientes.editar');
-    Route::post('/clientes/saveeditar', [ClientesController::class, 'saveEditar'])->name('clientes.saveEdit');
-    Route::get('/clientes/adicionar',[ClientesController::class, 'adicionarClienteView'])->name('clientes.adicionar.view');
-    Route::post('/clientes/adicionar',[ClientesController::class, 'adicionarCliente'])->name('clientes.adicionar.action');
-    Route::delete('/clientes/excluirAction',[ClientesController::class, 'excluirClienteAction'])->name('cliente.excluir');
-    Route::get('/clientes/search', [ClientesController::class, 'search'])->name('clientes.search');
+    Route::get('/clientes', [ClientesController::class, 'index'])->name('cliente.index');
+    Route::post('/clientes/pesquisar', [ClientesController::class, 'search'])->name('cliente.search');
+    Route::get('/clientes/adicionar',[ClientesController::class, 'painelAdicionar'])->name('cliente.painel.adicionar');
+    Route::post('/clientes/editar', [ClientesController::class, 'editarCliente'])->name('cliente.editar');
+    Route::post('/clientes/adicionar',[ClientesController::class, 'adicionarCliente'])->name('cliente.adicionar');
+    Route::delete('/clientes/excluir',[ClientesController::class, 'excluirCliente'])->name('cliente.excluir');
     
     
     Route::get('/produtos', [ProdutosController::class, 'index'])->name('produto.index');
@@ -33,9 +32,9 @@ Route::middleware(['auth'])->group(function(){
     
     
     
-    Route::get('/caixa', [CaixaController::class, 'index'])->name('caixa.abrir.view');
+    Route::get('/caixa', [CaixaController::class, 'index'])->name('caixa.index');
     Route::post('/caixa/fechar', [CaixaController::class, 'fecharCaixa'])->name('caixa.fechar');
-    Route::post('/caixa/abrir', [CaixaController::class, 'iniciarCaixa'])->name('caixa.abrir.abrir');
+    Route::post('/caixa/abrir', [CaixaController::class, 'iniciarCaixa'])->name('caixa.iniciar');
     Route::post('/caixa/adicionar', [CaixaController::class, 'adicionarSuprimento'])->name('caixa.add');
     Route::post('/caixa/sangria', [CaixaController::class, 'adicionarSangria'])->name('caixa.sangria');
     

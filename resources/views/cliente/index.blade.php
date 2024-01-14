@@ -15,9 +15,10 @@
 @section('content_header')
     <div class="row cor-fundo">
         <div class="col-md-4">
-            <form action="{{ route('clientes.search') }}" method="GET" class="form-inline">
+            <form action="{{ route('cliente.search') }}" method="POST" class="form-inline">
+                @csrf
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Pesquisar clientes" name="query">
+                    <input type="text" id="pesquisa" class="form-control" placeholder="Pesquisar clientes" name="query">
                     <div class="input-group-append">
                         <button style="border: solid 1px rgb(0, 0, 0); color: black; background-color:white;" class="btn btn-outline-primary" type="submit">Buscar</button>
                     </div>
@@ -25,7 +26,7 @@
             </form>
         </div>
         <div class="col-md-5">
-            <h3>TOTAL DE CLIENTES  <i class="fas fa-sm fa-arrow-right" style="width: 50px;"></i> <strong>{{count($clientes)}}</strong> </h3>
+            <h2>Total de Clientes <i class="fas fa-sm fa-arrow-right" style="width: 50px;"></i> <strong>{{count($clientes)}}</strong> </h2>
         </div>
         <div class="col-md-3 d-flex justify-content-end align-items-center">
             <div>
@@ -56,49 +57,26 @@
             $('#tel').mask('(00) 00000-0000');
             $('#btnAdd').click(function() {
                 $("#formUp")[0].reset();
+                const rota = "{{route('cliente.adicionar')}}";
+                $('#formUp').attr('action', rota);
                 $('#modalAlert').modal('show');
             });
 
             $('.btnEditar').click(function() {
                 $("#formUp")[0].reset();
-                editar($(this).attr('id'));
-            });
-            function editar(index){
-                $.post("{{route('clientes.editar')}}", { id: index, _token: $('meta[name="csrf-token"]').attr('content')}, function( data )	
-                {
-                    $("#id").val(data.id);
-                    $("#nome").val(data.nome);
-                    $("#tel").val(data.telefone);
-                    $("#endereco").val(data.endereco);
-                    $("#bairro").val(data.bairro);
-                    $("#cidade").val(data.cidade);
-                }
-                );
-
+                const rota = "{{route('cliente.editar')}}"
+                $('#formUp').attr('action', rota);
+                var linha = $(this).closest('tr');
+                $('#id').val($(this).attr('id'));
+                $('#nome').val(linha.find('td:eq(0)').text());
+                $('#endereco').val(linha.find('td:eq(1)').text());
+                $('#tel').val(linha.find('td:eq(2)').text());
+                $('#bairro').val(linha.find('td:eq(3)').text());
+                $('#cidade').val(linha.find('td:eq(4)').text());
                 $('#modalAlert').modal('show');
-            };
-
-            $('#btnSubmit').click(function() {
-                var dados = $("#formUp").serialize();
-                $.post("{{route('clientes.saveEdit')}}",dados, function( data )	{
-                    if(data.success == true){
-                        $('#modalAlert').modal('hide');
-                        $("#background-text").addClass("bg-success");
-                        $("#titulo-msg").html(data.message);
-                        $('#modal-msg').modal('show');
-                        setTimeout(function() {
-                            window.location.reload(); 
-                        }, 1100); 
-                    }
-                    else{
-                        if(data.errors.hasOwnProperty('nome')) 
-                        {
-                            var errorMessage = data.errors.nome[0];
-                            $('#error-nome').text(errorMessage);
-                        }
-                    }
-                });
             });
+
+            
             $('.btnExcluir').click(function () {
                 $('#idExcluir').val($(this).attr('id')); 
                 const rota = "{{ route('cliente.excluir') }}";
@@ -114,6 +92,30 @@
             else{
                 table.parent().css('max-height', 'none').css('overflow-y', 'visible');    
             }
+
+            $('#pesquisa').on('keyup', function(e) {
+                var search = $(this).val();
+                $.post("/clientes/pesquisar", {query: search, _token: $('meta[name="csrf-token"]').attr('content') }, function(clientes) {
+                    tabela.empty();
+                    if (clientes.length > 0) {
+                        $.each(clientes, function (index, cliente) {
+                            var linha = $('<tr>');
+                            linha.append('<th scope="row">' + cliente.id + '</th>');
+                            linha.append('<td><strong>' + cliente.nome + '</strong></td>');
+                            linha.append('<td>' + cliente.endereco + '</td>');
+                            linha.append('<td>' + cliente.telefone + '</td>');
+                            linha.append('<td>' + cliente.bairro + '</td>');
+                            linha.append('<td>' + cliente.cidade + '</td>');
+                            linha.append('<td><div class="btn-group"> <div><button type="button" id="' + cliente.id + '" class="btnEditar btn btn-secondary-soft btn-sm btn-success mr-2"><i class="bi bi-pencil-square"></i> Editar</button></div><div><button type="button" id="' + cliente.id + '" class="btnExcluir btn btn-danger btn-sm mt-2 mt-sm-0"><i class="bi bi-trash"></i> Excluir</button></div></div></td>');
+                            // Adicionar linha à tabela
+                            tabela.append(linha);
+                        });
+                    } else {
+                        // Adicionar uma linha indicando que nenhum cliente foi encontrado
+                        tabela.append('<tr><td colspan="8" class="text-center">Nenhum usuário encontrado</td></tr>');
+                    }
+                });
+            });
         });
     </script>
 @stop

@@ -12,10 +12,9 @@
 	</style>
 @stop
 @section('content')
-<x-modals.modalMsg/>
 	<div class="row p-3">
 		<div class="col-md-5 caixa">
-			<form id="abrirForm" method="POST">
+			<form id="abrirForm" method="POST" action="{{route('caixa.iniciar')}}"> 
 				@csrf
 				<div class="form-group text-center pb-3">
 					<h3>Abertura de caixa</h3>
@@ -33,43 +32,13 @@
 				</button>
 			</form>
 		</div>
-		<div class="col-md-7">
-
-		</div>
 	</div>
-
 @stop
 @section('js')
 <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
 <script>
 	$(function(){
-		$('#abrirForm').submit(function(){
-			$.post("{{ route('caixa.abrir.abrir') }}",$('#abrirForm').serialize(),function(data){
-				if(data.success == true){
-					$('#modalAlert').modal('hide');
-                    $('#modal-msg').modal('show');
-                    $("#background-text").addClass("bg-success");
-                    $("#titulo-msg").html(data.message);
-                    setTimeout(function() {
-                        window.location.reload(); 
-                    }, 1100); 
-    	    	}
-    			else{
-                    $('#modal-msg').modal('show');
-                    $("#background-text").addClass("bg-success");
-                    $("#titulo-msg").html(data.message);
-                    setTimeout(function() {
-                        window.location.reload(); 
-                    }, 1100); 
-        			
-    			}
-			}
-		);
-		return false;
-		});
-		$('#btnCancel').click(function(){
-			location.reload();
-		});
+		
 	});
 </script>
 @stop

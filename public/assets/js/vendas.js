@@ -243,21 +243,12 @@ $(document).ready(function() {
         }
     });
 
-
     $('#btnFinalizar').on('click', function() {
         $('#modalTransacao').modal('show');
         setTimeout(function() {
             $('#valor_recebido').focus();
         }, 1000);
     });
-    
-    // $('#btnCancelar').on('click', function() {
-    //     $('#modalAlert').modal('show');
-    //     $('.modal-title').text('Cancelamento de venda');
-    //     $('#title-body').text('Deseja cancelar a venda?');
-    //     $('.btn-cancelar').text('Cancelar');
-    //     $('#btnSubmit').text('Excluir todos itens');
-    // });
 
     $('#btnSubmit').on('click', function() {
         console.log("asdas");

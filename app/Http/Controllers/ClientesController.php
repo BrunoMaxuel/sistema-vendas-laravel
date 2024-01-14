@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Services\ClienteService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,142 +11,40 @@ use Illuminate\Support\Facades\Validator;
 
 class ClientesController extends Controller
 {
-    public function index(){
-        $clientes = Cliente::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
+    protected $clienteService;
+    public function __construct(ClienteService $cliente)
+    {
+        $this->clienteService = $cliente;
+    }
+    public function index(){ 
+        $clientes = $this->clienteService->buscarTodosClientes();
         return view('cliente/index', ['clientes' => $clientes]);
     }
     
-    public function editarView(Request $request){
-
-        if($request->id != null){
-            $cliente = Cliente::where('user_id', Auth::id())->where('id', $request->id)->first();
-            return response()->json($cliente);
-        }
-    }
-    public function saveEditar(Request $request){
-        $validator = Validator::make($request->all(), [
-            'nome' => 'required',
-        ], [
-            'nome.required' => 'Por favor, preencha o campo nome.',
-        ]);
-        
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Erro na validação',
-                'errors' => $validator->errors()
-            ]);
-        }
-        try{
-            $cliente = null;
-            if(!blank($request->id)){
-                $cliente = Cliente::where('user_id', Auth::id())->find($request->id);
-            }else{
-                $cliente = new Cliente();
-            }
-            $cliente->user_id   = Auth::id(); 
-            $cliente->nome      = $request->nome;
-            $cliente->telefone  = $request->telefone;
-            $cliente->endereco  = $request->endereco;
-            $cliente->bairro    = $request->bairro;
-            $cliente->cidade    = $request->cidade;
-    
-            if($cliente->save()){
-                if(!blank($request->id)){
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Cliente alterado com sucesso!'
-                    ]);
-                } else {
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Cliente adicionado com sucesso!'
-                    ]);
-                }
-            }
-        } catch(Exception $e){
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ]);
-        }
+    public function editarCliente(Request $request){
+        $this->clienteService->editarCliente($request);
+        return redirect(route('cliente.index'));
     }
     
     public function excluirCliente(Request $request){
-        if($request->id != null){
-            $cliente = Cliente::where('user_id', Auth::id())->where('id', $request->id)->first();
-            return response()->json($cliente);
-        }
-        else{
-            return response()->json([
-                'success' => 'false',
-                'message' => 'sem indice na busca!'
-            ]);
-        }
-    }
-    public function excluirClienteAction(Request $request) {
-        if ($request->id) {
-            $cliente = Cliente::where('user_id', Auth::id())->find($request->id);
-            
-            if ($cliente) {
-                $cliente->delete();
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Cliente excluído com sucesso!'
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Cliente não encontrado!'
-                ], 404); 
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Nenhum ID fornecido para exclusão!'
-            ], 400); // Indica uma requisição inválida (400 Bad Request)
+        if($this->clienteService->excluirCliente($request)){
+            return redirect(route('cliente.index'));
         }
     }
     public function search(Request $request)
     {
-        $query = $request->input('query');
-        $clientes = Cliente::where('user_id', Auth::id())->where('nome', 'LIKE', "%$query%")
-            ->orWhere('endereco', 'LIKE', "%$query%")->get();
-
-            return view('cliente/index', ['clientes' => $clientes]);
+        $clientes = $this->clienteService->pesquisarCliente($request);
+        if($clientes){
+            return $clientes;
+        }
     }
 
-
     public function adicionarCliente(Request $request){
-        $validator = Validator::make($request->all(), [
-            'nome' => 'required',
-        ], [
-            'nome.required' => 'Por favor, preencha o campo nome.',
-            // Adicione mensagens para os demais campos
-        ]);
-        
-    
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Erro na validação',
-                'errors' => $validator->errors()
-            ]);// Código de status HTTP para erros de validação 
+        if($this->clienteService->adicionarCliente($request)){
+            return redirect(route('cliente.index'));
         }
-        $cliente = new Cliente;
-        $cliente->user_id       = Auth::id();
-        $cliente->nome          = $request->nome;
-        $cliente->telefone      = $request->telefone;
-        $cliente->endereco      = $request->endereco;
-        $cliente->bairro        = $request->bairro;
-        $cliente->cidade        = $request->cidade;
-        if($cliente->save()){
-            return response()->json([
-                'success' => true,
-            ]);
-        }
-   }
-    public function adicionarClienteView(){
+    }
+    public function painelAdicionar(){
         return view('cliente.adicionar');
    }
 }

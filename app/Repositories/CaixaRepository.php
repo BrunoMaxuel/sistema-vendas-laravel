@@ -92,7 +92,7 @@ class CaixaRepository{
 
     public function adicionarSuprimento($request){
         $suprimento = new Suprimento();
-        $suprimento->valor = $request->valor;
+        $suprimento->valor = $request->valor_inicial;
         $suprimento->descricao = $request->descricao;
         $suprimento->user_id = Auth::id(); 
         $suprimento->save();
@@ -101,7 +101,7 @@ class CaixaRepository{
 
     public function adicionarSangria($request){
         $sangria = new Sangria();
-        $sangria->valor = $request->valor;
+        $sangria->valor = $request->valor_inicial;
         $sangria->descricao = $request->descricao;
         $sangria->user_id = Auth::id();
         $sangria->save();

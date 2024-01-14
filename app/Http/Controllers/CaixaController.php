@@ -22,7 +22,6 @@ class CaixaController extends Controller
 
     public function index(){
         $caixa = $this->caixa->painelCaixa();
-        
         if($caixa !== false &&  $caixa->aberto) {
             return view('caixa.caixa', ['caixa' =>$caixa]);
         } else {
@@ -30,15 +29,23 @@ class CaixaController extends Controller
         }
     }
     public function iniciarCaixa(Request $request){
-        return $this->caixa->iniciarCaixa($request);        
+        if($this->caixa->iniciarCaixa($request)){
+            return redirect(route('caixa.index'));
+        }
     }
     public function fecharCaixa(){
-        return $this->caixa->fecharCaixa();
+        if($this->caixa->fecharCaixa()){
+            return redirect(route('caixa.index'));
+        }
     }
     public function adicionarSuprimento(Request $request){
-        return $this->caixa->adicionarSuprimento($request);
+        if($this->caixa->adicionarSuprimento($request)){
+            return redirect(route('caixa.index'));
+        }
     }
     public function adicionarSangria(Request $request){
-        return $this->caixa->adicionarSangria($request);
+        if($this->caixa->adicionarSangria($request)){
+            return redirect(route('caixa.index'));
+        }
     }
 }

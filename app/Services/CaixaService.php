@@ -61,24 +61,18 @@ class CaixaService{
         $dados->valor_inicial = str_replace(',', '.', $valorInicial);
 
         if ($this->repositorioCaixa->iniciarCaixaInserir($dados)) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Caixa aberto com sucesso!'
-            ]);
+            return true;
         }
     }
     public function fecharCaixa(){
         if($this->repositorioCaixa->fecharCaixa()){
-            return response()->json([
-                'success' => true,
-                'message' => 'Caixa fechado com sucesso!'
-            ]);
+            return true;
         }
     }
 
     public function adicionarSuprimento($request){
-        $valorAdicionar = str_replace('.', '', $request->valor);
-        $request->valor = str_replace(',', '.', $valorAdicionar);
+        $valorAdicionar = str_replace('.', '', $request->valor_inicial);
+        $request->valor_inicial = str_replace(',', '.', $valorAdicionar);
         if($this->repositorioCaixa->adicionarSuprimento($request))
         {    
             return response()->json([
@@ -90,14 +84,11 @@ class CaixaService{
     }
 
     public function adicionarSangria($request){
-        $valorRetirar = str_replace('.', '', $request->valor);
-        $request->valor = str_replace(',', '.', $valorRetirar);
+        $valorRetirar = str_replace('.', '', $request->valor_inicial);
+        $request->valor_inicial = str_replace(',', '.', $valorRetirar);
         if($this->repositorioCaixa->adicionarSangria($request))
         {
-            return response()->json([
-                'success' => true,
-                'message' => 'Dinheiro removido com sucesso!'
-            ]);
+            return true;
         }
     }
 

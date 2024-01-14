@@ -24,15 +24,9 @@
                         <td>
                             <div class="btn-group">
                                 <div>
-                                    {{-- <button type="button" id="{{$cliente['id']}}"  class="btnEditar btn btn-secondary-soft btn-sm btn-success mr-2">
-                                    <i class="bi bi-pencil-square"></i> Editar
-                                    </button> --}}
                                     <x-form.button  id="{{$cliente['id']}}" class="btnEditar mr-2" type="submit" theme="success" icon="fas fa-edit" label="" />
                                 </div>
                                 <div>
-                                    {{-- <button type="button" id="{{$cliente['id']}}" class="btnExcluir btn btn-danger btn-sm mt-2 mt-sm-0">
-                                    <i class="bi bi-trash"></i> Excluir
-                                    </button> --}}
                                     <x-form.button  id="{{$cliente['id']}}" class="btnExcluir" type="submit" theme="danger" icon="fas fa-trash" label="" />
                                 </div>
                             </div>

@@ -110,7 +110,7 @@
                 </div>
                 <div class="p-3">
                     <h2><strong >Itens</strong></h2>
-                    <h2><strong id="total_itens" class="pl-3 ml-3">0</strong></h2>
+                    <h2><strong id="total_item" class="pl-3 ml-3">0</strong></h2>
                 </div>
             </div>
         </div>

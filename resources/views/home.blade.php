@@ -36,7 +36,7 @@
                 <div class="icon">
                     <i class="fas fa-user"></i>
                 </div>
-                <a href="{{route('clientes.view')}}" class="small-box-footer p-2" style="font-size: 20px">Clientes <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{route('cliente.index')}}" class="small-box-footer p-2" style="font-size: 20px">Clientes <i class="fa fa-arrow-circle-right"></i></a>
                 
             </div>
         </div>

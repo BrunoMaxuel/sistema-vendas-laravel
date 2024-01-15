@@ -19,7 +19,7 @@
     </div>
 @stop
 @section('content')
-<x-modalMsg.modalMsg/>
+<x-modals.modalMsg/>
 <div class="row ml-2">
     <div class="col-md-6">
         <form id="formUp">
@@ -112,7 +112,7 @@
 
         $('#btnSubmit').click(function() {
             var dados = $("#formUp").serialize();
-            $.post("{{route('produtos.saveEdit')}}",dados, function( data )	{
+            $.post("{{route('produto.adicionar')}}",dados, function( data )	{
                 if(data.success == true){
                     $("#background-text").addClass("bg-success");
                     $("#titulo-msg").html(data.message);

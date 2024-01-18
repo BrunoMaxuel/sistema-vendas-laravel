@@ -17,23 +17,10 @@
     <form action="{{ route('registrar.action') }}" method="post">
         @csrf
         {{-- Name field --}}
-<<<<<<< HEAD
-        <div class="input-group mb-3">
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                   value="{{ old('name') }}" placeholder="Seu nome e sobrenome..." autofocus>
-
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-
-=======
         <label for="">Nome</label>
         <div class="input-group mb-1">
             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
                    value="{{ old('name') }}" placeholder="Informe seu nome" autofocus>
->>>>>>> emergency
             @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -42,22 +29,11 @@
         </div>
 
         {{-- Email field --}}
-<<<<<<< HEAD
-        <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                   value="{{ old('email') }}" placeholder="Seu {{ __('adminlte::adminlte.email') }}">
-
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-=======
         <label for="">Email</label>
         <div class="input-group mb-1">
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                    value="{{ old('email') }}" placeholder="Informe seu email">
->>>>>>> emergency
+
 
             @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -67,22 +43,11 @@
         </div>
 
         {{-- Password field --}}
-<<<<<<< HEAD
-        <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                   placeholder="Sua senha de acesso...">
 
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-=======
         <label for="">Senha</label>
         <div class="input-group mb-1">
             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
                    placeholder="Insira uma senha">
->>>>>>> emergency
 
             @error('password')
                 <span class="invalid-feedback" role="alert">
@@ -92,24 +57,11 @@
         </div>
 
         {{-- Confirm password field --}}
-<<<<<<< HEAD
-        <div class="input-group mb-3">
-            <input type="password" name="password_confirmation"
-                   class="form-control @error('password_confirmation') is-invalid @enderror"
-                   placeholder="Sua senha de confirmação...">
-
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-=======
         <label for="">Senha confirmação</label>
         <div class="input-group mb-4">
             <input type="password" name="password_confirmation"
                    class="form-control @error('password_confirmation') is-invalid @enderror"
                    placeholder="Insira novamente">
->>>>>>> emergency
 
             @error('password_confirmation')
                 <span class="invalid-feedback" role="alert">

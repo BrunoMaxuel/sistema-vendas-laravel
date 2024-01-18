@@ -14,11 +14,7 @@ return [
     'sign_in'                     => 'Entrar',
     'log_out'                     => 'Sair',
     'toggle_navigation'           => 'Trocar navegação',
-<<<<<<< HEAD
-    'login_message'               => 'Entre para iniciar uma nova sessão',
-=======
     'login_message'               => 'Entrar no sistema',
->>>>>>> emergency
     'register_message'            => 'Registrar um novo membro',
     'password_reset_message'      => 'Recuperar senha',
     'reset_password'              => 'Recuperar senha',

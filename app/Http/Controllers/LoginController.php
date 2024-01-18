@@ -18,11 +18,7 @@ class LoginController extends Controller
      */
     public function loginView()
     {
-<<<<<<< HEAD
-        return view('vendor.adminlte.login');
-=======
         return view('vendor.adminlte.auth.login');
->>>>>>> emergency
     }
     /**
      * ação de autenticar
@@ -65,8 +61,6 @@ class LoginController extends Controller
 
         return redirect('/');
     }
-<<<<<<< HEAD
-=======
     public function mudarSenha(){
 
         return view('vendor/adminlte/auth/passwords/reset');
@@ -75,6 +69,5 @@ class LoginController extends Controller
     public function mudarSenhaAction(){
         return view('vendor/adminlte/auth/passwords/confirm');
     }
->>>>>>> emergency
 
 }

@@ -11,11 +11,8 @@ use Illuminate\Support\Facades\Route;
  
 Route::get('/login', [LoginController::class, 'loginView'])->name('login.view');
 Route::post('/login', [LoginController::class, 'autenticar'])->name('login.auth');
-<<<<<<< HEAD
-=======
 Route::get('/password/reset', [LoginController::class, 'mudarSenha'])->name('mudar.senha');
 Route::post('/password/email', [LoginController::class, 'mudarSenhaAction'])->name('mudar.action');
->>>>>>> emergency
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
@@ -66,19 +63,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/backup', [HistoricoVendasController::class, 'importBackup'])->name('backup.importBackup'); 
 
 
-
-
-
-
-
     Route::post('/logout', [LoginController::class, 'deslogar'])->name('logout');
-<<<<<<< HEAD
-    Route::get('/registrar', [LoginController::class, 'registrar'])->name('registrar');
-    Route::post('/registrar', [LoginController::class, 'processoRegistrar'])->name('registrar.action');
-});
-=======
-   
 });
 Route::get('/registrar', [LoginController::class, 'registrar'])->name('registrar');
 Route::post('/registrar', [LoginController::class, 'processoRegistrar'])->name('registrar.action');
->>>>>>> emergency

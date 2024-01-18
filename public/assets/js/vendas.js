@@ -16,6 +16,8 @@ var tabelaVenda = $('#tableVenda tbody');
 
 $(function() {
     atualizarTabelaVenda();        
+        
+
 
 
     $('#search').on('keyup', function(e) {
@@ -87,7 +89,8 @@ $(function() {
 });
 function atualizarTabelaVenda() {
     tabelaVenda.empty();
-
+    qtdItem = 0;
+    totalVenda= 0;
     var listaVenda = JSON.parse(localStorage.getItem('listaVenda')) || [];
 
     if (listaVenda.length > 0) {
@@ -100,12 +103,13 @@ function atualizarTabelaVenda() {
             newRow.append('<td>' + item.preco + '</td>');
             newRow.append('<td>' + item.total + '</td>');
             tabelaVenda.append(newRow);
+            qtdItem += item.quantidade;
+            totalVenda += item.total;
         });
     } 
+    var table = $('#tableVenda');
+    table.parent().css('max-height', '400px').css('overflow-y', 'auto');
 }
-
-
-
 function preencherTabelaBusca(data) {
     tableApiBody.empty();    
     data.forEach(function(item) {
@@ -116,10 +120,8 @@ function preencherTabelaBusca(data) {
         newRow.append('<td>' + item.preco + '</td>');
         newRow.append('<td>' + item.preco_custo + '</td>');
         newRow.append('<td>' + item.estoque + '</td>');
-        
         tableApiBody.append(newRow);
     });
-
 }
 
 $(document).on('keydown', function(e) {

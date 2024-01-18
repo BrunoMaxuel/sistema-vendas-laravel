@@ -20,5 +20,11 @@
 - **Possui autenticação de login.**
 - **Possui migrations para preparar banco de dados rápido.**
 - **Possui organização, sem executar regras de negócios no controller.**
+## Instalação
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- **Faça clone do projeto na Filial "develop": git clone -b develop https://github.com/BrunoMaxuel/pdv-zero.git**
+- **Abra o projeto cd pdv-zero, execute "cp .env.example .env" e configure login e senha**
+- **Execute "composer install" para instalar as dependências do composer.json e gerar a pasta vendor.**
+- **Execute "sail up -d" ou "./vendor/bin/sail up -d" depende da configuração do docker.**
+- **Execute "sail artisan migrate --seed" para criar as tabelas no banco e gerar dados fictícios.**
+- **Faça login com "visitante@gmail.com" e senha "visitante123" para acessar o sistema.**

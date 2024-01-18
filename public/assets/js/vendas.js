@@ -3,19 +3,20 @@
 function convertToUpper(el) {
     $(el).val($(el).val().toUpperCase());
 }
+$('#search').on('keydown', function(e) {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        e.preventDefault();
+    }
+});
 var linhaSelecionada = 0;
 var displayTableApi = $('#display-tableApi');
 var displayTableVenda = $('#display-tableVenda');
 var tableApiBody = $('#tableApi tbody');
 var tabelaVenda = $('#tableVenda tbody');
-$(function() {
-    atualizarTabelaVenda();
 
-    $('#search').on('keydown', function(e) {
-        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-            e.preventDefault();
-        }
-    });
+$(function() {
+    atualizarTabelaVenda();        
+
 
     $('#search').on('keyup', function(e) {
         var search = $(this).val();

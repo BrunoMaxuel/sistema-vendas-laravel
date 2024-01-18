@@ -53,17 +53,11 @@ return [
         'enabled' => true,
         'img' => [
             'path' => 'vendor/adminlte/dist/img/invokevendas_m.png',
-<<<<<<< HEAD
-            'alt' => 'Invoke Vendas',
-            'class' => '',
-            'width' => 50,
-            'height' => 50,
-=======
+
             'alt' => '',
             'class' => '',
             'width' => 100,
             'height' => 100,
->>>>>>> emergency
         ],
     ],
 

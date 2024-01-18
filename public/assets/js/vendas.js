@@ -1,5 +1,4 @@
 
-// Converter para maiúsculo o input
 function convertToUpper(el) {
     $(el).val($(el).val().toUpperCase());
 }
@@ -13,13 +12,8 @@ var displayTableApi = $('#display-tableApi');
 var displayTableVenda = $('#display-tableVenda');
 var tableApiBody = $('#tableApi tbody');
 var tabelaVenda = $('#tableVenda tbody');
-
 $(function() {
     atualizarTabelaVenda();        
-        
-
-
-
     $('#search').on('keyup', function(e) {
         var search = $(this).val();
 
@@ -30,8 +24,6 @@ $(function() {
                 displayTableApi.css('display', 'block');
                 displayTableVenda.css('display', 'none');
 
-                tableApiBody.find('tr.selected').removeClass('selected').css('background-color', '');
-                
                 if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') {
                     tableApiBody.find('tr:first').addClass('selected').css('background-color', '#aaa');
                     linhaSelecionada = 0;
@@ -42,12 +34,10 @@ $(function() {
                         linhaSelecionada++;
                     }
                 }
-                moverLinha(linhaSelecionada);
-
+                tableApiBody.find('tr').eq(linhaSelecionada).addClass('selected').css('background-color', '#aaa');
+                
             });
         } else {
-            tableApiBody.find('tr.selected').removeClass('selected').css('background-color', '');
-            tableApiBody.find('tr:first').addClass('selected').css('background-color', '#aaa');
             linhaSelecionada = 0;
             displayTableApi.css('display', 'none');
             displayTableVenda.css('display', 'block');
@@ -82,10 +72,7 @@ $(function() {
             atualizarTabelaVenda();
         }
     });
-    
-    function moverLinha(index) {
-        tableApiBody.find('tr').eq(index).addClass('selected').css('background-color', '#aaa');
-    }    
+       
 });
 function atualizarTabelaVenda() {
     tabelaVenda.empty();

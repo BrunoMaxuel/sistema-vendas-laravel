@@ -8,4 +8,8 @@
 
 /.github export-ignore
 CHANGELOG.md export-ignore
+<<<<<<< HEAD
 .styleci.yml export-ignore
+=======
+.styleci.yml export-ignore
+>>>>>>> emergency

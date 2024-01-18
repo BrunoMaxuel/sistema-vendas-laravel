@@ -11,12 +11,22 @@
 			background-color: #0A8DC6;
 			color: white;
 		}
+<<<<<<< HEAD
 		.custom-table th,
 		.custom-table td {
 			padding: 7px; 
 			text-align: left;
 			border-bottom: 1px solid #ddd; 
 		}
+=======
+
+		table, #transations-table{
+            border-collapse: collapse;
+            /* width: 100%; */
+            border-radius: 20px; /* Adicione esta linha para arredondar os cantos da tabela */
+            overflow: hidden; /* Garante que a borda arredondada seja visível mesmo com bordas internas */
+        }
+>>>>>>> emergency
 	</style>
 @stop
 @section('content_header')
@@ -42,7 +52,11 @@
 @section('content')
 	<div class="row">
 		<div class="col-md-12">
+<<<<<<< HEAD
 			<table id="transations-table" class="custom-table table compact table-bordered" width="100%">
+=======
+			<table id="transations-table" class="csustom-table table compact table-bordereds" width="100%">
+>>>>>>> emergency
 				<thead class="thead-light">
 					<tr>
 						<th scope="col">#</th>

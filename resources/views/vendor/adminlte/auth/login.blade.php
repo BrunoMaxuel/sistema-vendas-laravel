@@ -25,6 +25,7 @@
         @csrf
 
         {{-- Email field --}}
+<<<<<<< HEAD
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                    value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>
@@ -35,6 +36,13 @@
                 </div>
             </div>
 
+=======
+        <label for="">Email</label>
+        <div class="input-group mb-1">
+            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                   value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>
+
+>>>>>>> emergency
             @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -43,6 +51,7 @@
         </div>
 
         {{-- Password field --}}
+<<<<<<< HEAD
         <div class="input-group mb-3">
             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
                    placeholder="{{ __('adminlte::adminlte.password') }}">
@@ -53,6 +62,13 @@
                 </div>
             </div>
 
+=======
+        <label for="">Senha</label>
+        <div class="input-group mb-4">
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                   placeholder="{{ __('adminlte::adminlte.password') }}">
+
+>>>>>>> emergency
             @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -62,7 +78,11 @@
 
         {{-- Login field --}}
         <div class="row">
+<<<<<<< HEAD
             <div class="col-7">
+=======
+            <div class="col-12 mb-2">
+>>>>>>> emergency
                 <div class="icheck-primary" title="{{ __('adminlte::adminlte.remember_me_hint') }}">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
@@ -72,6 +92,7 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div class="col-5">
                 <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                     <span class="fas fa-sign-in-alt"></span>
@@ -86,19 +107,47 @@
 @section('auth_footer')
     {{-- Password reset link --}}
     @if($password_reset_url)
+=======
+            <div class="col-12 mb-3">
+                
+                <x-form.button onclick="" type="submit" theme="primary" class="btn-block"  label="{{ __('adminlte::adminlte.sign_in')}}" />
+               
+            </div>
+        </div>
+    </form>
+@stop
+
+
+
+{{-- ou resetar senha ou criar conta --}}
+
+@section('auth_footer')
+    {{-- Password reset link --}}
+    {{-- @if($password_reset_url)
+>>>>>>> emergency
         <p class="my-0">
             <a href="{{ $password_reset_url }}">
                 {{ __('adminlte::adminlte.i_forgot_my_password') }}
             </a>
         </p>
+<<<<<<< HEAD
     @endif
 
     {{-- Register link --}}
+=======
+    @endif --}}
+
+    {{-- Register link
+>>>>>>> emergency
     @if($register_url)
         <p class="my-0">
             <a href="{{ $register_url }}">
                 {{ __('adminlte::adminlte.register_a_new_membership') }}
             </a>
         </p>
+<<<<<<< HEAD
     @endif
+=======
+    @endif --}}
+>>>>>>> emergency
 @stop

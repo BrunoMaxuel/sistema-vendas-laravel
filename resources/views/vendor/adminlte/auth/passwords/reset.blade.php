@@ -14,9 +14,12 @@
     <form action="{{ $password_reset_url }}" method="post">
         @csrf
 
+<<<<<<< HEAD
         {{-- Token field --}}
         <input type="hidden" name="token" value="{{ $token }}">
 
+=======
+>>>>>>> emergency
         {{-- Email field --}}
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"

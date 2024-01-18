@@ -14,7 +14,11 @@ return [
     'sign_in'                     => 'Sign In',
     'log_out'                     => 'Log Out',
     'toggle_navigation'           => 'Toggle navigation',
+<<<<<<< HEAD
     'login_message'               => 'Sign in to start your session',
+=======
+    'login_message'               => 'Sign in to the system',
+>>>>>>> emergency
     'register_message'            => 'Register a new membership',
     'password_reset_message'      => 'Reset Password',
     'reset_password'              => 'Reset Password',

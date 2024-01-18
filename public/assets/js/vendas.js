@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Efeito de linha na tabela
 $('#tableApi tbody').on('mouseover mouseout', 'tr', function(event) {
     if (event.type === 'mouseover') {
@@ -7,11 +8,14 @@ $('#tableApi tbody').on('mouseover mouseout', 'tr', function(event) {
     }
 });
 
+=======
+>>>>>>> emergency
 // Converter para maiúsculo o input
 function convertToUpper(el) {
     $(el).val($(el).val().toUpperCase());
 }
 
+<<<<<<< HEAD
 var tableVenda = $('#tableVenda');
 var tableApi = $('#tableApi');
 var total = $('#total');
@@ -62,6 +66,19 @@ $(function() {
     $.post("/vender/vendaAndamento", { _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
         if(data){
             updateTableVenda(data);
+=======
+var linhaSelecionada = 0;
+var displayTableApi = $('#display-tableApi');
+var displayTableVenda = $('#display-tableVenda');
+var tableApiBody = $('#tableApi tbody');
+var tabelaVenda = $('#tableVenda tbody');
+$(function() {
+    atualizarTabelaVenda();
+
+    $('#search').on('keydown', function(e) {
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+            e.preventDefault();
+>>>>>>> emergency
         }
     });
 
@@ -70,6 +87,7 @@ $(function() {
 
         if (search && search.indexOf('*') === -1) {
             $.post("/vender/estoque", { search, _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
+<<<<<<< HEAD
                 updateTable(data);
             });
             $('#display-tableApi').css('display', 'block');
@@ -105,6 +123,93 @@ $(function() {
 function updateTable(data) {
     var tableBody = $('#tableApi tbody');
     tableBody.empty();
+=======
+                preencherTabelaBusca(data);
+
+                displayTableApi.css('display', 'block');
+                displayTableVenda.css('display', 'none');
+
+                tableApiBody.find('tr.selected').removeClass('selected').css('background-color', '');
+                
+                if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') {
+                    tableApiBody.find('tr:first').addClass('selected').css('background-color', '#aaa');
+                    linhaSelecionada = 0;
+                } else {
+                    if (e.key === 'ArrowUp' && linhaSelecionada > 0) {
+                        linhaSelecionada--;
+                    } else if (e.key === 'ArrowDown' && linhaSelecionada < tableApiBody.find('tr').length - 1) {
+                        linhaSelecionada++;
+                    }
+                }
+                moverLinha(linhaSelecionada);
+
+            });
+        } else {
+            tableApiBody.find('tr.selected').removeClass('selected').css('background-color', '');
+            tableApiBody.find('tr:first').addClass('selected').css('background-color', '#aaa');
+            linhaSelecionada = 0;
+            displayTableApi.css('display', 'none');
+            displayTableVenda.css('display', 'block');
+            atualizarTabelaVenda();
+        }
+
+    });
+    $('#search').on('keypress', function(e) {
+        if (e.key === 'Enter' && displayTableApi.css('display') === 'block') {
+           
+            displayTableApi.css('display', 'none');
+            displayTableVenda.css('display', 'block');
+            $('#search').val('');   
+            var linhaSelecionada = tableApiBody.find('tr.selected');
+            var nome = linhaSelecionada.find('td:eq(1)').text();
+            var codigo_barras = linhaSelecionada.find('td:eq(2)').text();
+            var preco = linhaSelecionada.find('td:eq(3)').text();
+    
+            var listaVenda = JSON.parse(localStorage.getItem('listaVenda')) || [];
+
+            listaVenda.push({
+                nome: nome,
+                codigo_barras: codigo_barras,
+                quantidade: 1,
+                preco: preco,
+                total: "123,00"
+            });
+            localStorage.setItem('listaVenda', JSON.stringify(listaVenda));
+            // localStorage.clear();
+            console.log(localStorage.getItem('listaVenda'));
+            
+            atualizarTabelaVenda();
+        }
+    });
+    
+    function moverLinha(index) {
+        tableApiBody.find('tr').eq(index).addClass('selected').css('background-color', '#aaa');
+    }    
+});
+function atualizarTabelaVenda() {
+    tabelaVenda.empty();
+
+    var listaVenda = JSON.parse(localStorage.getItem('listaVenda')) || [];
+
+    if (listaVenda.length > 0) {
+        listaVenda.forEach(function (item, index) {
+            var newRow = $('<tr>');
+            newRow.append('<td>' + (index + 1) + '</td>');
+            newRow.append('<td>' + item.nome + '</td>');
+            newRow.append('<td>' + item.codigo_barras + '</td>');
+            newRow.append('<td>' + item.quantidade + '</td>');
+            newRow.append('<td>' + item.preco + '</td>');
+            newRow.append('<td>' + item.total + '</td>');
+            tabelaVenda.append(newRow);
+        });
+    } 
+}
+
+
+
+function preencherTabelaBusca(data) {
+    tableApiBody.empty();
+>>>>>>> emergency
     
     data.forEach(function(item) {
         var newRow = $('<tr>');
@@ -114,6 +219,7 @@ function updateTable(data) {
         newRow.append('<td>' + item.preco + '</td>');
         newRow.append('<td>' + item.preco_custo + '</td>');
         newRow.append('<td>' + item.estoque + '</td>');
+<<<<<<< HEAD
         tableBody.append(newRow);
     });
 
@@ -199,6 +305,18 @@ $(function() {
    
 });
 
+=======
+        tableApiBody.append(newRow);
+    });
+    
+    if (tableApiBody.children('tr').length > 6) {
+        tableApiBody.parent().css('max-height', '400px').css('overflow-y', 'auto');
+    } else {
+        tableApiBody.parent().css('max-height', 'none').css('overflow-y', 'visible');
+    }
+
+}
+>>>>>>> emergency
 
 $(document).on('keydown', function(e) {
     if (!$('#modalTransacao').is(':visible')) {
@@ -251,7 +369,10 @@ $(document).ready(function() {
     });
 
     $('#btnSubmit').on('click', function() {
+<<<<<<< HEAD
         console.log("asdas");
+=======
+>>>>>>> emergency
         const rota = "/vender/finalizar";
         $('#formTransacao').attr('action', rota);
     });

@@ -13,9 +13,12 @@ Route::get('/login', [LoginController::class, 'loginView'])->name('login.view');
 Route::post('/login', [LoginController::class, 'autenticar'])->name('login.auth');
 Route::get('/password/reset', [LoginController::class, 'mudarSenha'])->name('mudar.senha');
 Route::post('/password/email', [LoginController::class, 'mudarSenhaAction'])->name('mudar.action');
+Route::get('/', function(){
+    return redirect(route('dashboard.index'));
+});
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('/', [HomeController::class, 'index'])->name('home.index');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard.index');
     
     Route::get('/clientes', [ClientesController::class, 'index'])->name('cliente.index');
     Route::post('/clientes/pesquisar', [ClientesController::class, 'search'])->name('cliente.search');

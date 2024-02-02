@@ -16,11 +16,11 @@
     </style> 
 @stop
 @section('content_header')
-<div class="row cor-fundo">
-    <div class="col-md-12 ">
-        <h3><strong>Backup e restauração do sistema</strong></h3>
+    <div class="row cor-fundo">
+        <div class="col-md-12 ">
+            <h3><strong>Backup e restauração do sistema</strong></h3>
+        </div>
     </div>
-</div>
 @stop
 
 @section('content')

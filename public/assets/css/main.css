@@ -66,40 +66,12 @@
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fff3cd;
 }
-#preloader {
-  background: linear-gradient(to right, var(--bs-link-color) , var(--bs-secondary) );
-  position: fixed;
-  inset: 0;
-  z-index: 1100;
-}
-
-#preloader:before {
-  content: "";
-  width: 150px;
-  height: 150px;
-  position: fixed;
-  top: calc(50% - 70px);
-  left: calc(50% - 70px);
-  border: 40px solid;
-  border-radius: 50%;
-  border-color: #00A2E8 transparent;
-  animation: animate-preloader 1.5s linear infinite;
-}
-@keyframes animate-preloader {
-  100% {
-    transform: rotate(360deg);
-  }
-}
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
-
-
-
 
 @media (prefers-reduced-motion: no-preference) {
   :root {

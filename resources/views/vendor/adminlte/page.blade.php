@@ -12,11 +12,8 @@
 @section('body_data', $layoutHelper->makeBodyData())
 
 @section('body')
+    <x-preloader/>
     <div class="wrapper">
-        {{-- Preloader Animation --}}
-        @if($layoutHelper->isPreloaderEnabled())
-        @include('adminlte::partials.common.preloader')
-        @endif
         
         {{-- Top Navbar --}}
         @if($layoutHelper->isLayoutTopnavEnabled())

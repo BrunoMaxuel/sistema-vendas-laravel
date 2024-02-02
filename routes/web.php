@@ -8,17 +8,12 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\VendasController;
 use Illuminate\Support\Facades\Route;
-Route::get('/login', [LoginController::class, 'loginView'])->name('login.view');
-Route::post('/login', [LoginController::class, 'autenticar'])->name('login.auth');
+
 Route::get('/password/reset', [LoginController::class, 'mudarSenha'])->name('mudar.senha');
 Route::post('/password/email', [LoginController::class, 'mudarSenhaAction'])->name('mudar.action');
-Route::get('/', function(){
-    return redirect(route('dashboard.index'));
-});
-
 Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard.index');
-
+    
     //clientes
     Route::get('/clientes', [ClientesController::class, 'index'])->name('cliente.index');
     Route::post('/clientes/pesquisar', [ClientesController::class, 'search'])->name('cliente.search');
@@ -58,8 +53,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/historico/imprimirVendaDetalhada/{id}', [HistoricoVendasController::class, 'imprimirVenda'])->name('historico.imprimir.venda');
     Route::get('/backup', [HistoricoVendasController::class, 'backupView'])->name('backup.view'); 
     Route::post('/backup', [HistoricoVendasController::class, 'importBackup'])->name('backup.importBackup'); 
-
+    
     Route::post('/logout', [LoginController::class, 'deslogar'])->name('logout');
 });
 Route::get('/registrar', [LoginController::class, 'registrar'])->name('registrar');
 Route::post('/registrar', [LoginController::class, 'processoRegistrar'])->name('registrar.action');
+
+Route::get('/', [LoginController::class, 'home'])->name('home.index');
+Route::post('/login', [LoginController::class, 'autenticar'])->name('login.auth');

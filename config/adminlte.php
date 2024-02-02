@@ -67,17 +67,6 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'preloader' => [
-        'enabled' => false,
-        'img' => [
-            'path' => 'vendor/adminlte/dist/img/invokevendas_m.png',
-            'alt' => 'AdminLTE Preloader Image',
-            'effect' => 'animation__shake',
-            'width' => 200,
-            'height' => 200,
-        ],
-    ],
-
     /*
     |--------------------------------------------------------------------------
     | User Menu
@@ -143,13 +132,13 @@ return [
 
     'sidebar_mini' => 'lg',
     'sidebar_collapse' => false,
-    'sidebar_collapse_auto_size' => false,
+    'sidebar_collapse_auto_size' => true,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => '1',
     'sidebar_nav_accordion' => true,
-    'sidebar_nav_animation_speed' => 200,
+    'sidebar_nav_animation_speed' => 350,
 
     /*
     |--------------------------------------------------------------------------
@@ -172,7 +161,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => '/',
+    'dashboard_url' => '/dashboard',
     'logout_url' => '/logout',
     'login_url' => '/login',
     'register_url' => 'register',

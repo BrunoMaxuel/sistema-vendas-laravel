@@ -20,7 +20,6 @@ class HomeController extends Controller
         ->whereYear('created_at', $anoAtual)
         ->whereMonth('created_at', $mesAtual)
         ->get();
-       
         return view('dashboard',['clientes'=>$clientes,'produtos'=>$produtos,'transacoes'=>$transacoes]);
     }
 }

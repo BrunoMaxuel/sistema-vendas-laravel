@@ -11,20 +11,14 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /**
-     * Tela de login
-     *
-     * @return \Illuminate\View\View
-     */
-    public function loginView()
+    public function home()
     {
+        if(Auth::check()){
+            return redirect(route('dashboard.index'));
+        }
         return view('home');
     }
-    /**
-     * ação de autenticar
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function autenticar(LoginRequest $request)
     {
         $request->processoAutenticar();
@@ -35,22 +29,12 @@ class LoginController extends Controller
     public function registrar(){
         return view('vendor/adminlte/auth/register');
     }
-    /**
-     * Tela de registrar
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function processoRegistrar(RegistrarRequest $request)
     {
         $request->criarUsuario();
     }
 
-    /**
-     * Ação de deslogar
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function deslogar(Request $request)
     {
         Auth::guard('web')->logout();
@@ -61,6 +45,7 @@ class LoginController extends Controller
 
         return redirect('/');
     }
+    
     public function mudarSenha(){
 
         return view('vendor/adminlte/auth/passwords/reset');

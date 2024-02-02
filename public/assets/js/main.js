@@ -1,18 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // "use strict";
-
-  const preloader = document.querySelector('#preloader');
-  if (preloader) {
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        preloader.remove();
-      }, 200);
-      
-    });
-  }
-});
-
-
 window.addEventListener('DOMContentLoaded', event => {
 
   // Activate Bootstrap scrollspy on the main nav element

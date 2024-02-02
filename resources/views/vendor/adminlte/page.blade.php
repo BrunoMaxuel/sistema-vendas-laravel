@@ -16,15 +16,13 @@
     <div class="wrapper">
         
         {{-- Top Navbar --}}
-        @if($layoutHelper->isLayoutTopnavEnabled())
-        @include('adminlte::partials.navbar.navbar-layout-topnav')
-        @else
-        @include('adminlte::partials.navbar.navbar')
+        @if(!$layoutHelper->isLayoutTopnavEnabled())
+            @include('adminlte::partials.navbar.navbar')
         @endif
         
         {{-- Left Main Sidebar --}}
         @if(!$layoutHelper->isLayoutTopnavEnabled())
-        @include('adminlte::partials.sidebar.left-sidebar')
+            @include('adminlte::partials.sidebar.left-sidebar')
         @endif
         
         {{-- Content Wrapper --}}

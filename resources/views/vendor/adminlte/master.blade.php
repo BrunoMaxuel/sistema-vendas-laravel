@@ -36,15 +36,6 @@
     {{-- Extra Configured Plugins Stylesheets --}}
     @include('adminlte::plugins', ['type' => 'css'])
 
-    {{-- Livewire Styles --}}
-    @if(config('adminlte.livewire'))
-        @if(intval(app()->version()) >= 7)
-            @livewireStyles
-        @else
-            <livewire:styles />
-        @endif
-    @endif
-
     {{-- Custom Stylesheets (post AdminLTE) --}}
     @yield('adminlte_css')
 

@@ -38,7 +38,7 @@ return [
 
     'logo' => 'Invoke Vendas',
     'logo_img' => 'vendor/adminlte/dist/img/invokevendas_m.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo_img_class' => 'brand-image',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
@@ -134,20 +134,7 @@ return [
     'sidebar_nav_accordion' => true,
     'sidebar_nav_animation_speed' => 350,
 
-    /*
-    |--------------------------------------------------------------------------
-    | Control Sidebar (Right Sidebar)
-    |--------------------------------------------------------------------------
-    */
-
-    'right_sidebar' => false,
-    'right_sidebar_icon' => 'fas fa-cogs',
-    'right_sidebar_theme' => 'dark',
-    'right_sidebar_slide' => true,
-    'right_sidebar_push' => true,
-    'right_sidebar_scrollbar_theme' => 'os-theme-light',
-    'right_sidebar_scrollbar_auto_hide' => 'l',
-
+ 
     /*
     |--------------------------------------------------------------------------
     | URLs

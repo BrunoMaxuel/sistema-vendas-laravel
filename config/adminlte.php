@@ -68,7 +68,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'img' => [
             'path' => 'vendor/adminlte/dist/img/invokevendas_m.png',
             'alt' => 'AdminLTE Preloader Image',

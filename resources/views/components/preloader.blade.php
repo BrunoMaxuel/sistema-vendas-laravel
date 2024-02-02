@@ -1,6 +1,6 @@
 <style>
     #preloader {
-    background: linear-gradient(to right, #2937f0 , #9f1ae2 );
+    background: #343A40;
     position: fixed;
     inset: 0;
     z-index: 1100;

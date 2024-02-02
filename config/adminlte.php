@@ -63,12 +63,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Preloader Animation
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
     | User Menu
     |--------------------------------------------------------------------------
     */
@@ -91,7 +85,7 @@ return [
     'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
-    'layout_dark_mode' => null,
+    'layout_dark_mode' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -132,9 +126,9 @@ return [
 
     'sidebar_mini' => 'lg',
     'sidebar_collapse' => false,
-    'sidebar_collapse_auto_size' => true,
-    'sidebar_collapse_remember' => false,
-    'sidebar_collapse_remember_no_transition' => true,
+    'sidebar_collapse_auto_size' => false,
+    'sidebar_collapse_remember' => true,
+    'sidebar_collapse_remember_no_transition' => false,  // nao pode ser true no mobile o menu n funciona
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => '1',
     'sidebar_nav_accordion' => true,

@@ -12,7 +12,7 @@
     @php( $logout_url = $logout_url ? url($logout_url) : '' )
 @endif
 
-<li style="margin-right: 100px;" class="nav-item dropdown user-menu">
+<li style="margin-right: 30px;" class="nav-item dropdown user-menu">
 
     {{-- User menu toggler --}}
     <a  href="#" class="nav-link dropdown-toggle " data-toggle="dropdown">
@@ -22,8 +22,9 @@
                  alt="{{ Auth::user()->name }} ">
         @endif
         <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
-            <h4>
-                <i class="fas fa-user"></i> Perfil</strong></h4>
+            <h5>
+                <i class="fas fa-user">Perfil</i> 
+            </h5>
         </span>
     </a>
 
@@ -68,11 +69,13 @@
                     {{ __('adminlte::menu.profile') }}
                 </a>
             @endif
+            
             <a class="btn btn-success @if(!$profile_url) btn-block @endif"
                href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fa fa-fw fa-power-off "></i>
                 Sair do sistema
             </a>
+
             <form id="logout-form" action="{{ $logout_url }}" method="POST" style="display: none;">
                 @if(config('adminlte.logout_method'))
                     {{ method_field(config('adminlte.logout_method')) }}

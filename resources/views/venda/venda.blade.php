@@ -3,8 +3,8 @@
 @section('css')
     <style>
         #search{
-            margin-left: 10px;
-            margin-bottom: 15px;
+            margin-left: 1px;
+            margin-bottom: 10px;
             width: 350px;
             height: 40px;
             font-size: 17px;
@@ -20,9 +20,9 @@
     </style>
 @stop
 @section('content_header')
-    <div class="row pt-4 pb-4">
+    <div class="row  pt-2">
         <div class="col-md-6">
-            <h5 class="text-light" style="margin-left: 10px">Código barras/Nome</h5>
+            <h5 class="text-light" style="margin-left: 5px">Código barras/Nome</h5>
             <div class="input-group-append search-input">
                 <input type="text" id="search" placeholder="Pesquisar item para venda" oninput="convertToUpper(this)">
             </div>
@@ -89,7 +89,11 @@
 @section('js')
     <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
     <script src="{{asset('assets/js/vendas.js')}}"></script>
-    <script >
-        
+
+    <script>
+        $('#btnCancelar').click(function(){
+            localStorage.clear();
+            location.reload();
+        });
     </script>
 @stop

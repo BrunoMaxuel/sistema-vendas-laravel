@@ -76,7 +76,6 @@
                             <option value="10x">10x</option>
                             <option value="11x">11x</option>
                             <option value="12x">12x</option>
-                            
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -103,3 +102,41 @@
       </div>
     </div>
 </div>
+@push('js')
+    <script>
+        $(document).on('keydown', function(e) {
+            if (!$('#modalTransacao').is(':visible')) {
+                $('#search').focus();
+            }
+            $(document).on('input', '#valor_recebido, #desconto', function() {
+                var totalVenda    = parseFloat($('#total_venda').val().replace('.', '').replace(',', '.'));
+                var desconto      = parseInt($('#desconto').val().replace('%', ''));
+                var totalRecebido = parseFloat($('#valor_recebido').val().replace('.', '').replace(',', '.'));        
+                
+                if (isNaN(desconto)) {
+                    desconto = 0; 
+                }
+            
+                if (!isNaN(totalVenda) && !isNaN(totalRecebido)) {
+                    var parcela          = parseInt($('#parcela').val().replace('x', ''));
+                    var totalComDesconto = totalVenda - (totalVenda * (desconto / 100));
+                    var valor_parcela    = totalComDesconto / parcela;
+                    var troco            = totalRecebido - totalComDesconto;
+            
+                    $('#venda_desconto').val(totalComDesconto.toLocaleString('pt-br', {maximumFractionDigits: 2}));
+                    $('#valor_parcela').val(valor_parcela.toLocaleString('pt-br', {maximumFractionDigits: 2}));
+                    $('#troco').text(troco.toLocaleString('pt-br', {maximumFractionDigits: 2}));
+                } else {
+                    $('#troco').text('0,00');
+                }
+            });
+            if (e.which === 118) { 
+                var linhas = $('.table-venda tbody tr').length;
+                e.preventDefault();
+                if(linhas !== 0){
+                    $('#btnFinalizar').click();
+                }
+            }
+        });
+    </script>
+@endpush

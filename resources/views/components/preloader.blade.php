@@ -37,7 +37,7 @@
 
             setTimeout(() => {
                 document.querySelector('#preloader').remove();
-            }, 200);
+            }, 500);
             
             });
         }

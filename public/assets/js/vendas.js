@@ -10,8 +10,9 @@ $('#search').on('keydown', function(e) {
 var linhaSelecionada = 0;
 var displayTableApi = $('#display-tableApi');
 var displayTableVenda = $('#display-tableVenda');
-var tableApiBody = $('#tableApi tbody');
-var tabelaVenda = $('#tableVenda tbody');
+var infoVenda = $('.info-venda');
+var tableApiBody = $('.table-api tbody');
+var tabelaVenda = $('.table-venda tbody');
 $(function() {
     atualizarTabelaVenda();        
     $('#search').on('keyup', function(e) {
@@ -20,9 +21,8 @@ $(function() {
         if (search && search.indexOf('*') === -1) {
             $.post("/vender/estoque", { search, _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
                 preencherTabelaBusca(data);
-
-                displayTableApi.css('display', 'block');
-                displayTableVenda.css('display', 'none');
+                displayTableApi.removeClass('hidden');
+                infoVenda.addClass('hidden');
 
                 if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') {
                     tableApiBody.find('tr:first').addClass('selected').css('background-color', '#aaa');
@@ -39,17 +39,16 @@ $(function() {
             });
         } else {
             linhaSelecionada = 0;
-            displayTableApi.css('display', 'none');
-            displayTableVenda.css('display', 'block');
+            displayTableApi.addClass('hidden');
+            infoVenda.removeClass('hidden');
             atualizarTabelaVenda();
         }
 
     });
     $('#search').on('keypress', function(e) {
-        if (e.key === 'Enter' && displayTableApi.css('display') === 'block') {
-           
-            displayTableApi.css('display', 'none');
-            displayTableVenda.css('display', 'block');
+        if (e.key === 'Enter' && !displayTableApi.hasClass("hidden")) {
+            displayTableApi.addClass('hidden');
+            infoVenda.removeClass('hidden');
             $('#search').val('');   
             var linhaSelecionada = tableApiBody.find('tr.selected');
             var nome = linhaSelecionada.find('td:eq(1)').text();
@@ -94,7 +93,7 @@ function atualizarTabelaVenda() {
             totalVenda += item.total;
         });
     } 
-    var table = $('#tableVenda');
+    var table = $('.table-venda');
     table.parent().css('max-height', '400px').css('overflow-y', 'auto');
 }
 function preencherTabelaBusca(data) {
@@ -138,7 +137,7 @@ $(document).on('keydown', function(e) {
         }
     });
     if (e.which === 118) { 
-        var linhas = $('#tableVenda tbody tr').length;
+        var linhas = $('.table-venda tbody tr').length;
         e.preventDefault();
         if(linhas !== 0){
             $('#btnFinalizar').click();
@@ -167,7 +166,7 @@ $(document).ready(function() {
     });
     
     function verificarLinhasTabelaVenda() {
-        var linhas = $('#tableVenda tbody tr').length;
+        var linhas = $('.table-venda tbody tr').length;
         if (linhas === 0) {
             $('#btnFinalizar button').prop('disabled', true);
             $('#btnCancelar button').prop('disabled', true);

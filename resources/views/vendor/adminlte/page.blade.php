@@ -27,9 +27,9 @@
         
         {{-- Content Wrapper --}}
         @empty($iFrameEnabled)
-        @include('adminlte::partials.cwrapper.cwrapper-default')
+            @include('adminlte::partials.cwrapper.cwrapper-default')
         @else
-        @include('adminlte::partials.cwrapper.cwrapper-iframe')
+            @include('adminlte::partials.cwrapper.cwrapper-iframe')
         @endempty
         
         

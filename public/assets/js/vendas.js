@@ -67,8 +67,8 @@ $(function() {
             var linhaSelecionada = tableApiBody.find('tr.selected');
             var nome = linhaSelecionada.find('td:eq(1)').text();
             var codigo_barras = linhaSelecionada.find('td:eq(2)').text();
-            var preco = linhaSelecionada.find('td:eq(3)').text();
-    
+            var preco = linhaSelecionada.find('td:eq(4)').text();
+
             var listaVenda = JSON.parse(localStorage.getItem('listaVenda')) || [];
 
             var precoFloat = parseFloat(preco.replace(',', '.'));
@@ -106,9 +106,11 @@ function atualizarTabelaVenda() {
             newRow.append('<td>' + item.total + '</td>');
             tabelaVenda.append(newRow);
             qtdItem += item.quantidade;
-            totalVenda += item.total;
+            totalVenda += parseFloat(item.total);
+            console.log(totalVenda);
         });
     } 
+    $('#total').text(totalVenda.toFixed(2).replace('.', ','));
     var table = $('.table-venda');
     table.parent().css('max-height', '400px').css('overflow-y', 'auto');
     verificarLinhasTabelaVenda(); 
@@ -120,8 +122,8 @@ function preencherTabelaBusca(data) {
         newRow.append('<td>' + item.id + '</td>');
         newRow.append('<td>' + item.nome + '</td>');
         newRow.append('<td>' + item.codigo_barras + '</td>');
-        newRow.append('<td>' + item.preco + '</td>');
         newRow.append('<td>' + item.preco_custo + '</td>');
+        newRow.append('<td>' + item.preco + '</td>');
         newRow.append('<td>' + item.estoque + '</td>');
         tableApiBody.append(newRow);
     });
@@ -160,29 +162,41 @@ $(document).on('keydown', function(e) {
             $('#btnFinalizar').click();
         }
     }
+    if(e.which == 114 && $('#btnFinalizar button').prop('disabled') == false){
+        e.preventDefault();
+        $('#btnCancelar').click();
+    }
 });
 
 $(document).ready(function() {
     $('#vendaForm input').keydown(function(event) {
         if (event.which == 13) { 
                 event.preventDefault(); 
-                $('#finalizarVenda').click(); 
+                $('#btnModalFinalizar').click(); 
         }
+        if (event.which == 27) {
+            $('#modalTransacao').modal('hide');
+        }
+       
     });
 
     $('#btnFinalizar').on('click', function() {
         $('#modalTransacao').modal('show');
+
         setTimeout(function() {
             $('#valor_recebido').focus();
         }, 1000);
     });
 
-    $('#btnSubmit').on('click', function() {
+    $('#btnModalFinalizar').on('click', function() {
         const rota = "/vender/finalizar";
         $('#formTransacao').attr('action', rota);
     });
     
     setTimeout(verificarLinhasTabelaVenda,400);
+});
+$('#btnModalCancel').on('click', function () {
+    $('#modalTransacao').modal('hide');     
 });
 
 function verificarLinhasTabelaVenda() {

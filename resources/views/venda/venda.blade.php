@@ -24,7 +24,7 @@
         <div class="col-md-6">
             <h5 class="text-light" style="margin-left: 5px">Código barras/Nome</h5>
             <div class="input-group-append search-input">
-                <input type="text" id="search" placeholder="Pesquisar item para venda" oninput="convertToUpper(this)">
+                <input type="text" id="search" name="pesquisa" placeholder="Pesquisar item para venda" oninput="convertToUpper(this) ">
             </div>
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-end pr-4">
@@ -47,8 +47,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Nome do produto</th>
                 <th scope="col">Código barras</th>
-                <th scope="col">Preço</th>
                 <th scope="col">Custo</th>
+                <th scope="col">Preço</th>
                 <th scope="col">Estoque</th>
             </tr>
         </thead>
@@ -91,9 +91,13 @@
     <script src="{{asset('assets/js/vendas.js')}}"></script>
 
     <script>
+         $('#search').val('');
         $('#btnCancelar').click(function(){
-            localStorage.clear();
-            location.reload();
+            const resp = window.confirm("Tem certeza que deseja cancelar todos produtos?");
+            if(resp){
+                localStorage.clear();
+                location.reload();
+            }
         });
     </script>
 @stop

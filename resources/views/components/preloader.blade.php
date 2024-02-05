@@ -1,6 +1,7 @@
 <style>
     #preloader {
     background: #343A40;
+    /* background-color: white; */
     position: fixed;
     inset: 0;
     z-index: 1100;

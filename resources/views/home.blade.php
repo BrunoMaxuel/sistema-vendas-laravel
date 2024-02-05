@@ -7,22 +7,26 @@
         <meta name="author" content="" />
         <title>Página inicial</title>
         <style>
-            
+            #preloader{
+                background: white !important;
+            }
         </style>
         <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
         <link rel="stylesheet" href="{{asset('assets/css/font.css')}}">
         <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
         <!-- Bootstrap icons-->
+        <link rel="stylesheet" href="{{asset('vendor/fontawesome-free/css/all.css')}}">
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     </head>
     <body id="page-top">
         <x-preloader/>
-        <x-home.modalLogin/>
         <x-home.navbar/>
         <x-home.mashead/>
         <x-home.facades/>
         <x-home.systemFeature/>
         <x-home.aboutSystem/>
+        <x-home.modalLogin/>
         <!-- Call to action section-->
         <section class="cta">
             <div class="cta-content">
@@ -35,6 +39,6 @@
         </section>
        <x-home.footer/>
         <script src="{{asset('assets/js/main.js')}}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     </body>
 </html>

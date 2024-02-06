@@ -39,6 +39,7 @@
 @stop
 @section('content')
 <x-modals.modalVenda/>
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div id="display-tableApi" class="hidden">
     <table class="table-api moverProduto table hover order-column table-striped compact table-bordered">
@@ -77,21 +78,27 @@
     <div class="col-md-3 d-flex flex-column align-items-center">
         <div class="mb-5">
             <h1><strong>TOTAL</strong></h1>
-            <h2><strong id="total" class="pl-3 ml-3">0,00</strong></h2>
+            <h2><strong class="total_valor_venda pl-3 ml-3">0,00</strong></h2>
         </div>
         <div class="mt-3">
             <h1><strong >Itens</strong></h1>
-            <h2><strong id="total_item" class="pl-3 ml-3">0</strong></h2>
+            <h2><strong class="total_item_venda pl-3 ml-3">0</strong></h2>
         </div>
     </div>
 </div>  
 @stop
+@if (session('mensagem'))
+<script>
+    // Passe a mensagem para uma variável JavaScript
+    var msg = "sucesso";
+</script>
+@endif
 @section('js')
     <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
     <script src="{{asset('assets/js/vendas.js')}}"></script>
 
     <script>
-         $('#search').val('');
+        $('#search').val('');
         $('#btnCancelar').click(function(){
             const resp = window.confirm("Tem certeza que deseja cancelar todos produtos?");
             if(resp){
@@ -99,5 +106,10 @@
                 location.reload();
             }
         });
+        
+        var msg;
+        if(msg){
+            localStorage.clear();
+        }
     </script>
 @stop

@@ -65,6 +65,8 @@ $(function() {
             infoVenda.removeClass('hidden');
             $('#search').val('');   
             var linhaSelecionada = tableApiBody.find('tr.selected');
+
+            var id = linhaSelecionada.find('td:eq(0)').text();
             var nome = linhaSelecionada.find('td:eq(1)').text();
             var codigo_barras = linhaSelecionada.find('td:eq(2)').text();
             var preco = linhaSelecionada.find('td:eq(4)').text();
@@ -77,6 +79,7 @@ $(function() {
             valorTotal = valorTotal.toFixed(2).replace('.', ',');
 
             listaVenda.push({
+                id: id,
                 nome: nome,
                 codigo_barras: codigo_barras,
                 quantidade: searchPartes[0],
@@ -92,7 +95,7 @@ $(function() {
 function atualizarTabelaVenda() {
     tabelaVenda.empty();
     qtdItem = 0;
-    totalVenda= 0;
+    totalVenda= 0.00;
     var listaVenda = JSON.parse(localStorage.getItem('listaVenda')) || [];
     
     if (listaVenda.length > 0) {
@@ -105,12 +108,12 @@ function atualizarTabelaVenda() {
             newRow.append('<td>' + item.preco + '</td>');
             newRow.append('<td>' + item.total + '</td>');
             tabelaVenda.append(newRow);
-            qtdItem += item.quantidade;
-            totalVenda += parseFloat(item.total);
-            console.log(totalVenda);
+            qtdItem += parseInt(item.quantidade);
+            totalVenda += parseFloat(item.total.replace(',', '.'));
         });
     } 
-    $('#total').text(totalVenda.toFixed(2).replace('.', ','));
+    $('.total_valor_venda').text(totalVenda.toFixed(2).replace('.', ','));
+    $('.total_item_venda').text(qtdItem);
     var table = $('.table-venda');
     table.parent().css('max-height', '400px').css('overflow-y', 'auto');
     verificarLinhasTabelaVenda(); 
@@ -134,10 +137,9 @@ $(document).on('keydown', function(e) {
         $('#search').focus();
     }
     $(document).on('input', '#valor_recebido, #desconto', function() {
-        var totalVenda    = parseFloat($('#total_venda').val().replace('.', '').replace(',', '.'));
+        var totalVenda    = parseFloat($('.total_valor_venda').text().replace('.', '').replace(',', '.'));
         var desconto      = parseInt($('#desconto').val().replace('%', ''));
-        var totalRecebido = parseFloat($('#valor_recebido').val().replace('.', '').replace(',', '.'));        
-        
+        var totalRecebido = parseFloat($('#valor_recebido').val().replace('.', '').replace(',', '.'));
         if (isNaN(desconto)) {
             desconto = 0; 
         }
@@ -148,7 +150,7 @@ $(document).on('keydown', function(e) {
             var valor_parcela    = totalComDesconto / parcela;
             var troco            = totalRecebido - totalComDesconto;
     
-            $('#venda_desconto').val(totalComDesconto.toLocaleString('pt-br', {maximumFractionDigits: 2}));
+            $('#venda_desconto_modal').val(totalComDesconto.toLocaleString('pt-br', {maximumFractionDigits: 2}));
             $('#valor_parcela').val(valor_parcela.toLocaleString('pt-br', {maximumFractionDigits: 2}));
             $('#troco').text(troco.toLocaleString('pt-br', {maximumFractionDigits: 2}));
         } else {
@@ -182,14 +184,20 @@ $(document).ready(function() {
 
     $('#btnFinalizar').on('click', function() {
         $('#modalTransacao').modal('show');
-
+        $('#total_venda_modal').val($('.total_valor_venda').text());
+        $('#total_item_modal').val($('.total_item_venda').text());
+        $('#venda_desconto_modal').val($('.total_valor_venda').text());
+        $('#valor_recebido').val($('.total_valor_venda').text());
+        $('#valor_parcela').val($('.total_valor_venda').text());
+        $('#venda_detalhada').val(localStorage.getItem('listaVenda'));
+        console.log($('#venda_detalhada').val());
         setTimeout(function() {
             $('#valor_recebido').focus();
-        }, 1000);
+        }, 100);
     });
 
     $('#btnModalFinalizar').on('click', function() {
-        const rota = "/vender/finalizar";
+        const rota = "/vender";
         $('#formTransacao').attr('action', rota);
     });
     
@@ -211,7 +219,7 @@ function verificarLinhasTabelaVenda() {
 }
 
 $(document).on('change', '#parcela', function() {
-    var vendaDescont = parseFloat($('#venda_desconto').val().replace('.', '').replace(',', '.'));
+    var vendaDescont = parseFloat($('#venda_desconto_modal').val().replace('.', '').replace(',', '.'));
     var parcela = parseInt($('#parcela').val().replace('x', ''));
     var valorParcela = vendaDescont / parcela;
     

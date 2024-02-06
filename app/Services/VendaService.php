@@ -40,28 +40,6 @@ class VendaService
         }
     }
 
-    public function registrarVenda($produto){
-        $this->vendaRepository->salvarVenda($produto);
-        $vendas = $this->buscarVendaEmAndamento();
-        return response()->json($vendas);
-    }
-
-    public function buscarVendaEmAndamento(){
-        $resultados = $this->vendaRepository->consultarVendaEmAndamento();
-        $vendas = $resultados->map(function ($produto) {
-            $produto->preco = number_format($produto->preco, 2, ',', '.');
-            $produto->preco_custo = number_format($produto->preco_custo, 2, ',', '.');
-            $produto->valor_item = number_format($produto->valor_item, 2, ',', '.');
-            $produto->total_venda = number_format($produto->total_venda, 2, ',', '.');
-            return $produto;
-        });
-        return $vendas;
-    }
-
-    public function cancelarItem($id_item){
-        $this->vendaRepository->cancelarItem($id_item);
-    }
-
     public function finalizarVenda($request){
         if($request->desconto == "" || $request->desconto == "%"){
             $request->desconto = "0";
@@ -73,28 +51,14 @@ class VendaService
         $request->total_venda = str_replace(['.', ','], ['', '.'], $request->total_venda);
         $transacao = $this->repositoryTransacao->criarTransacao($request);
         if ($transacao) {
-            $vendas = $this->vendaRepository->buscarVendasParaFinalizar();
+            $vendas = json_decode($request->venda_detalhada);
+
             foreach ($vendas as $venda) {
+                
                 $this->vendaRepository->criarVendaDetalhada($venda);
             }
         } 
-    }
-
-    public function cancelarVenda(){
-        $vendaAndamento = $this->vendaRepository->consultarVendaEmAndamento();
-        foreach ($vendaAndamento as $venda) {
-            $quantidadeVendida = intval($venda->quantidade);
-            $idProduto = intval($venda->id_venda);
-
-            $produto = $this->vendaRepository->consultarProduto($idProduto);
-        
-            if ($produto) {
-                $produto->estoque += $quantidadeVendida;
-                $produto->save();
-            }
-            $venda->delete();
-        }
-    
+        return true;
     }
 
 }

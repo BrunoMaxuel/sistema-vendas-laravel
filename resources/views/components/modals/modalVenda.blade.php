@@ -17,24 +17,24 @@
             <h6 class="modal-title">Finalização de venda</h6>
         </div>
         <div id="modalBody" class="modal-body p-3">
-            <form id="formTransacao" action="/historico/editar" method="POST">
+            <form id="formTransacao" method="POST">
                 @csrf
                 <div class="row">
-                    <input type="hidden" id="idTransacao" name="id_transacao">
+                    <input type="hidden" id="venda_detalhada" name="venda_detalhada">
                     <div class="m-1">
 
                     </div>
                     <div class="col m-1 border">
                         <h6>TOTAL DA VENDA</h6>
-                        <input type="text" id="total_venda" class="custom-input" name="total_venda" value="11120,00" readonly>
+                        <input type="text" id="total_venda_modal" class="custom-input" name="total_venda" value="11120,00" readonly>
                     </div>
                     <div class="col m-1 border">
                         <h6>TOTAL COM DESCONTO</h6>
-                        <input type="text" id="venda_desconto" class="custom-input" name="venda_desconto" value="0,00" readonly>
+                        <input type="text" id="venda_desconto_modal" class="custom-input" name="venda_desconto" value="0,00" readonly>
                     </div> 
                     <div class="col m-1 border">
                         <h6>TOTAL ITENS</h6>
-                        <input type="text" id="total_item" class="custom-input" name="total_item" value="0" readonly>
+                        <input type="text" id="total_item_modal" class="custom-input" name="total_item" value="0" readonly>
                     </div>
                 </div>
                 

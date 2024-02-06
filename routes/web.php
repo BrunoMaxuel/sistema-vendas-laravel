@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/vender/vendaAndamento', [VendasController::class, 'vendaEmAndamento'])->name('venda.andamento');
     Route::post('/vender/vendaAndamento/cancelar', [VendasController::class, 'cancelarItemVenda'])->name('venda.cancelar');
     Route::post('/vender/vendaAndamento/registrar', [VendasController::class, 'vendaEmAndamentoRegistrar'])->name('venda.andamento.registrar');
-    Route::post('/vender/finalizar', [VendasController::class, 'finalizarVenda'])->name('venda.finalizar');
+    Route::post('/vender', [VendasController::class, 'finalizarVenda'])->name('venda.finalizar');
     Route::post('/vender/vendaAndamento/cancelarVenda', [VendasController::class, 'cancelarVenda'])->name('venda.andamento.cancelar');
     //Histórico e Backup
     Route::get('/historico', [HistoricoVendasController::class, 'index'])->name('historico.view'); 

@@ -28,26 +28,14 @@ class VendasController extends Controller
     public function buscarProdutos(Request $request){
         return $this->vendaService->buscarDadosParaVenda($request->search);
     }
-
-    public function vendaEmAndamentoRegistrar(Request $request){
-        return $this->vendaService->registrarVenda($request->linha);
-    }
-
-    public function vendaEmAndamento(){
-        return $this->vendaService->buscarVendaEmAndamento();
-    }
-
-    public function cancelarItemVenda(Request $request) {
-        $this->vendaService->cancelarItem($request->id_venda);
-    }
     
     public function finalizarVenda(Request $request){
-        $this->vendaService->finalizarVenda($request);
-        return redirect(route('venda.index'));
-    }
-    
-    public function cancelarVenda(){
-        $this->vendaService->cancelarVenda();
+        $response = $this->vendaService->finalizarVenda($request);
+
+        if ($response) {
+            return redirect()->route('venda.index')->with('mensagem', 'true');
+        }
         
     }
+    
 }

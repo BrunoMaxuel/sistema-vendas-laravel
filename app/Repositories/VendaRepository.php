@@ -64,14 +64,15 @@ class VendaRepository
         $transacao                      = Transacao::orderBy('id', 'desc')->latest()->first();
         $vendaDetalhada                 = new vendasDetalhadas();
         $vendaDetalhada->user_id        = Auth::id();
-        $vendaDetalhada->nome_produto   = $venda->nome_produto;
+        $vendaDetalhada->nome_produto   = $venda->nome;
         $vendaDetalhada->codigo_barras  = $venda->codigo_barras;
         $vendaDetalhada->quantidade     = $venda->quantidade;
-        $vendaDetalhada->valor_item     = $venda->valor_item;
-        $vendaDetalhada->total_venda    = $venda->total_venda;
-        $vendaDetalhada->item_cancelado = $venda->item_cancelado;
+        $vendaDetalhada->valor_item     = str_replace(',', '.', $venda->preco);
+        $vendaDetalhada->total_venda    = str_replace(',', '.', $venda->total);
         $vendaDetalhada->id_transacao   = $transacao->id;
         $vendaDetalhada->save();
+        // dd($venda->id);
+        Produto::where('user_id', Auth::id())->where('id', $venda->id)->decrement('estoque', $venda->quantidade);
     }
     public function consultarProduto($consulta){
         return Produto::find($consulta);

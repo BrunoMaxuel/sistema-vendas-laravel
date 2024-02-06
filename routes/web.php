@@ -23,7 +23,6 @@ Route::middleware(['auth'])->group(function(){
     //clientes
     Route::get('/clientes', [ClientesController::class, 'index'])->name('cliente.index');
     Route::post('/clientes/pesquisar', [ClientesController::class, 'search'])->name('cliente.search');
-    Route::get('/clientes/adicionar',[ClientesController::class, 'painelAdicionar'])->name('cliente.painel.adicionar');
     Route::post('/clientes/editar', [ClientesController::class, 'editarCliente'])->name('cliente.editar');
     Route::post('/clientes/adicionar',[ClientesController::class, 'adicionarCliente'])->name('cliente.adicionar');
     Route::delete('/clientes/excluir',[ClientesController::class, 'excluirCliente'])->name('cliente.excluir');

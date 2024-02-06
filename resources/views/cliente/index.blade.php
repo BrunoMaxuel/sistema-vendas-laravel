@@ -3,32 +3,23 @@
 @section('title', 'Clientes Cadastrados')
 @section('css')
     <style>
-        .cor-fundo{
-            background-color: #0A8DC6;
-            padding: 20px 10px 20px 10px;
-            border-radius: 10px;
-            color:white;
+        .pesquisa{
+            height: 40px ;
+            width: 400px;
+            border-radius: 5px;
         }
     </style>
 @stop
 
 @section('content_header')
-    <div class="row cor-fundo">
+    <div class="row pb-3">
+        <div class="col-md-12">
+            <h2>Total de Clientes <i class="fas fa-sm fa-arrow-right" style="margin-left:20px; width: 50px;"></i> <strong>{{count($clientes)}}</strong> </h2>
+        </div>
         <div class="col-md-4">
-            <form action="{{ route('cliente.search') }}" method="POST" class="form-inline">
-                @csrf
-                <div class="input-group">
-                    <input type="text" id="pesquisa" class="form-control" placeholder="Pesquisar clientes" name="query">
-                    <div class="input-group-append">
-                        <button style="border: solid 1px rgb(0, 0, 0); color: black; background-color:white;" class="btn btn-outline-primary" type="submit">Buscar</button>
-                    </div>
-                </div>
-            </form>
+            <input type="text" id="pesquisa" class="pesquisa" placeholder="Pesquisar clientes" name="query">
         </div>
-        <div class="col-md-5">
-            <h2>Total de Clientes <i class="fas fa-sm fa-arrow-right" style="width: 50px;"></i> <strong>{{count($clientes)}}</strong> </h2>
-        </div>
-        <div class="col-md-3 d-flex justify-content-end align-items-center">
+        <div class="col-md-8 d-flex justify-content-end align-items-center">
             <div>
                 <x-form.button id="btnAdd" type="submit" theme="light" icon="fas fa-icon-name" label="Adicionar Cliente" />
             </div>

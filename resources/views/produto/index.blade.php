@@ -3,12 +3,13 @@
 @section('title', 'Produtos Adicionados')
 @section('css')
     <style>
-        .cor-fundo{
-            background-color: #0A8DC6;
-            padding: 20px 10px 20px 10px;
-            border-radius: 10px;
-            color:white;
+         .pesquisa{
+            height: 40px ;
+            width: 400px;
+            border-radius: 5px;
         }
+
+
         tbody tr td{
        text-transform: uppercase;
         }
@@ -17,32 +18,22 @@
         width: 100%;
     }
 
-    .custom-table th,
-    .custom-table td {
-        padding: 4px; /* Ajuste o valor conforme necessário */
-        text-align: left;
-        border-bottom: 1px solid #ddd; /* Adicione uma borda inferior para separar as linhas */
-    }
+    
     </style>
 @stop
 @section('content_header')
-    <div class="row cor-fundo">
+
+
+    <div class="row pb-3">
+        <div class="col-md-12">
+            <h3>Total de Produtos  <i class="fas fa-sm fa-arrow-right" style="margin-left:20px; width: 50px;"></i> <strong>{{count($produtos)}}</strong> </h3>
+        </div>
         <div class="col-md-4">
-            <form action="{{ route('produtos.search') }}" method="GET" class="form-inline">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Pesquisar por produtos" name="query">
-                    <div class="input-group-append">
-                        <button style="border: solid 1px rgb(0, 0, 0); color: black; background-color:white;" class="btn btn-outline-primary" type="submit">Buscar</button>
-                    </div>
-                </div>
-            </form>
+            <input type="text" class="pesquisa" placeholder="Pesquisar por produtos" name="query">
         </div>
-        <div class="col-md-5">
-            <h3>TOTAL DE PRODUTOS  <i class="fas fa-sm fa-arrow-right" style="width: 50px;"></i> <strong>{{count($produtos)}}</strong> </h3>
-        </div>
-        <div class="col-md-3 d-flex justify-content-end align-items-center">
-            <div id="btnAdd" class="btn btn-light">
-                Adicionar produto
+        <div class="col-md-8 d-flex justify-content-end align-items-center">
+            <div>
+                <x-form.button id="btnAdd" type="submit" theme="light" icon="fas fa-icon-name" label="Adicionar Cliente" />
             </div>
         </div>
     </div>

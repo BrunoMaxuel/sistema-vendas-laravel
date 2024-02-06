@@ -12,8 +12,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/password/reset', [LoginController::class, 'mudarSenha'])->name('mudar.senha');
 Route::post('/password/email', [LoginController::class, 'mudarSenhaAction'])->name('mudar.action');
 Route::middleware(['auth'])->group(function(){
+    //Dashboard
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard.index');
     
+    //vendas
+    Route::get('/vendas', [VendasController::class, 'index'])->name('venda.index');
+    Route::post('/vendas/produtos', [VendasController::class, 'buscarProdutos'])->name('estoque.api.listar');
+    Route::post('/vender', [VendasController::class, 'finalizarVenda'])->name('venda.finalizar');
+
     //clientes
     Route::get('/clientes', [ClientesController::class, 'index'])->name('cliente.index');
     Route::post('/clientes/pesquisar', [ClientesController::class, 'search'])->name('cliente.search');
@@ -21,6 +27,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/clientes/editar', [ClientesController::class, 'editarCliente'])->name('cliente.editar');
     Route::post('/clientes/adicionar',[ClientesController::class, 'adicionarCliente'])->name('cliente.adicionar');
     Route::delete('/clientes/excluir',[ClientesController::class, 'excluirCliente'])->name('cliente.excluir');
+
     //produtos
     Route::get('/produtos', [ProdutosController::class, 'index'])->name('produto.index');
     Route::get('/produtos/adicionar', [ProdutosController::class, 'produtosViewAdicionar'])->name('produtos.view.adicinar');
@@ -35,15 +42,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/caixa/abrir', [CaixaController::class, 'iniciarCaixa'])->name('caixa.iniciar');
     Route::post('/caixa/adicionar', [CaixaController::class, 'adicionarSuprimento'])->name('caixa.add');
     Route::post('/caixa/sangria', [CaixaController::class, 'adicionarSangria'])->name('caixa.sangria');
-    //vendas
-    Route::get('/vender', [VendasController::class, 'index'])->name('venda.index');
-    Route::post('/venda/registrar', [VendasController::class, 'registrarVenda'])->name('venda.registrar');
-    Route::post('/vender/estoque', [VendasController::class, 'buscarProdutos'])->name('estoque.api.listar');
-    Route::post('/vender/vendaAndamento', [VendasController::class, 'vendaEmAndamento'])->name('venda.andamento');
-    Route::post('/vender/vendaAndamento/cancelar', [VendasController::class, 'cancelarItemVenda'])->name('venda.cancelar');
-    Route::post('/vender/vendaAndamento/registrar', [VendasController::class, 'vendaEmAndamentoRegistrar'])->name('venda.andamento.registrar');
-    Route::post('/vender', [VendasController::class, 'finalizarVenda'])->name('venda.finalizar');
-    Route::post('/vender/vendaAndamento/cancelarVenda', [VendasController::class, 'cancelarVenda'])->name('venda.andamento.cancelar');
+
     //Histórico e Backup
     Route::get('/historico', [HistoricoVendasController::class, 'index'])->name('historico.view'); 
     Route::post('/historico', [HistoricoVendasController::class, 'historicoBuscarDetalhes'])->name('historico.detalhes'); 

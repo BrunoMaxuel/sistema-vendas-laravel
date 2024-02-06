@@ -9,10 +9,11 @@
             height: 40px;
             font-size: 17px;
         }
-        #tableApi{
-            max-height: 400px;
-            overflow-y: auto; 
-        }   
+        .table-api tbody tr td{
+            font-size: 20px;
+            padding: 25px !important;
+            font-weight: bolder;
+        }
         
         .hidden{
             display: none;

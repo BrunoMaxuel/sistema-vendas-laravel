@@ -174,7 +174,7 @@ return [
         ],
         [
             'text'        => 'Realizar Vendas',
-            'url'         => '/vender',
+            'url'         => '/vendas',
             'icon'        => 'fas fa-fw fa-shopping-cart',
         ],
         [

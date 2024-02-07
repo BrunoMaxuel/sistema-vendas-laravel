@@ -8,7 +8,7 @@
             border-radius:25px
         }
         .cor-fundo{
-            background-color: #0A8DC6;
+            background-color: #343A40;
             padding: 25px 5px 25px 5px;
             border-radius: 10px;
             color:white;
@@ -16,9 +16,12 @@
     </style> 
 @stop
 @section('content_header')
-    <div class="row cor-fundo">
-        <div class="col-md-12 ">
+    <div class="row pl-5 pr-5">
+        <div class="col-md-11 cor-fundo d-flex justify-content-center">
             <h3><strong>Backup e restauração do sistema</strong></h3>
+        </div>
+        <div class="col-md-1">
+
         </div>
     </div>
 @stop

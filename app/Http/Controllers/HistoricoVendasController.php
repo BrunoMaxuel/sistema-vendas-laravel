@@ -62,7 +62,7 @@ class HistoricoVendasController extends Controller
     public function imprimirVenda(Request $request){
         $id_transacao = $request->id;
         $vendasDetalhada = vendasDetalhadas::where('user_id', Auth::id())->where('item_cancelado', false)->where('id_transacao', $id_transacao)->get();
-        return view('relatorio.imprimirDetalhesVendas', ['vendasDetalhada' => $vendasDetalhada]);
+        return view('components.relatorio.imprimirDetalhesVendas', ['vendasDetalhada' => $vendasDetalhada]);
     }
 
     public function backupView(){

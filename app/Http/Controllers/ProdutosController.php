@@ -19,7 +19,7 @@ class ProdutosController extends Controller
 
     public function index(){
         $produtos = $this->produtoService->buscarTodosProdutos();
-        return view('produto/index', ['produtos'=>$produtos]);
+        return view('produtos', ['produtos'=>$produtos]);
     }
 
     public function editarView(Request $request){

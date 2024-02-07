@@ -222,7 +222,7 @@ $('#btnFinalizar').on('click', function() {
     console.log($('#venda_detalhada').val());
     setTimeout(function() {
         $('#valor_recebido').focus();
-    }, 100);
+    }, 500);
 });
 
 //finaliza venda completamente

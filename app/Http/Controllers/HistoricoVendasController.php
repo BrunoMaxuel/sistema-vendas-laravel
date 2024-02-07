@@ -21,7 +21,7 @@ class HistoricoVendasController extends Controller
 
     public function index(){
         $transacao = Transacao::where('user_id', Auth::id())->orderby('id', 'desc')->get();
-        return view('relatorio.historicoVendas', ['transactions' => $transacao]);
+        return view('historicoVendas', ['transactions' => $transacao]);
     }   
     public function editarTransacao(TransacaoRequest $request){
         return $this->transacaoService->editarTransacao($request);
@@ -56,7 +56,7 @@ class HistoricoVendasController extends Controller
         $transacoes = Transacao::where('user_id', Auth::id())->get();
         $vendasDetalhada = vendasDetalhadas::where('user_id', Auth::id())->where('item_cancelado', false)->get();
         
-        return view('relatorio.imprimirTodasVendas', ['transacoes' => $transacoes, 'vendasDetalhada' => $vendasDetalhada]);
+        return view('components.relatorio.imprimirTodasVendas', ['transacoes' => $transacoes, 'vendasDetalhada' => $vendasDetalhada]);
     }
 
     public function imprimirVenda(Request $request){
@@ -66,7 +66,7 @@ class HistoricoVendasController extends Controller
     }
 
     public function backupView(){
-        return view('relatorio.backup', ['mysql'=>$this->MakeTmpBackup()]);
+        return view('backup', ['mysql'=>$this->MakeTmpBackup()]);
     }
 
     function MakeTmpBackup(){

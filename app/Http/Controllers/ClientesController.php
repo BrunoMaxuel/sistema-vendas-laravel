@@ -18,7 +18,7 @@ class ClientesController extends Controller
     }
     public function index(){ 
         $clientes = $this->clienteService->buscarTodosClientes();
-        return view('cliente/index', ['clientes' => $clientes]);
+        return view('clientes', ['clientes' => $clientes]);
     }
     
     public function editarCliente(Request $request){

@@ -19,7 +19,7 @@ class VendaService
     {
         $ultimoRegistroCaixa = $this->vendaRepository->verificarCaixaAberto();
         if (isset($ultimoRegistroCaixa) && $ultimoRegistroCaixa->aberto == true) {
-            return 'venda.venda';
+            return 'venda';
         } else {
             return 'caixa.caixaAbrir';
         }

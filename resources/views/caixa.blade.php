@@ -8,7 +8,7 @@
         width: 100%;
     	}	
 		.cor-fundo{
-			background-color: #0A8DC6;
+			background-color: #343A40;
 			color: white;
 		}
 		table, #transations-table{

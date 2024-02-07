@@ -4,7 +4,7 @@
 @section('css')
 	<style>
 		.cor-linha{
-			background-color: #0A8DC6;
+			background-color: #343A40;
 			color:white;
 			padding: 15px;
 			border-radius: 5px;
@@ -35,13 +35,13 @@
 @stop
 @section('content_header')
 	<div class="row cor-linha">
-		<div class="col-md-6">
+		<div class="col-md-4">
+
+		</div>
+		<div class="col-md-4">
 			<h3>Histórico de Vendas</h3>
 		</div>
-		<div class="col-md-3 ">
-			{{-- <button onclick="imprimirConteudo('historico/imprimirVendas')" class="btn btn-light">Imprimir Histórico</button> --}}
-		</div>
-		<div class="col-md-3 ">
+		<div class="col-md-4 d-flex justify-content-end">
 			<x-form.button onclick="imprimirConteudo('historico/imprimirVendas')" type="button" theme="light"  label="Imprimir Histórico" />
 		</div>
 	</div>
@@ -158,13 +158,13 @@
         });
 
 		var tabela = $('#transations-table');
-            var numCliente = tabela.find('tbody').find('tr').length;
-            if(numCliente > 7){
-                tabela.parent().css('max-height', '400px').css('overflow-y', 'auto');
-            }
-            else{
-                tabela.parent().css('max-height', 'none').css('overflow-y', 'visible');    
-            }
+		var numCliente = tabela.find('tbody').find('tr').length;
+		if(numCliente > 7){
+			tabela.parent().css('max-height', '400px').css('overflow-y', 'auto');
+		}
+		else{
+			tabela.parent().css('max-height', 'none').css('overflow-y', 'visible');    
+		}
     });
 
 	function closePrint () {
@@ -184,7 +184,6 @@
 		newFrame.src = url;
 		document.body.appendChild(newFrame);
 	}
-
 
 </script>
 @stop

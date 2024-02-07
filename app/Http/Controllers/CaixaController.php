@@ -23,9 +23,9 @@ class CaixaController extends Controller
     public function index(){
         $caixa = $this->caixa->painelCaixa();
         if($caixa !== false &&  $caixa->aberto) {
-            return view('caixa.caixa', ['caixa' =>$caixa]);
+            return view('caixa', ['caixa' =>$caixa]);
         } else {
-            return view('caixa.caixaAbrir');
+            return view('caixaAbrir');
         }
     }
     public function iniciarCaixa(Request $request){

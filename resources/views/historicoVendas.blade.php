@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('title', 'Histórico de vendas')
-@section('css')
+@push('css')
 	<style>
 		.cor-linha{
 			background-color: #343A40;
@@ -9,30 +9,9 @@
 			padding: 15px;
 			border-radius: 5px;
 		}
-		.custom-table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    .custom-table th,
-    .custom-table td {
-        padding: 4px; /* Ajuste o valor conforme necessário */
-        text-align: left;
-        border-bottom: 1px solid #ddd; /* Adicione uma borda inferior para separar as linhas */
-    }
-	.custom-input {
-		border: none; /* Remove a borda padrão */
-		background-color: #0A8DC6; /* Cor de fundo */
-		color: white; /* Cor do texto */
-		font-size: 1.25rem; /* Tamanho da fonte */
-		padding: 0.375rem 0.75rem; /* Espaçamento interno */
-		margin-left: 1.25rem; /* Margem esquerda para alinhar ao texto */
-		font-weight: bold; /* Negrito */
-		width: 150px;
-	}
 
 	</style>
-@stop
+@endpush
 @section('content_header')
 	<div class="row cor-linha">
 		<div class="col-md-4">
@@ -91,99 +70,133 @@
 			</tbody>
 		</table>	
 	</div>
+	@if(session('msg'))
+    <div id="mensagem" >
+    </div>
+@endif
 @stop
-@section('js')
-<script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
-<script src="{{ asset('assets/js/historicoVendas.js') }}"></script>
-<script type="text/javascript">
-    $(function() {
-			$('.visualizar').click(function() {
-			var id = $(this).data('id');
-			var token = "{{ csrf_token() }}";
-
-			$.post('/historico', { dataId: id, _token: token })
-			.done(function(vendaDetalhes) {
-				$('#table-modal tbody').empty();
-				
-				$.each(vendaDetalhes, function(index, venda) {
-					$('#id_transacao').val(venda.id_transacao);
-					var valorItemFormatted = parseFloat(venda.valor_item).toLocaleString('pt-br', {minimumFractionDigits: 2});
-					var totalVendaFormatted = parseFloat(venda.total_venda).toLocaleString('pt-br', {minimumFractionDigits: 2});
-					var newRow = '<tr>' +
-						'<td>' + venda.id_transacao + '</td>' +
-						'<td>' + venda.nome_produto + '</td>' +
-						'<td>' + venda.quantidade + '</td>' +
-						'<td>' + valorItemFormatted + '</td>' +
-						'<td>' + totalVendaFormatted + '</td>' +
-						'</tr>';
-					$('#table-modal tbody').append(newRow);
-				});
-				$('#modalHistorico').modal('show');
-			})
-			.fail(function(error) {
-				console.error(error);
-			});
+@push('js')
+	<script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
+	<script type="text/javascript">
+		$('#btnModalFinalizar').on('click', function() {
+			const rota = "/historico/editar";
+			$('#formTransacao').attr('action', rota);
 		});
 
-        $('.editar').click(function() {
-			const linha = $(this).closest('tr');
-			var total = parseFloat(linha.find('td:nth-child(10)').text().replace('.', '').replace(',', '.'));
-			var desconto = linha.find('td:nth-child(5)').text();
-			var totalDesconto = total - total * (parseFloat(desconto.replace('%', '')) / 100);
-			var parcela = parseInt(linha.find('td:nth-child(7)').text().replace('x',''));
-			var valorParcela = totalDesconto / parcela;
-			$('#idTransacao').val(linha.find('td:nth-child(1)').text()); 
-			$('#cliente').val(linha.find('td:nth-child(2)').text());
-			$('#pagamento').val(linha.find('td:nth-child(4)').text()); 
-            $('#total_item').val(linha.find('td:nth-child(6)').text()); 
-            $('#parcela').val(linha.find('td:nth-child(7)').text());   
-            $('#valor_parcela').val(totalDesconto.toLocaleString('pt-br', {minimumFractionDigits: 2}));
-            $('#desconto').val(linha.find('td:nth-child(5)').text()); 
-            $('#total_venda').val(linha.find('td:nth-child(10)').text());   
-            $('#venda_desconto').val(totalDesconto.toLocaleString('pt-br', {minimumFractionDigits: 2})); 
-            $('#valor_recebido').val(linha.find('td:nth-child(9)').text());
-			const rota = "{{route('historico.editar')}}";
-			$('.modal-title').text('Edição de venda');
-			$('#btnSubmit').text('Salvar Alterações');
-			$('#formTransacao').attr('action', rota);
-			$('#modalTransacao').modal('show');
-        });
 
-        $('.excluir').click(function() {
-			var transacaoId = $(this).data('id');
-			$('#modalExcluir').modal('show');
-			$('#idExcluir').val(transacaoId);
-			const rota = "{{route('historico.excluir')}}";
-			$('#formExcluir').attr('action', rota);
-        });
+		$(function() {
+			
+			var mensagem = document.getElementById('mensagem');
+			if (mensagem) {
+				showModal();
+				function showModal(){
+					$("#background-text").addClass("bg-success");
+					$("#titulo-msg").html("Informações alteradas com sucesso!");
+					setTimeout(function() {
+							$('#modal-msg').modal('show');
+					}, 500); 
+					setTimeout(function() {
+							$('#modal-msg').modal('hide');
+					}, 2000); 
+				}
+			}
 
-		var tabela = $('#transations-table');
-		var numCliente = tabela.find('tbody').find('tr').length;
-		if(numCliente > 7){
-			tabela.parent().css('max-height', '400px').css('overflow-y', 'auto');
+
+			// msg = false;
+			// if(msg){
+			// 	showModal();
+			// }
+			// function showModal(){
+			// 	$("#background-text").addClass("bg-success");
+			// 	$("#titulo-msg").css('font-size', 20);
+			// 	$("#titulo-msg").html("Informações alteradas com sucesso!");
+			// 	setTimeout(function() {
+			// 			$('#modal-msg').modal('show');
+			// 	}, 500); 
+			// 	setTimeout(function() {
+			// 			$('#modal-msg').modal('hide');
+			// 	}, 3000); 
+			// }
+
+
+			$('.editar').click(function() {
+				$('#modalTransacao').modal('show');
+				const linha 	= $(this).closest('tr');
+				$('#idTransacao').val(linha.find('td:nth-child(1)').text()); 
+				$('#cliente').val(linha.find('td:nth-child(2)').text());
+				$('#pagamento').val(linha.find('td:nth-child(4)').text()); 
+				$('#desconto').val(linha.find('td:nth-child(5)').text()); 
+				$('#total_item_modal').val(linha.find('td:nth-child(6)').text()); 
+				$('#parcela').val(linha.find('td:nth-child(7)').text());   
+				$('#valor_parcela').val(linha.find('td:nth-child(8)').text());
+				$('#venda_desconto_modal').val(linha.find('td:nth-child(9)').text()); 
+				$('#total_venda_modal').val(linha.find('td:nth-child(10)').text());   
+				$('#valor_recebido').attr('readonly', true).val("0,00");
+			});
+			$('.visualizar').click(function() {
+				var id = $(this).data('id');
+				var token = "{{ csrf_token() }}";
+
+				$.post('/historico', { dataId: id, _token: token })
+				.done(function(vendaDetalhes) {
+					$('#table-modal tbody').empty();
+					
+					$.each(vendaDetalhes, function(index, venda) {
+						$('#id_transacao').val(venda.id_transacao);
+						var valorItemFormatted = parseFloat(venda.valor_item).toLocaleString('pt-br', {minimumFractionDigits: 2});
+						var totalVendaFormatted = parseFloat(venda.total_venda).toLocaleString('pt-br', {minimumFractionDigits: 2});
+						var newRow = '<tr>' +
+							'<td>' + venda.id_transacao + '</td>' +
+							'<td>' + venda.nome_produto + '</td>' +
+							'<td>' + venda.quantidade + '</td>' +
+							'<td>' + valorItemFormatted + '</td>' +
+							'<td>' + totalVendaFormatted + '</td>' +
+							'</tr>';
+						$('#table-modal tbody').append(newRow);
+					});
+					$('#modalHistorico').modal('show');
+				})
+				.fail(function(error) {
+					console.error(error);
+				});
+			});
+
+
+			$('.excluir').click(function() {
+				var transacaoId = $(this).data('id');
+				$('#modalExcluir').modal('show');
+				$('#idExcluir').val(transacaoId);
+				const rota = "{{route('historico.excluir')}}";
+				$('#formExcluir').attr('action', rota);
+			});
+
+			var tabela = $('#transations-table');
+			var numCliente = tabela.find('tbody').find('tr').length;
+			if(numCliente > 7){
+				tabela.parent().css('max-height', '400px').css('overflow-y', 'auto');
+			}
+			else{
+				tabela.parent().css('max-height', 'none').css('overflow-y', 'visible');    
+			}
+		});
+
+		function closePrint () {
+				document.body.removeChild(this.__container__);
+			}
+		function setPrint () {
+			this.contentWindow.print();
 		}
-		else{
-			tabela.parent().css('max-height', 'none').css('overflow-y', 'visible');    
+
+		function imprimirConteudo(url) {
+			var newFrame = document.createElement("iframe");
+			newFrame.onload = setPrint;
+			newFrame.style.visibility = "hidden";
+			newFrame.style.position = "fixed";
+			newFrame.style.right = "0";
+			newFrame.style.bottom = "0";
+			newFrame.src = url;
+			document.body.appendChild(newFrame);
 		}
-    });
 
-	function closePrint () {
-    		  document.body.removeChild(this.__container__);
-    	}
-	function setPrint () {
-   		  this.contentWindow.print();
-   	}
-
-	function imprimirConteudo(url) {
-		var newFrame = document.createElement("iframe");
-		newFrame.onload = setPrint;
-		newFrame.style.visibility = "hidden";
-		newFrame.style.position = "fixed";
-		newFrame.style.right = "0";
-		newFrame.style.bottom = "0";
-		newFrame.src = url;
-		document.body.appendChild(newFrame);
-	}
-
-</script>
-@stop
+	</script>
+@endpush

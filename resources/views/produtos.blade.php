@@ -9,21 +9,17 @@
             border-radius: 5px;
         }
 
-
         tbody tr td{
-       text-transform: uppercase;
+            text-transform: uppercase;
         }
-        .custom-table {
-        border-collapse: collapse;
-        width: 100%;
-    }
 
-    
+        .custom-table {
+            border-collapse: collapse;
+            width: 100%;
+        }  
     </style>
 @stop
 @section('content_header')
-
-
     <div class="row pb-3">
         <div class="col-md-12">
             <h3>Total de Produtos  <i class="fas fa-sm fa-arrow-right" style="margin-left:20px; width: 50px;"></i> <strong>{{count($produtos)}}</strong> </h3>

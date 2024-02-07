@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @section('title', 'Realizar venda')
-@section('css')
+@push('css')
     <style>
         #search{
             margin-left: 1px;
@@ -11,7 +11,7 @@
         }
         .table-api tbody tr td{
             font-size: 20px;
-            padding: 25px !important;
+            padding: 15px;
             font-weight: bolder;
         }
         
@@ -19,7 +19,7 @@
             display: none;
         }
     </style>
-@stop
+@endpush
 @section('content_header')
     <div class="row  pt-2">
         <div class="col-md-6">
@@ -40,6 +40,7 @@
 @stop
 @section('content')
 <x-modals.modalVenda/>
+<x-modals.modalMsg/>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div id="display-tableApi" class="hidden">
@@ -88,18 +89,37 @@
     </div>
 </div>  
 @stop
-@if (session('mensagem'))
-<script>
-    // Passe a mensagem para uma variável JavaScript
-    var msg = "sucesso";
-</script>
+@if (session('msg'))
+    <div id="msg">
+
+    </div>
 @endif
-@section('js')
+@push('js')
     <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
     <script src="{{asset('assets/js/vendas.js')}}"></script>
 
     <script>
-        $('#search').val('');
+        $(function() {
+            var mensagem = $('#msg').text();
+			if (mensagem) {
+				showModal();
+				function showModal(){
+					$("#background-text").addClass("bg-success");
+					$("#titulo-msg").html("Venda realizada!");
+					setTimeout(function() {
+							$('#modal-msg').modal('show');
+					}, 500); 
+					setTimeout(function() {
+                        $('#modal-msg').modal('hide');
+					}, 1400); 
+				}
+			}
+        });
+
+
+
+
+
         $('#btnCancelar').click(function(){
             const resp = window.confirm("Tem certeza que deseja cancelar todos produtos?");
             if(resp){
@@ -108,9 +128,5 @@
             }
         });
         
-        var msg;
-        if(msg){
-            localStorage.clear();
-        }
     </script>
-@stop
+@endpush

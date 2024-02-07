@@ -162,27 +162,6 @@ $(document).on('keydown', function(e) {
     if (!$('#modalTransacao').is(':visible')) {
         $('#search').focus();
     }
-    //evento de mudanças do input do modal finalizar vendas
-    $(document).on('input', '#valor_recebido, #desconto, #parcela', function() {
-        var totalVenda    = parseFloat($('.total_valor_venda').text().replace('.', '').replace(',', '.'));
-        var desconto      = parseInt($('#desconto').val().replace('%', ''));
-        var totalRecebido = parseFloat($('#valor_recebido').val().replace('.', '').replace(',', '.'));
-        if (isNaN(desconto)) {
-            desconto = 0; 
-        }
-        //calculos de finalizar vendas
-        if (!isNaN(totalVenda) && !isNaN(totalRecebido)) {
-            var parcela          = parseInt($('#parcela').val().replace('x', ''));
-            var totalComDesconto = totalVenda - (totalVenda * (desconto / 100));
-            var valor_parcela    = totalComDesconto / parcela;
-            var troco            = totalRecebido - totalComDesconto;
-            $('#venda_desconto_modal').val(totalComDesconto.toLocaleString('pt-br', {maximumFractionDigits: 2}));
-            $('#valor_parcela').val(valor_parcela.toLocaleString('pt-br', {maximumFractionDigits: 2}));
-            $('#troco').text(troco.toLocaleString('pt-br', {maximumFractionDigits: 2}));
-        } else {
-            $('#troco').text('0,00');
-        }
-    });
     //o modal finalizar venda é aberto caso pressione a tecla F7 e tenha itens de venda
     if (e.which === 118) { 
         var linhas = $('.table-venda tbody tr').length;
@@ -198,18 +177,7 @@ $(document).on('keydown', function(e) {
     }
 });
 //evento no input de keydown
-$('#vendaForm input').keydown(function(event) {
-    //tecla enter finaliza a venda completamente!
-    if (event.which == 13) { 
-            event.preventDefault(); 
-            $('#btnModalFinalizar').click(); 
-    }
-    //tecla ESC fecha o modal
-    if (event.which == 27) {
-        $('#modalTransacao').modal('hide');
-    }
-   
-});
+
 //abre o modal com informações nele
 $('#btnFinalizar').on('click', function() {
     $('#modalTransacao').modal('show');
@@ -229,12 +197,10 @@ $('#btnFinalizar').on('click', function() {
 $('#btnModalFinalizar').on('click', function() {
     const rota = "/vender";
     $('#formTransacao').attr('action', rota);
+    localStorage.clear();
+    location.reload();
 });
 
-//fecha o modal de finalizar venda
-$('#btnModalCancel').on('click', function () {
-    $('#modalTransacao').modal('hide');     
-});
 //verifica linhas da tabela para desabilitar botões de finalizar e cancelar vendas
 function verificarLinhasTabelaVenda() {
     var linhas = $('.table-venda tbody tr').length;

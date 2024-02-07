@@ -17,8 +17,8 @@ class TransacaoService{
         if($request->desconto == "" || $request->desconto == "%"){
             $request->desconto = "0";
         }
-        $valor_parcela    = str_replace(['.', ','], ['', '.'], $request->valor_parcela);
-        $vendaComDesconto = str_replace(['.', ','], ['', '.'], $request->venda_desconto);
+        $valor_parcela    = str_replace(',', '.', $request->valor_parcela);
+        $vendaComDesconto = str_replace(',', '.', $request->venda_desconto);
         $transacao = $this->repositorioTransacao->buscarTransacaoId($request->id_transacao);
         if ($transacao) {
             $transacao->pagamento          = $request->pagamento;
@@ -28,9 +28,9 @@ class TransacaoService{
             $transacao->cliente            = $request->cliente;
             $transacao->venda_com_desconto = $vendaComDesconto;
             $transacao->save();
-            return response()->json("feito");
+            return "Informações atualizada com sucesso!";
         } else {
-            return response()->json(['error' => 'Transação não encontrada']);
+            return "Erro ao editar transação!";
         }
     }
 }

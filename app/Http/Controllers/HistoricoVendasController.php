@@ -24,7 +24,8 @@ class HistoricoVendasController extends Controller
         return view('historicoVendas', ['transactions' => $transacao]);
     }   
     public function editarTransacao(TransacaoRequest $request){
-        return $this->transacaoService->editarTransacao($request);
+        $mensagem = $this->transacaoService->editarTransacao($request);
+        return redirect()->route('historico.view')->with('msg', $mensagem);
     }
     
     public function excluirTransacao(Request $request){

@@ -32,9 +32,9 @@ class VendasController extends Controller
     public function finalizarVenda(Request $request){
         $response = $this->vendaService->finalizarVenda($request);
 
-        if ($response) {
-            return redirect()->route('venda.index')->with('mensagem', 'true');
-        }
+        // if ($response) {
+            return redirect()->route('venda.index')->with('msg', 'msg');
+        // }
         
     }
     

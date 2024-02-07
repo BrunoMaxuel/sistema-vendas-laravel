@@ -44,7 +44,4 @@ class ClientesController extends Controller
             return redirect(route('cliente.index'));
         }
     }
-    public function painelAdicionar(){
-        return view('cliente.adicionar');
-   }
 }

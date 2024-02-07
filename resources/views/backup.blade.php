@@ -28,11 +28,6 @@
 
 @section('content')
     <x-modals.modalMsg/>
-    @if(session('msg'))
-        <script>
-            showModal(session('msg'));
-        </script>
-    @endif
     <div class="row pr-5 pl-5">
         <div class="col-md-5 cor-fundo">
             <div class="box box-danger text-center">
@@ -62,7 +57,6 @@
         @if(session('msg'))
             showModal('{{ session('msg') }}');
         @endif
-        document.getElementById('file-sql').value = '';
 
         document.getElementById('file-sql').onchange = function(e){
             $("#background-text").addClass("bg-blue");

@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-" role="document">
       <div class="modal-content">
           <div class="modal-header">
-            <p id="titulo">Excluir dados da lista</p>
+            <p id="titulo">Excluir item da lista</p>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

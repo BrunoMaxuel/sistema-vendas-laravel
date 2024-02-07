@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div id="background-text" class="modal-content text-white">
             <div class="m-5">
-                <h4 id="titulo-msg"></h4>
+                <h3 id="titulo-msg"></h3>
             </div>
         </div>
     </div>

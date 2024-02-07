@@ -25,17 +25,14 @@
         }
     }
 </style>
-
 <div id="preloader">
     
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-
         if (document.querySelector('#preloader')) {
             window.addEventListener('load', () => {
-
+                
             setTimeout(() => {
                 document.querySelector('#preloader').remove();
             }, 500);

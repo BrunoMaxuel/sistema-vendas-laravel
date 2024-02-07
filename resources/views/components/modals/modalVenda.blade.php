@@ -1,32 +1,33 @@
-<style>
-    .custom-input{
-        background-color: transparent;
-        border: none;
-        color: white;
-        width: 80px;
-    }
-    .custom-input:focus{
-        outline: none;
-    }
-</style>
-
+@push('css')
+    <style>
+        .custom-input{
+            background-color: transparent;
+            border: none;
+            color: white;
+            width: 80px;
+        }
+        .custom-input:focus{
+            outline: none;
+        }
+    </style>
+@endpush
 <div class="modal fade " id="modalTransacao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header" id="modalHeader">
-            <h6 class="modal-title">Finalização de venda</h6>
+            <h6 class="modal-title">Informações de pagamento</h6>
         </div>
-        <div id="modalBody" class="modal-body p-3">
-            <form id="formTransacao" method="POST">
+        <div id="modalBody"  class="modal-body p-3">
+            <form id="formTransacao"  method="POST">
                 @csrf
                 <div class="row">
+                    <input type="hidden" id="idTransacao" name="id_transacao">
                     <input type="hidden" id="venda_detalhada" name="venda_detalhada">
                     <div class="m-1">
-
                     </div>
                     <div class="col m-1 border">
                         <h6>TOTAL DA VENDA</h6>
-                        <input type="text" id="total_venda_modal" class="custom-input" name="total_venda" value="11120,00" readonly>
+                        <input type="text" id="total_venda_modal" class="custom-input" name="total_venda" value="0,00" readonly>
                     </div>
                     <div class="col m-1 border">
                         <h6>TOTAL COM DESCONTO</h6>
@@ -93,7 +94,7 @@
                         <input  id="cliente" class="form-control" name="cliente" placeholder="Pesquisar cliente" value="Visitante"/>
                     </div>
                     <div class="col-md-5 d-flex justify-content-end">
-                        <button id="btnModalFinalizar" type="submit" class="btn btn-success mr-2">Finalizar venda</button>
+                        <button id="btnModalFinalizar" type="submit" class="btn btn-success mr-2">Salvar Alterações</button>
                         <button id="btnModalCancel" type="button" class="btn btn-default">Cancelar</button>
                     </div>
                 </div>
@@ -102,3 +103,38 @@
       </div>
     </div>
 </div>
+
+@push('js')
+    <script>
+        $(document).on('input', '#valor_recebido, #desconto, #parcela', function() {
+            var totalVenda    = parseFloat($('#total_venda_modal').val().replace(',', '.'));
+            var desconto      = parseInt($('#desconto').val().replace('%', ''));
+            var totalRecebido = parseFloat($('#valor_recebido').val().replace(',', '.'));
+            if (isNaN(desconto)) {
+                desconto = 0; 
+            }
+            //calculos de finalizar vendas
+            if (!isNaN(totalVenda) && !isNaN(totalRecebido)) {
+                var parcela          = parseInt($('#parcela').val().replace('x', ''));
+                var totalComDesconto = totalVenda - (totalVenda * (desconto / 100));
+                var valor_parcela    = totalComDesconto / parcela;
+                var troco            = totalRecebido - totalComDesconto;
+                $('#venda_desconto_modal').val(totalComDesconto.toLocaleString('pt-br', {maximumFractionDigits: 2}));
+                $('#valor_parcela').val(valor_parcela.toLocaleString('pt-br', {maximumFractionDigits: 2}));
+                $('#troco').text(troco.toLocaleString('pt-br', {maximumFractionDigits: 2}));
+            } else {
+                $('#troco').text('0,00');
+            }
+        });
+        $('#btnModalCancel').on('click', function () {
+            $('#modalTransacao').modal('hide');     
+        });
+        $('#vendaForm input').keydown(function(event) {
+            //tecla ESC fecha o modal
+            if (event.which == 27) {
+                $('#modalTransacao').modal('hide');
+            }
+        
+        });
+    </script>
+@endpush

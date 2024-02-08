@@ -2,8 +2,8 @@
     <style>
         table tbody{
             border-collapse: collapse;
-            height: 200px !important; 
-            overflow-y: auto !important; 
+            height: 200px; 
+            overflow-y: auto ; 
         }
     </style>
 @endpush

@@ -25,3 +25,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        document.getElementById("loginModal").style.display = "none";
+    });
+</script>

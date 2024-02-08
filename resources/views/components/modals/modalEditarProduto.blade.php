@@ -60,3 +60,23 @@
       </div>
     </div>
   </div>
+@push('js')
+    <script>
+          var preco = $('#preco');
+          var lucro = $('#lucro');
+          var custo = $('#preco_custo');
+          $('#preco, #preco_custo, #lucro').on('keyup', function() {
+              var preco_custo = parseFloat(custo.val().replace(",", ".")) || 0;
+              var preco_venda = parseFloat(preco.val().replace(",", ".")) || 0;
+              var mLucro = parseFloat(lucro.cleanVal()) || 0;
+
+              if ($(this).is('#preco') || $(this).is('#preco_custo')) {
+                  var diff = preco_venda - preco_custo;
+                  lucro.val(lucro.masked(((diff / preco_custo) * 100).toFixed(0)));
+              } else if ($(this).is('#lucro')) {
+                  var newPreco = preco_custo + (preco_custo * (mLucro / 100));
+                  preco.val(preco.masked(newPreco.toFixed(2)));
+              }
+          });
+    </script>
+@endpush

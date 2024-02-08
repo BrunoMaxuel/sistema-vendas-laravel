@@ -52,10 +52,20 @@ class ProdutosController extends Controller
        if($query != null){
             $produtos = Produto::where('user_id', Auth::id())->where('nome', 'LIKE', "%$query%")
             ->orWhere('codigo_barras', 'LIKE', "%$query%")->orderby('id', 'desc')->get();
-            return view('produto/index', ['produtos' => $produtos]);
+            $produtos = $produtos->map(function($produto){
+                $produto->preco = number_format($produto->preco, 2, ',', '');
+                $produto->preco_custo = number_format($produto->preco_custo, 2, ',', '');
+                return $produto;
+            });
+            return $produtos;
        }else{
             $produtos = Produto::where('user_id', Auth::id())->get();
-            return view('produto/index', ['produtos' => $produtos]);
+            $produtos = $produtos->map(function($produto){
+                $produto->preco = number_format($produto->preco, 2, ',', '');
+                $produto->preco_custo = number_format($produto->preco_custo, 2, ',', '');
+                return $produto;
+            });
+            return $produtos;
        }
     }
 }

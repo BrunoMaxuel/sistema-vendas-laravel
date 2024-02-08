@@ -9,28 +9,22 @@
             height: 40px;
             font-size: 17px;
         }
-        .table-api tbody tr td{
-            font-size: 20px;
-            padding: 15px;
-            font-weight: bolder;
-        }
-        
         .hidden{
             display: none;
         }
     </style>
 @endpush
 @section('content_header')
-    <div class="row  pt-2">
+    <div class="row">
         <div class="col-md-6">
-            <h5 class="text-light" style="margin-left: 5px">Código barras/Nome</h5>
+            <h5 class="text-light @if (session('msg')) msg @endif  " style="margin-left: 5px">Código barras/Nome</h5>
             <div class="input-group-append search-input">
                 <input type="text" id="search" name="pesquisa" placeholder="Pesquisar item para venda" oninput="convertToUpper(this) ">
             </div>
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-end pr-4">
             <div id="btnFinalizar">
-                <button class="btn btn-light mr-2 "><strong>Finalizar Venda</strong></button>
+                <button class="btn btn-light mr-3 "><strong>Finalizar Venda</strong></button>
             </div>
             <div id="btnCancelar">
                 <button class="btn btn-light "><strong>Cancelar Venda</strong></button>
@@ -87,21 +81,16 @@
             <h2><strong class="total_item_venda pl-3 ml-3">0</strong></h2>
         </div>
     </div>
-</div>  
-@stop
-@if (session('msg'))
-    <div id="msg">
+</div>
 
-    </div>
-@endif
+@stop
 @push('js')
     <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
     <script src="{{asset('assets/js/vendas.js')}}"></script>
 
     <script>
         $(function() {
-            var mensagem = $('#msg').text();
-			if (mensagem) {
+			if ($('.msg').text()) {
 				showModal();
 				function showModal(){
 					$("#background-text").addClass("bg-success");
@@ -115,11 +104,6 @@
 				}
 			}
         });
-
-
-
-
-
         $('#btnCancelar').click(function(){
             const resp = window.confirm("Tem certeza que deseja cancelar todos produtos?");
             if(resp){
@@ -127,6 +111,7 @@
                 location.reload();
             }
         });
+        $('#display-tableApi').parent().css('height', '440px').css('overflow-y', 'hidden');
         
     </script>
 @endpush

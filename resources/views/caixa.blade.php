@@ -13,7 +13,6 @@
 		}
 		table, #transations-table{
             border-collapse: collapse;
-            /* width: 100%; */
             border-radius: 20px; /* Adicione esta linha para arredondar os cantos da tabela */
             overflow: hidden; /* Garante que a borda arredondada seja visível mesmo com bordas internas */
         }

@@ -87,7 +87,7 @@
             $('#pesquisa').on('keyup', function(e) {
                 var search = $(this).val();
                 $.post("/clientes/pesquisar", {query: search, _token: $('meta[name="csrf-token"]').attr('content') }, function(clientes) {
-                    tabela.empty();
+                    $('#table-cliente tbody').empty();
                     if (clientes.length > 0) {
                         $.each(clientes, function (index, cliente) {
                             var linha = $('<tr>');
@@ -97,7 +97,7 @@
                             linha.append('<td>' + cliente.telefone + '</td>');
                             linha.append('<td>' + cliente.bairro + '</td>');
                             linha.append('<td>' + cliente.cidade + '</td>');
-                            linha.append('<td><div class="btn-group"> <div><button type="button" id="' + cliente.id + '" class="btnEditar btn btn-secondary-soft btn-sm btn-success mr-2"><i class="bi bi-pencil-square"></i> Editar</button></div><div><button type="button" id="' + cliente.id + '" class="btnExcluir btn btn-danger btn-sm mt-2 mt-sm-0"><i class="bi bi-trash"></i> Excluir</button></div></div></td>');
+                            linha.append('<td><div class="btn-group"> <div><button type="button" id="' + cliente.id + '" class="btnEditar btn btn-secondary btn-success mr-2"><i class="fas fa-edit"></i> </button></div><div><button type="button" id="' + cliente.id + '" class="btnExcluir btn btn-danger mt-2 mt-sm-0"><i class="fas fa-trash"></i> </button></div></div></td>');
                             // Adicionar linha à tabela
                             tabela.append(linha);
                         });

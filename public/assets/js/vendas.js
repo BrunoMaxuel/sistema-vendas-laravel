@@ -10,7 +10,7 @@ $('#search').on('keydown', function(e) {
 
             tableApiBody.find('tr').removeClass('selected').css('background-color', '');
             tableApiBody.find('tr').eq(--linhaSelecionada).addClass('selected').css('background-color', '#aaa');
-        } else if (e.key === 'ArrowDown' && linhaSelecionada < tableApiBody.find('tr').length - 1) {
+        } else if (e.key === 'ArrowDown' && linhaSelecionada < 7) {
 
             tableApiBody.find('tr').removeClass('selected').css('background-color', '');
             tableApiBody.find('tr').eq(++linhaSelecionada).addClass('selected').css('background-color', '#aaa');

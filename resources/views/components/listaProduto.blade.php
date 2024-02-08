@@ -1,5 +1,14 @@
+@push('css')
+    <style>
+        table tbody{
+            border-collapse: collapse;
+            height: 200px !important; 
+            overflow-y: auto !important; 
+        }
+    </style>
+@endpush
 <div class="table-responsive">
-    <table id="tabela-produto" class="custom-table table table-striped align-middle">
+    <table id="tabela-produto" class="table table-bordered align-middle">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -47,3 +56,29 @@
         </tbody>
     </table>
 </div>
+@push('js')
+    <script type="text/javascript" name="listaProduto" >
+        $(document).on('click', '.btnEditar, .btnExcluir', function() {
+            if ($(this).hasClass('btnEditar')) {
+                var linhaTabela = $(this).closest('tr');
+                var colunas = linhaTabela.find('td');
+                $('#id_hidden').val(colunas[0].innerText);
+                $('#nome').val(colunas[1].innerText);
+                $('#codigo_barras').val(colunas[2].innerText);
+                $('#preco').val(colunas[3].innerText);
+                $('#preco_custo').val(colunas[4].innerText);
+                $('#categoria').val(colunas[8].innerText);
+                $('#lucro').val(colunas[5].innerText);
+                $('#estoque').val(colunas[6].innerText);
+                $('#fornecedor').val(colunas[7].innerText);
+                $('#modalAlert').modal('show');
+                $("#formUp").attr("action", "{{ route('produto.editar') }}");
+            } else if ($(this).hasClass('btnExcluir')) {
+                $('#idExcluir').val($(this).attr('id')); 
+                const rota = "{{route('produto.excluir')}}";
+                $('#formExcluir').attr('action', rota);
+                $('#modalExcluir').modal('show');
+            }
+        });
+    </script>
+@endpush

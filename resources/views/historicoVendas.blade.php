@@ -31,7 +31,7 @@
 	<x-modals.modalExcluir/>
 	<x-modals.modalMsg/>
 	<div class="table-responsive">
-		<table id="transations-table" class="custom-table table hover order-column compact table-bordered" cellspacing="0" width="100%">
+		<table id="transations-table" class="custom-table table hover order-column compact table-bordered" >
 			<thead class="thead-light">
 			<tr>
 				<th scope="col">N°</th>

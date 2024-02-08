@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table id="table-cliente" class="table table-striped align-middle">
+    <table id="table-cliente" class="table table-striped align-middle table-bordered">
         <thead>
         <tr>
             <th scope="col">Id</th>

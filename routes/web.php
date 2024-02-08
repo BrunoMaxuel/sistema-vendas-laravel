@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function(){
     //produtos
     Route::get('/produtos', [ProdutosController::class, 'index'])->name('produto.index');
     Route::get('/produtos/adicionar', [ProdutosController::class, 'produtosViewAdicionar'])->name('produtos.view.adicinar');
-    Route::get('/produtos/search', [ProdutosController::class, 'search'])->name('produtos.search');
+    Route::post('/produtos/search', [ProdutosController::class, 'search'])->name('produtos.search');
     Route::post('/produtos/editarproduto', [ProdutosController::class, 'editarProduto'])->name('produto.editar');
     Route::post('/produtos/novoproduto', [ProdutosController::class, 'novoProduto'])->name('produto.adicionar');
     Route::delete('/produtos/excluir', [ProdutosController::class, 'excluirProduto'])->name('produto.excluir');

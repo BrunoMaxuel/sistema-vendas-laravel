@@ -45,6 +45,13 @@
     <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
     <script type="text/javascript">
         $(function() {
+
+            $(document).on('keydown', function(e){
+                if(!$('#modalAlert').is(':visible')){
+                    $('#pesquisa').focus();
+                }
+            });
+
             $('#tel').mask('(00) 00000-0000');
             $('#btnAdd').click(function() {
                 $("#formUp")[0].reset();
@@ -53,28 +60,28 @@
                 $('#modalAlert').modal('show');
             });
 
-            $('.btnEditar').click(function() {
-                $("#formUp")[0].reset();
-                const rota = "{{route('cliente.editar')}}"
-                $('#formUp').attr('action', rota);
-                var linha = $(this).closest('tr');
-                $('#id').val($(this).attr('id'));
-                $('#nome').val(linha.find('td:eq(0)').text());
-                $('#endereco').val(linha.find('td:eq(1)').text());
-                $('#tel').val(linha.find('td:eq(2)').text());
-                $('#bairro').val(linha.find('td:eq(3)').text());
-                $('#cidade').val(linha.find('td:eq(4)').text());
-                $('#modalAlert').modal('show');
+            $(document).on('click', '.btnEditar, .btnExcluir', function() {
+                if ($(this).hasClass('btnEditar')) {
+                    $("#formUp")[0].reset();
+                    const rota = "{{route('cliente.editar')}}"
+                    $('#formUp').attr('action', rota);
+                    var linha = $(this).closest('tr');
+                    $('#id').val($(this).attr('id'));
+                    $('#nome').val(linha.find('td:eq(0)').text());
+                    $('#endereco').val(linha.find('td:eq(1)').text());
+                    $('#tel').val(linha.find('td:eq(2)').text());
+                    $('#bairro').val(linha.find('td:eq(3)').text());
+                    $('#cidade').val(linha.find('td:eq(4)').text());
+                    $('#modalAlert').modal('show');
+                } else if ($(this).hasClass('btnExcluir')) {
+                    $('#idExcluir').val($(this).attr('id')); 
+                    const rota = "{{ route('cliente.excluir') }}";
+                    $('#formExcluir').attr('action', rota);
+                    $('#modalExcluir').modal('show');
+                }
             });
 
             
-            $('.btnExcluir').click(function () {
-                $('#idExcluir').val($(this).attr('id')); 
-                const rota = "{{ route('cliente.excluir') }}";
-                $('#formExcluir').attr('action', rota);
-                $('#modalExcluir').modal('show');
-            }); 
-
             var tabela = $('#table-cliente');
             var numCliente = tabela.find('tbody').find('tr').length;
             if(numCliente > 7){

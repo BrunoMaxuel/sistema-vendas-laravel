@@ -26,10 +26,6 @@ class ProdutosController extends Controller
         return $this->produtoService->edit($request);
     }
 
-    public function produtosViewAdicionar(){
-        return view('produto.adicionar');
-    }
-
     public function buscarProdutoPorId(Request $request){
         return $this->produtoService->buscaParaExclusao($request);
     }
@@ -39,11 +35,14 @@ class ProdutosController extends Controller
     }
 
     public function novoProduto(ProdutoRequest $request){
-        return $this->produtoService->adicionarProduto($request);
+        $this->produtoService->adicionarProduto($request);
+        return redirect(route('produto.index'))->with('msg', 'msg');
     }
 
     public function editarProduto(ProdutoRequest $request){
-        return $this->produtoService->editarProduto($request);
+        $this->produtoService->editarProduto($request);
+        return redirect(route('produto.index'))->with('msg', 'msg');
+
     }
 
     public function search(Request $request){

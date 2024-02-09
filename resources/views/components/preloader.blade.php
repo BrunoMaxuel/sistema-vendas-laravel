@@ -4,7 +4,7 @@
         background: #343A40;
         position: fixed;
         inset: 0;
-        z-index: 1100;
+        z-index: 9100;
         }
 
         #preloader:before {
@@ -17,7 +17,7 @@
         border: 40px solid;
         border-radius: 50%;
         border-color: #00A2E8 transparent;
-        animation: spin 1.5s linear infinite;
+        animation: spin 1.4s linear infinite;
         }
         @keyframes spin {
             100% {
@@ -39,8 +39,7 @@
                     
                 setTimeout(() => {
                     document.querySelector('#preloader').remove();
-                }, 500);
-                
+                }, 200);
                 });
             }
         });

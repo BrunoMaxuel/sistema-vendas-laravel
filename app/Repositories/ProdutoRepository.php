@@ -29,12 +29,9 @@ class ProdutoRepository{
         $produto->estoque       = $request->estoque;
         $produto->fornecedor    = $request->fornecedor;
         $produto->categoria     = $request->categoria;
-        if($produto->save()){
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Produto Adicionado Com Sucesso!'
-            ]);
-        }
+        $produto->save();
+        return true;
+           
     }
     public function editarProduto($request){
         $produto  = $this->buscarProdutoPorId($request);
@@ -47,11 +44,7 @@ class ProdutoRepository{
         $produto->estoque       = $request->estoque;
         $produto->fornecedor    = $request->fornecedor;
         $produto->categoria     = $request->categoria;
-        if($produto->save()){
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Produto Alterado Com Sucesso!'
-            ]);
-        }
+        $produto->save();
+        return true;
     }
 }

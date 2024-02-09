@@ -61,16 +61,15 @@
         $(document).on('click', '.btnEditar, .btnExcluir', function() {
             if ($(this).hasClass('btnEditar')) {
                 var linhaTabela = $(this).closest('tr');
-                var colunas = linhaTabela.find('td');
-                $('#id_hidden').val(colunas[0].innerText);
-                $('#nome').val(colunas[1].innerText);
-                $('#codigo_barras').val(colunas[2].innerText);
-                $('#preco').val(colunas[3].innerText);
-                $('#preco_custo').val(colunas[4].innerText);
-                $('#categoria').val(colunas[8].innerText);
-                $('#lucro').val(colunas[5].innerText);
-                $('#estoque').val(colunas[6].innerText);
-                $('#fornecedor').val(colunas[7].innerText);
+                $('#id_hidden').val(linhaTabela.find('td:eq(0)').text());
+                $('#nome').val(linhaTabela.find('td:eq(1)').text());
+                $('#codigo_barras').val(linhaTabela.find('td:eq(2)').text());
+                $('#preco').val(linhaTabela.find('td:eq(3)').text()); 
+                $('#preco_custo').val(linhaTabela.find('td:eq(4)').text());
+                $('#categoria').val(linhaTabela.find('td:eq(8)').text()); 
+                $('#lucro').val(linhaTabela.find('td:eq(5)').text()); 
+                $('#estoque').val(linhaTabela.find('td:eq(6)').text()); 
+                $('#fornecedor').val(linhaTabela.find('td:eq(7)').text()); 
                 $('#modalAlert').modal('show');
                 $("#formUp").attr("action", "{{ route('produto.editar') }}");
             } else if ($(this).hasClass('btnExcluir')) {
@@ -80,5 +79,6 @@
                 $('#modalExcluir').modal('show');
             }
         });
+
     </script>
 @endpush

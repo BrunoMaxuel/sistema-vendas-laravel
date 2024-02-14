@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Services;
 use App\Repositories\TransacaoRepository;
 use App\Repositories\VendaRepository;
-use Illuminate\Support\Facades\Auth;
 
 class VendaService
 {

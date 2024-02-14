@@ -2,15 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Caixa;
-use App\Models\Produto;
-use App\Models\Transacao;
-use App\Models\Venda;
-use App\Models\vendasDetalhadas;
-use App\Services\SuporteService;
 use App\Services\VendaService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class VendasController extends Controller
 {
@@ -30,11 +23,8 @@ class VendasController extends Controller
     }
     
     public function finalizarVenda(Request $request){
-        $response = $this->vendaService->finalizarVenda($request);
-
-        // if ($response) {
-            return redirect()->route('venda.index')->with('msg', 'msg');
-        // }
+        $this->vendaService->finalizarVenda($request);
+        return redirect()->route('venda.index')->with('msg', 'msg');
         
     }
     

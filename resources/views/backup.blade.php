@@ -9,7 +9,7 @@
         }
         .cor-fundo{
             background-color: #343A40;
-            padding: 25px 5px 25px 5px;
+            padding: 30px 5px 30px 5px;
             border-radius: 10px;
             color:white;
         }

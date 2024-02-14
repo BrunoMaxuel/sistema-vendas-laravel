@@ -21,7 +21,7 @@ class VendaService
         if (isset($ultimoRegistroCaixa) && $ultimoRegistroCaixa->aberto == true) {
             return 'venda';
         } else {
-            return 'caixa.caixaAbrir';
+            return 'caixaAbrir';
         }
     }
 

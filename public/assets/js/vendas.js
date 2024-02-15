@@ -83,7 +83,7 @@ $(function() {
     });
     //Passa o conteudo da tabela do banco de dados para o localStorage
     $('#search').on('keypress', function(e) {
-        if (e.key === 'Enter' && !displayTableApi.hasClass("hidden")) {
+        if (e.key === 'Enter' && !displayTableApi.hasClass("hidden") && tableApiBody.find('tr td').length > 1) {
             displayTableApi.addClass('hidden');
             infoVenda.removeClass('hidden');
             $('#search').val('');   

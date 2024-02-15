@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-8 d-flex justify-content-end align-items-center">
             <div>
-                <x-form.button id="btnAdd" type="submit" theme="light" icon="fas fa-icon-name" label="Adicionar Cliente" />
+                <x-form.button id="btnAdd" type="submit" theme="light" icon="fas fa-icon-name" label="Adicionar Produto" />
             </div>
         </div>
     </div>

@@ -25,15 +25,15 @@
                     <input type="hidden" id="venda_detalhada" name="venda_detalhada">
                     <div class="m-1">
                     </div>
-                    <div class="col m-1 border">
+                    <div class="col m-2 p-2 border rounded">
                         <h6>TOTAL DA VENDA</h6>
                         <input type="text" id="total_venda_modal" class="custom-input" name="total_venda" value="0,00" readonly>
                     </div>
-                    <div class="col m-1 border">
+                    <div class="col m-2 p-1 border rounded">
                         <h6>TOTAL COM DESCONTO</h6>
                         <input type="text" id="venda_desconto_modal" class="custom-input" name="venda_desconto" value="0,00" readonly>
                     </div> 
-                    <div class="col m-1 border">
+                    <div class="col m-2 p-2 rounded border">
                         <h6>TOTAL ITENS</h6>
                         <input type="text" id="total_item_modal" class="custom-input" name="total_item" value="0" readonly>
                     </div>

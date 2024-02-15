@@ -10,7 +10,7 @@
             font-size: 17px;
         }
         .hidden{
-            display: none;
+            display: none !important;
         }
     </style>
 @endpush
@@ -53,7 +53,7 @@
         </tbody>
     </table>
 </div>
-<div class="row info-venda">
+<div class="row info-venda ">
     <div class="col-md-9" id="display-tableVenda">
         <table class="table-venda table hover order-column table-striped compact table-bordered" >
             <thead class="thead-light">

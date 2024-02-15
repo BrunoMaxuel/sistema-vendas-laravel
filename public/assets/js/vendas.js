@@ -155,6 +155,11 @@ function preencherTabelaBusca(data) {
         newRow.append('<td>' + item.estoque + '</td>');
         tableApiBody.append(newRow);
     });
+    if(data == null || data == ""){
+        var newRow = $('<tr>');
+        newRow.append('<td colspan="6" class="text-center" > Nenhum dado encontrado </td>');
+        tableApiBody.append(newRow);
+    }
 }
 //evento keydown
 $(document).on('keydown', function(e) {

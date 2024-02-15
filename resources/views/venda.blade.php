@@ -59,7 +59,7 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Item</th>
-                    <th scope="col">Nome do produto</th>
+                    <th scope="col" >Nome do produto</th>
                     <th scope="col">Código</th>
                     <th style="width: 5%" scope="col">UN</th>
                     <th scope="col">Preço</th>

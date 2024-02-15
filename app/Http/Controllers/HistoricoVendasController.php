@@ -49,7 +49,7 @@ class HistoricoVendasController extends Controller
     }
     public function historicoBuscarDetalhes(Request $request){
         $id_transacao = $request->dataId;
-        $vendaDetalhe = vendasDetalhadas::where('user_id', Auth::id())->where('item_cancelado', false)->where('id_transacao', $id_transacao)->get();
+        $vendaDetalhe = vendasDetalhadas::where('user_id', Auth::id())->where('id_transacao', $id_transacao)->get();
         return response()->json($vendaDetalhe);
     }
 

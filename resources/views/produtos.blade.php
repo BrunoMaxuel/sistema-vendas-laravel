@@ -74,19 +74,19 @@
                         $.each(produtos, function(index, produto){
                             var linha = $('<tr>');
                             linha.append('<td >'+ produto.id + '</td>');
-                            linha.append('<td><strong>'+ produto.nome + '</strong></td>');
+                            linha.append('<td style="width: 350px;" ><strong>'+ produto.nome + '</strong></td>');
                             linha.append('<td>'+ produto.codigo_barras + '</td>');
                             linha.append('<td>'+ produto.preco + '</td>');
                             linha.append('<td>'+ produto.preco_custo + '</td>');
                             linha.append('<td>'+ produto.lucro + '</td>');
                             linha.append('<td>'+ produto.estoque + '</td>');
-                            linha.append('<td>'+ produto.fornecedor + '</td>');
-                            linha.append('<td>'+ produto.categoria + '</td>');
+                            linha.append('<td style="display: none;">'+ produto.fornecedor + '</td>');
+                            linha.append('<td style="display: none;">'+ produto.categoria + '</td>');
                             linha.append('<td><div class="btn-group"> <div><button type="button" id="' + produto.id + '" class="btnEditar btn btn-secondary btn-success mr-2"> <i class="fas fa-edit"></i> </button></div><div><button type="button" id="' + produto.id + '" class="btnExcluir btn btn-danger mt-2 mt-sm-0"><i class="fas fa-trash"></i></button></div></div></td>');
                             $('#tabela-produto').append(linha);
                         });
                     }else{
-                        $('#tabela-produto').append('<tr><td colspan="10" class="text-center"><h2>Nenhum produto encontrado</h2></td></tr>');
+                        $('#tabela-produto tbody').append('<tr><td colspan="10" class="text-center">Produto não encontrado</td></tr>');
                     }
                 });
             });

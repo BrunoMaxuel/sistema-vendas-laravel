@@ -2,7 +2,6 @@
     <style>
         table tbody{
             border-collapse: collapse;
-            height: 200px; 
             overflow-y: auto ; 
         }
     </style>
@@ -18,8 +17,6 @@
                 <th scope="col">Custo</th>
                 <th scope="col">Lucro</th>
                 <th scope="col">Estoque</th>
-                <th scope="col">Fornecedor</th>
-                <th scope="col">Categoria</th>
                 <th scope="col">Ações</th>
             </tr>
         </thead>
@@ -28,29 +25,23 @@
                 @foreach($produtos as $produto)
                     <tr>
                         <td scope="row">{{$produto['id']}}</td>
-                        <td><strong>{{$produto['nome']}}</strong></td>
+                        <td style="width: 350px;"><strong>{{$produto['nome']}} </strong></td>
                         <td>{{$produto['codigo_barras']}}</td>
                         <td>{{number_format($produto['preco'], 2, ',', '.')}}</td>
                         <td>{{number_format($produto['preco_custo'], 2, ',', '.')}}</td>
                         <td>{{$produto['lucro'].'%'}}</td>
                         <td>{{$produto['estoque']}}</td>
-                        <td>{{$produto['fornecedor']}}</td>
-                        <td>{{$produto['categoria']}}</td>
+                        <td style="display: none;">{{$produto['fornecedor']}}</td>
+                        <td style="display: none;">{{$produto['categoria']}}</td>
                         <td>
-                            <div class="btn-group">
-                                <div>
-                                    <x-form.button id="{{$produto['id']}}" class="btnEditar mr-2" type="submit" theme="success" icon="fas fa-edit" label="" />
-                                </div>
-                                <div>
-                                    <x-form.button id="{{$produto['id']}}" class="btnExcluir" type="submit" theme="danger" icon="fas fa-trash" label="" />
-                                </div>
-                            </div>
+                            <x-form.button id="{{$produto['id']}}" class="btnEditar mr-2" type="submit" theme="success" icon="fas fa-edit" label="" />
+                            <x-form.button id="{{$produto['id']}}" class="btnExcluir" type="submit" theme="danger" icon="fas fa-trash" label="" />
                         </td>
                     </tr>
                 @endforeach
             @else
                 <tr>
-                    <td colspan="8" class="text-center">Nenhum produto encontrado</td>
+                    <td colspan="8" class="text-center"><p>lista de produtos vazia</p></td>
                 </tr>
             @endif
         </tbody>

@@ -1,12 +1,23 @@
 <div class="modal fade" id="modalHistorico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content p-3">
-        <div style="background-color: #0A8DC6; color: white;" class="modal-header d-flex justify-content-center" id="modalHeader">
+        <div style="background-color: #343A40; color: white;" class="modal-header d-flex justify-content-center" id="modalHeader">
             <h4 class="modal-title-visualizar">Detalhes da venda</h4>
             <input type="hidden" id="id_transacao">
         </div>
-        <div id="modalBody" class="modal-body p-3">
-            <table id="table-modal" class="table hover order-column compact table-bordered" cellspacing="0" width="100%">
+        <div id="modalBody" style="background-color: #454D55 !important;" class="modal-body p-3">
+            <div class="row">
+                <div class="col ">
+                    Forma de pagamento: <h5 class="pagamento"></h5>
+                </div>
+                <div class="col ">
+                    Parcela: <h5 class="parcela"></h5>
+                </div>
+                <div class="col ">
+                    Valor da parcela: <h5 class="valor_parcela"></h5>
+                </div>
+            </div>
+            <table id="table-vendaDetalhe" class="table hover order-column compact table-bordered" cellspacing="0" width="100%">
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">N°</th>

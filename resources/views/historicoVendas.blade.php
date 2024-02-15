@@ -37,11 +37,8 @@
 				<th scope="col">N°</th>
 				<th scope="col">Cliente</th>
 				<th scope="col">Data</th>
-				<th scope="col">Pagamento</th>
 				<th scope="col">Desc</th>
 				<th scope="col">Itens</th>
-				<th scope="col">Parcela</th>
-				<th scope="col">Parcela(R$)</th>
 				<th scope="col">Com Desc(R$)</th>
 				<th scope="col">Total(R$)</th>
 				<th scope="col">Ação</th>
@@ -53,11 +50,11 @@
 					<td>{{$transacao->id}}</td>
 					<td>{{$transacao->cliente}}</td>
 					<td>{{$transacao->created_at->toDateString()}}</td>
-					<td>{{$transacao->pagamento}}</td>
+					<td style="display: none;">{{$transacao->pagamento}}</td>
 					<td>{{$transacao->desconto}}%</td>
 					<td>{{$transacao->total_item}}</td>
-					<td>{{$transacao->parcela}}x</td>
-					<td>{{number_format($transacao->valor_parcela, 2, ',', '.')}}</td>
+					<td style="display: none;">{{$transacao->parcela}}x</td>
+					<td style="display: none;">{{number_format($transacao->valor_parcela, 2, ',', '.')}}</td>
 					<td>{{number_format($transacao->venda_com_desconto, 2, ',', '.')}}</td>
 					<td>{{number_format($transacao->total, 2, ',', '.')}}</td>
 					<td>
@@ -101,24 +98,6 @@
 				}
 			}
 
-
-			// msg = false;
-			// if(msg){
-			// 	showModal();
-			// }
-			// function showModal(){
-			// 	$("#background-text").addClass("bg-success");
-			// 	$("#titulo-msg").css('font-size', 20);
-			// 	$("#titulo-msg").html("Informações alteradas com sucesso!");
-			// 	setTimeout(function() {
-			// 			$('#modal-msg').modal('show');
-			// 	}, 500); 
-			// 	setTimeout(function() {
-			// 			$('#modal-msg').modal('hide');
-			// 	}, 3000); 
-			// }
-
-
 			$('.editar').click(function() {
 				$('#modalTransacao').modal('show');
 				const linha 	= $(this).closest('tr');
@@ -138,22 +117,26 @@
 				var token = "{{ csrf_token() }}";
 
 				$.post('/historico', { dataId: id, _token: token })
-				.done(function(vendaDetalhes) {
-					$('#table-modal tbody').empty();
+				.done(function(vendaDetalhes, vendaTransaction) {
+					$('#table-vendaDetalhe tbody').empty();
 					
 					$.each(vendaDetalhes, function(index, venda) {
 						$('#id_transacao').val(venda.id_transacao);
 						var valorItemFormatted = parseFloat(venda.valor_item).toLocaleString('pt-br', {minimumFractionDigits: 2});
 						var totalVendaFormatted = parseFloat(venda.total_venda).toLocaleString('pt-br', {minimumFractionDigits: 2});
-						var newRow = '<tr>' +
-							'<td>' + venda.id_transacao + '</td>' +
-							'<td>' + venda.nome_produto + '</td>' +
-							'<td>' + venda.quantidade + '</td>' +
-							'<td>' + valorItemFormatted + '</td>' +
-							'<td>' + totalVendaFormatted + '</td>' +
+						var newRow = 
+							'<tr>' +
+								'<td>' + venda.id_transacao + '</td>' +
+								'<td>' + venda.nome_produto + '</td>' +
+								'<td>' + venda.quantidade + '</td>' +
+								'<td>' + valorItemFormatted + '</td>' +
+								'<td>' + totalVendaFormatted + '</td>' +
 							'</tr>';
-						$('#table-modal tbody').append(newRow);
+						$('#table-vendaDetalhe tbody').append(newRow);
 					});
+					$('.pagamento').text($('#transations-table tbody').find('td:eq(3)').text());
+					$('.parcela').text($('#transations-table tbody').find('td:eq(6)').text());
+					$('.valor_parcela').text($('#transations-table tbody').find('td:eq(7)').text());
 					$('#modalHistorico').modal('show');
 				})
 				.fail(function(error) {

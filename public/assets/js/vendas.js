@@ -9,11 +9,11 @@ $('#search').on('keydown', function(e) {
         if (e.key === 'ArrowUp' && linhaSelecionada > 0) {
 
             tableApiBody.find('tr').removeClass('selected').css('background-color', '');
-            tableApiBody.find('tr').eq(--linhaSelecionada).addClass('selected').css('background-color', '#aaa');
+            tableApiBody.find('tr').eq(--linhaSelecionada).addClass('selected').css('background-color', '#222');
         } else if (e.key === 'ArrowDown' && linhaSelecionada < 7) {
 
             tableApiBody.find('tr').removeClass('selected').css('background-color', '');
-            tableApiBody.find('tr').eq(++linhaSelecionada).addClass('selected').css('background-color', '#aaa');
+            tableApiBody.find('tr').eq(++linhaSelecionada).addClass('selected').css('background-color', '#222');
         }
     }
 });
@@ -37,7 +37,7 @@ $(function() {
                 if (search.indexOf('*') == -1 && search.indexOf('-') == -1) {
                     $.post("/vendas/produtos", { search, _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
                         preencherTabelaBusca(data);
-                        tableApiBody.find('tr').eq(linhaSelecionada).addClass('selected').css('background-color', '#aaa');
+                        tableApiBody.find('tr').eq(linhaSelecionada).addClass('selected').css('background-color', '#222');
                         displayTableApi.removeClass('hidden');
                         infoVenda.addClass('hidden');
                     });
@@ -48,7 +48,7 @@ $(function() {
                    if(searchPartes[1]){
                         $.post("/vendas/produtos", { search: searchPartes[1], _token: $('meta[name="csrf-token"]').attr('content') }, function(data) {
                             preencherTabelaBusca(data);
-                            tableApiBody.find('tr').eq(linhaSelecionada).addClass('selected').css('background-color', '#aaa');
+                            tableApiBody.find('tr').eq(linhaSelecionada).addClass('selected').css('background-color', '#222');
                             displayTableApi.removeClass('hidden');
                             infoVenda.addClass('hidden');
                         });
@@ -110,6 +110,7 @@ $(function() {
                 total: valorTotal
             });
             localStorage.setItem('listaVenda', JSON.stringify(listaVenda));          
+            searchPartes = [1];
             atualizarTabelaVenda();
         }
     });
@@ -148,9 +149,9 @@ function preencherTabelaBusca(data) {
     data.forEach(function(item) {
         var newRow = $('<tr>');
         newRow.append('<td>' + item.id + '</td>');
-        newRow.append('<td>' + item.nome + '</td>');
-        newRow.append('<td>' + item.codigo_barras + '</td>');
-        newRow.append('<td>' + item.preco_custo + '</td>');
+        newRow.append('<td class="text-lg">' + item.nome + '</td>');
+        newRow.append('<td class="text-muted">' + item.codigo_barras + '</td>');
+        newRow.append('<td class="text-muted">' + item.preco_custo + '</td>');
         newRow.append('<td>' + item.preco + '</td>');
         newRow.append('<td>' + item.estoque + '</td>');
         tableApiBody.append(newRow);

@@ -7,7 +7,7 @@
               <input type="hidden" name="id" id="id_hidden">
               <div class="form-group">
                 <label for="nome">Nome do produto <span class="text-danger">*</span></label>
-                <input type="text" id="nome" maxlength="50" required="required" name="nome" class="form-control" placeholder="Nome do produto">
+                <input type="text" id="nome" maxlength="40" required="required" name="nome" class="form-control" placeholder="Nome do produto">
                 <span id="error-nome" class="text-danger"></span>
               </div>
               <div class="form-group">
@@ -16,24 +16,24 @@
               </div>
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="bairro">Preço de custo<span class="text-danger">*</span></label>
+                  <label for="bairro">Preço de custo<span class="text-danger"> * </span></label>
                   <input type="text" id="preco_custo" name="preco_custo" data-mask="000.000,00" data-mask-reverse="true" class="form-control" placeholder="Qual o produto lhe custou...">
                   <span id="error-preco-custo" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="preco">Preço de venda<span class="text-danger">*</span></label>
+                  <label for="preco">Preço de venda<span class="text-danger"> * </span></label>
                   <input type="text" id="preco" name="preco" data-mask="000.000,00" data-mask-reverse="true" class="form-control" placeholder="Preço de vender o produto...">
                   <span id="error-preco" class="text-danger"></span>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-3">
-                  <label for="lucro">Lucro<span class="text-danger">*</span></label>
+                  <label for="lucro">Lucro<span class="text-danger"> * </span></label>
                   <input type="text" id="lucro" data-mask="000%" data-mask-reverse="true" name="lucro" class="form-control" >
                   <span id="error-lucro" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-3">
-                  <label for="estoque">Estoque<span class="text-danger">*</span></label>
+                  <label for="estoque">Estoque<span class="text-danger"> * </span></label>
                   <input type="number" id="estoque" name="estoque" class="form-control" >
                   <span id="error-estoque" class="text-danger"></span>
                 </div>

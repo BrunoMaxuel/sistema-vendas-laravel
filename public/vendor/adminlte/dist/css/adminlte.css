@@ -53005,7 +53005,19 @@ a.text-muted:hover {
 .dark-mode .dark-mode.accent-gray-dark .page-item .page-link:hover, .dark-mode .dark-mode.accent-gray-dark .page-item .page-link:focus {
   color: #3f474e;
 }
-
 .dark-mode .border-dark {
   border-color: #4b545c !important;
 }
+.table-responsive::-webkit-scrollbar {
+            width: 10px;
+        }
+        .table-responsive::-webkit-scrollbar-thumb {
+            border: 1px solid #bbb;
+            background-color: #343A40;
+            border-radius: 10px;
+        }
+
+        .table-responsive::-webkit-scrollbar-track {
+            background-color: #bbb;
+            border-radius: 10px;
+        }

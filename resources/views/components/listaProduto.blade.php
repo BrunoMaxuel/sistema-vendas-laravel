@@ -2,8 +2,9 @@
     <style>
         table tbody{
             border-collapse: collapse;
-            overflow-y: auto ; 
+            overflow-y: auto ;
         }
+
     </style>
 @endpush
 <div class="table-responsive">
@@ -55,16 +56,16 @@
                 $('#id_hidden').val(linhaTabela.find('td:eq(0)').text());
                 $('#nome').val(linhaTabela.find('td:eq(1)').text());
                 $('#codigo_barras').val(linhaTabela.find('td:eq(2)').text());
-                $('#preco').val(linhaTabela.find('td:eq(3)').text()); 
+                $('#preco').val(linhaTabela.find('td:eq(3)').text());
                 $('#preco_custo').val(linhaTabela.find('td:eq(4)').text());
-                $('#categoria').val(linhaTabela.find('td:eq(8)').text()); 
-                $('#lucro').val(linhaTabela.find('td:eq(5)').text()); 
-                $('#estoque').val(linhaTabela.find('td:eq(6)').text()); 
-                $('#fornecedor').val(linhaTabela.find('td:eq(7)').text()); 
+                $('#categoria').val(linhaTabela.find('td:eq(8)').text());
+                $('#lucro').val(linhaTabela.find('td:eq(5)').text());
+                $('#estoque').val(linhaTabela.find('td:eq(6)').text());
+                $('#fornecedor').val(linhaTabela.find('td:eq(7)').text());
                 $('#modalAlert').modal('show');
                 $("#formUp").attr("action", "{{ route('produto.editar') }}");
             } else if ($(this).hasClass('btnExcluir')) {
-                $('#idExcluir').val($(this).attr('id')); 
+                $('#idExcluir').val($(this).attr('id'));
                 const rota = "{{route('produto.excluir')}}";
                 $('#formExcluir').attr('action', rota);
                 $('#modalExcluir').modal('show');

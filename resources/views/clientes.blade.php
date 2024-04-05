@@ -74,21 +74,21 @@
                     $('#cidade').val(linha.find('td:eq(4)').text());
                     $('#modalAlert').modal('show');
                 } else if ($(this).hasClass('btnExcluir')) {
-                    $('#idExcluir').val($(this).attr('id')); 
+                    $('#idExcluir').val($(this).attr('id'));
                     const rota = "{{ route('cliente.excluir') }}";
                     $('#formExcluir').attr('action', rota);
                     $('#modalExcluir').modal('show');
                 }
             });
 
-            
+
             var tabela = $('#table-cliente');
             var numCliente = tabela.find('tbody').find('tr').length;
             if(numCliente > 7){
                 tabela.parent().css('max-height', '400px').css('overflow-y', 'auto');
             }
             else{
-                table.parent().css('max-height', 'none').css('overflow-y', 'visible');    
+                table.parent().css('max-height', 'none').css('overflow-y', 'visible');
             }
 
             $('#pesquisa').on('keyup', function(e) {

@@ -4,20 +4,15 @@
 @section('css')
 	<style>
 		.custom-table {
-        border-collapse: collapse;
-        width: 100%;
-    	}	
+            border-collapse: collapse;
+            width: 100%;
+    	}
 		.cor-fundo{
 			background-color: #343A40;
 			color: white;
 		}
-		table, #transations-table{
-            border-collapse: collapse;
-            border-radius: 20px; /* Adicione esta linha para arredondar os cantos da tabela */
-            overflow: hidden; /* Garante que a borda arredondada seja visível mesmo com bordas internas */
-        }
 	</style>
-@stop
+@endsection
 @section('content_header')
 	<x-componentsCaixa.modalCaixa/>
 	<x-componentsCaixa.modalFechar total="{{$caixa->total}}" />
@@ -37,68 +32,69 @@
 			<button class="btn btn-danger" id="btnRemove">Sangria de caixa</button>
 		</div>
 	</div>
-@stop 
+@stop
 @section('content')
 	<div class="row">
 		<div class="col-md-12">
-
-			<table id="transations-table" class="table table-bordered" width="100%">
-				<thead class="thead-light">
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Data e Hora</th>
-						<th scope="col">Cliente ou Ações</th>
-						<th scope="col">Descrição</th>
-						<th scope="col">Desconto</th>
-						<th scope="col">Pagamento</th>
-						<th scope="col">Total R$</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>+</td>
-						<td>{{$caixa->created_at}}</td>
-						<td>+</td>
-						<td>{{$caixa->descricao}}</td>
-						<td>+</td>
-						<td>+</td>
-						<td>+{{number_format($caixa->valor_inicial, 2, ',', '.')}}</td>
-					</tr>
-					@foreach($caixa->suprimentos as $suprimento)
-						<tr class="bg-success">
-							<td>+</td>
-							<td>{{$suprimento->created_at}}</td>
-							<td> Adição de dinheiro </td>
-							<td>{{$suprimento->descricao}}</td>
-							<td>+</td>
-							<td>+</td>
-							<td>+{{number_format($suprimento->valor, 2, ',', '.')}}</td>
-						</tr>	
-					@endforeach
-					@foreach($caixa->sangrias as $sangria)
-					<tr style="background-color: rgb(250, 100, 100)">
-						<td>-</td>
-						<td>{{$sangria->created_at}}</td>
-						<td> Subtração de Dinheiro </td>
-						<td>{{$sangria->descricao}}</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-{{number_format($sangria->valor, 2, ',', '.')}}</td>
-					</tr>
-					@endforeach
-					@foreach($caixa->transacoes as $transacao)
-						<tr style="background-color: #0A8DC6; color: white;">
-							<td> + </td>
-							<td>{{$transacao->created_at}}</td>
-							<td>{{$transacao->cliente}}</td>
-							<td> Venda </td>
-							<td>{{$transacao->desconto}}%</td>
-							<td>{{$transacao->pagamento}}</td>
-							<td>+{{number_format($transacao->total, 2, ',', '.')}}</td>
-						</tr>
-					@endforeach
-				</tbody>
-			</table>
+			<div class="table-responsive">
+                <table id="transations-table" class="table table-bordered" width="100%">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Data e Hora</th>
+                            <th scope="col">Cliente ou Ações</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Desconto</th>
+                            <th scope="col">Pagamento</th>
+                            <th scope="col">Total R$</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>+</td>
+                            <td>{{$caixa->created_at}}</td>
+                            <td>+</td>
+                            <td>{{$caixa->descricao}}</td>
+                            <td>+</td>
+                            <td>+</td>
+                            <td>+{{number_format($caixa->valor_inicial, 2, ',', '.')}}</td>
+                        </tr>
+                        @foreach($caixa->suprimentos as $suprimento)
+                            <tr class="bg-success">
+                                <td>+</td>
+                                <td>{{$suprimento->created_at}}</td>
+                                <td> Adição de dinheiro </td>
+                                <td>{{$suprimento->descricao}}</td>
+                                <td>+</td>
+                                <td>+</td>
+                                <td>+{{number_format($suprimento->valor, 2, ',', '.')}}</td>
+                            </tr>
+                        @endforeach
+                        @foreach($caixa->sangrias as $sangria)
+                        <tr style="background-color: rgb(250, 100, 100)">
+                            <td>-</td>
+                            <td>{{$sangria->created_at}}</td>
+                            <td> Subtração de Dinheiro </td>
+                            <td>{{$sangria->descricao}}</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-{{number_format($sangria->valor, 2, ',', '.')}}</td>
+                        </tr>
+                        @endforeach
+                        @foreach($caixa->transacoes as $transacao)
+                            <tr style="background-color: #0A8DC6; color: white;">
+                                <td> + </td>
+                                <td>{{$transacao->created_at}}</td>
+                                <td>{{$transacao->cliente}}</td>
+                                <td> Venda </td>
+                                <td>{{$transacao->desconto}}%</td>
+                                <td>{{$transacao->pagamento}}</td>
+                                <td>+{{number_format($transacao->total, 2, ',', '.')}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 		</div>
 	</div>
 @stop

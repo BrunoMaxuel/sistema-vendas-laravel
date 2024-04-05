@@ -26,7 +26,7 @@
 	</div>
 @stop
 @section('content')
-	<x-modals.modalHistorico/>	
+	<x-modals.modalHistorico/>
 	<x-modals.modalVenda/>
 	<x-modals.modalExcluir/>
 	<x-modals.modalMsg/>
@@ -65,7 +65,7 @@
 				</tr>
 				@endforeach
 			</tbody>
-		</table>	
+		</table>
 	</div>
 	@if(session('msg'))
     <div id="mensagem" >
@@ -82,7 +82,7 @@
 
 
 		$(function() {
-			
+
 			var mensagem = document.getElementById('mensagem');
 			if (mensagem) {
 				showModal();
@@ -91,25 +91,25 @@
 					$("#titulo-msg").html("Informações alteradas com sucesso!");
 					setTimeout(function() {
 							$('#modal-msg').modal('show');
-					}, 500); 
+					}, 500);
 					setTimeout(function() {
 							$('#modal-msg').modal('hide');
-					}, 2000); 
+					}, 2000);
 				}
 			}
 
 			$('.editar').click(function() {
 				$('#modalTransacao').modal('show');
 				const linha 	= $(this).closest('tr');
-				$('#idTransacao').val(linha.find('td:nth-child(1)').text()); 
+				$('#idTransacao').val(linha.find('td:nth-child(1)').text());
 				$('#cliente').val(linha.find('td:nth-child(2)').text());
-				$('#pagamento').val(linha.find('td:nth-child(4)').text()); 
-				$('#desconto').val(linha.find('td:nth-child(5)').text()); 
-				$('#total_item_modal').val(linha.find('td:nth-child(6)').text()); 
-				$('#parcela').val(linha.find('td:nth-child(7)').text());   
+				$('#pagamento').val(linha.find('td:nth-child(4)').text());
+				$('#desconto').val(linha.find('td:nth-child(5)').text());
+				$('#total_item_modal').val(linha.find('td:nth-child(6)').text());
+				$('#parcela').val(linha.find('td:nth-child(7)').text());
 				$('#valor_parcela').val(linha.find('td:nth-child(8)').text());
-				$('#venda_desconto_modal').val(linha.find('td:nth-child(9)').text()); 
-				$('#total_venda_modal').val(linha.find('td:nth-child(10)').text());   
+				$('#venda_desconto_modal').val(linha.find('td:nth-child(9)').text());
+				$('#total_venda_modal').val(linha.find('td:nth-child(10)').text());
 				$('#valor_recebido').attr('readonly', true).val("0,00");
 			});
 			$('.visualizar').click(function() {
@@ -119,12 +119,12 @@
 				$.post('/historico', { dataId: id, _token: token })
 				.done(function(vendaDetalhes, vendaTransaction) {
 					$('#table-vendaDetalhe tbody').empty();
-					
+
 					$.each(vendaDetalhes, function(index, venda) {
 						$('#id_transacao').val(venda.id_transacao);
 						var valorItemFormatted = parseFloat(venda.valor_item).toLocaleString('pt-br', {minimumFractionDigits: 2});
 						var totalVendaFormatted = parseFloat(venda.total_venda).toLocaleString('pt-br', {minimumFractionDigits: 2});
-						var newRow = 
+						var newRow =
 							'<tr>' +
 								'<td>' + venda.id_transacao + '</td>' +
 								'<td>' + venda.nome_produto + '</td>' +
@@ -159,7 +159,7 @@
 				tabela.parent().css('max-height', '400px').css('overflow-y', 'auto');
 			}
 			else{
-				tabela.parent().css('max-height', 'none').css('overflow-y', 'visible');    
+				tabela.parent().css('max-height', 'none').css('overflow-y', 'visible');
 			}
 		});
 

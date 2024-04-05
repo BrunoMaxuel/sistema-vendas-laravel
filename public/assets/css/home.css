@@ -10933,7 +10933,7 @@ section {
 
 section.cta {
   position: relative;
-  padding: 10rem 0; 
+  padding: 10rem 0;
   height: 900px;
   background-image: url("../img/img.jpg");
   background-position: center;
@@ -11149,3 +11149,4 @@ footer a:hover, footer a:active, footer a:focus {
     max-width: 17rem;
   }
 }
+

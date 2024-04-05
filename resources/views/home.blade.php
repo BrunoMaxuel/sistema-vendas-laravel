@@ -7,11 +7,34 @@
         <meta name="author" content="" />
         <title>Página inicial</title>
         <style>
-            #preloader{
-                background: white !important;
+            body{
+                overflow: hidden;
+            }
+            #preloader {
+                background-color: white;
+                position: fixed;
+                inset: 0;
+                z-index: 9100;
+            }
+            #preloader:before {
+            content: "";
+            width: 150px;
+            height: 150px;
+            position: fixed;
+            top: calc(50% - 70px);
+            left: calc(50% - 70px);
+            border: 40px solid;
+            border-radius: 50%;
+            border-color: #00A2E8 transparent;
+            animation: spin 1.4s linear infinite;
+            }
+            @keyframes spin {
+                100% {
+                    transform: rotate(360deg);
+                }
             }
         </style>
-        <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/home.css')}}">
         <link rel="stylesheet" href="{{asset('assets/css/font.css')}}">
         <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
         <!-- Bootstrap icons-->
@@ -38,7 +61,20 @@
             </div>
         </section>
        <x-home.footer/>
-        <script src="{{asset('assets/js/main.js')}}"></script>
+        <script src="{{asset('assets/js/home.js')}}"></script>
         <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                document.body.style.overflow = 'hidden';
+                if (document.querySelector('#preloader')) {
+                    window.addEventListener('load', () => {
+
+                    setTimeout(() => {
+                        document.querySelector('#preloader').remove();
+                    }, 200);
+                    });
+                }
+            });
+        </script>
     </body>
 </html>

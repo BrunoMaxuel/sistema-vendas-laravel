@@ -28,3 +28,15 @@
 - **Execute "sail up -d" ou "./vendor/bin/sail up -d" depende da configuração do docker.**
 - **Execute "sail artisan migrate --seed" para criar as tabelas no banco e gerar dados fictícios.**
 - **Faça login com "visitante@gmail.com" e senha "visitante123" para acessar o sistema.**
+
+
+# demonstração
+![Descrição da imagem](screenshots/dashboard.png)
+![Descrição da imagem](screenshots/realizarvenda.png)
+![Descrição da imagem](screenshots/painelfinalizar.png)
+![Descrição da imagem](screenshots/controlecaixa.png)
+![Descrição da imagem](screenshots/produtos.png)
+![Descrição da imagem](screenshots/clientes.png)
+![Descrição da imagem](screenshots/historicovendas.png)
+![Descrição da imagem](screenshots/detalhesvenda.png)
+![Descrição da imagem](screenshots/imprimirtotalvendas.png)

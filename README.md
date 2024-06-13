@@ -30,13 +30,26 @@
 - **Faça login com "visitante@gmail.com" e senha "visitante123" para acessar o sistema.**
 
 
-# demonstração
-![Descrição da imagem](screenshots/dashboard.png)
-![Descrição da imagem](screenshots/realizarvenda.png)
-![Descrição da imagem](screenshots/painelfinalizar.png)
-![Descrição da imagem](screenshots/controlecaixa.png)
-![Descrição da imagem](screenshots/produtos.png)
-![Descrição da imagem](screenshots/clientes.png)
-![Descrição da imagem](screenshots/historicovendas.png)
-![Descrição da imagem](screenshots/detalhesvenda.png)
-![Descrição da imagem](screenshots/imprimirtotalvendas.png)
+## Capturas de Tela
+
+<table>
+  <tr>
+    <td><img src="screenshots/dashboard.png" alt="Dashboard" width="300" /></td>
+    <td><img src="screenshots/realizarvenda.png" alt="Realizar Venda" width="300" /></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/painelfinalizar.png" alt="Painel Finalizar" width="300" /></td>
+    <td><img src="screenshots/controlecaixa.png" alt="Controle de Caixa" width="300" /></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/produtos.png" alt="Produtos" width="300" /></td>
+    <td><img src="screenshots/clientes.png" alt="Clientes" width="300" /></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/historicovendas.png" alt="Histórico de Vendas" width="300" /></td>
+    <td><img src="screenshots/detalhesvenda.png" alt="Detalhes da Venda" width="300" /></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/imprimirtotalvendas.png" alt="Imprimir Total de Vendas" width="300" /></td>
+  </tr>
+</table>
